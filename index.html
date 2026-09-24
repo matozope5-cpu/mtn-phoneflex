@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFCC00">
+<title>MTN PhoneFlex — Get a Phone Today, Pay Small Daily</title>
+<meta name="description" content="Choose a phone, pay a small deposit and clear the balance with easy daily instalments from your MTN MoMo wallet. No bank account needed.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============ BASE ============ */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --yellow:#FFCC00;
+  --yellow-dark:#E8B800;
+  --black:#000;
+  --ink:#0d0d0d;
+  --ink-2:#5a5a5a;
+  --line:#eaeaea;
+  --soft:#fafafa;
+  --radius:20px;
+  --shadow:0 18px 44px rgba(0,0,0,.08);
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  color:var(--ink);background:#fff;line-height:1.55;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit}
+.wrap{width:100%;max-width:1140px;margin:0 auto;padding:0 20px}
+section[id]{scroll-margin-top:78px}
+
+/* ============ BUTTONS ============ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-weight:700;font-size:15px;border-radius:999px;padding:14px 26px;
+  border:2px solid transparent;cursor:pointer;white-space:nowrap;
+  transition:transform .15s ease,box-shadow .25s ease,background .2s ease,color .2s ease;
+}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--yellow);color:#000}
+.btn-primary:hover{background:var(--yellow-dark);box-shadow:0 10px 26px rgba(255,204,0,.45)}
+.btn-dark{background:#000;color:#fff}
+.btn-dark:hover{background:#1c1c1c;box-shadow:0 10px 26px rgba(0,0,0,.25)}
+.btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.28)}
+.btn-ghost:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5)}
+.btn-full{width:100%}
+.btn-sm{padding:12px 20px;font-size:14px}
+
+/* ============ HEADER ============ */
+.site-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid transparent;transition:border-color .3s,box-shadow .3s;
+}
+.site-header.scrolled{border-bottom-color:var(--line);box-shadow:0 4px 22px rgba(0,0,0,.05)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.logo{display:flex;align-items:center;gap:9px;flex-shrink:0}
+.logo-mark{
+  background:var(--yellow);color:#000;font-weight:900;font-style:italic;
+  font-size:14px;letter-spacing:-.4px;padding:6px 12px;border-radius:999px;
+}
+.logo-text{font-weight:800;font-size:16px;letter-spacing:-.02em}
+.nav{display:none;gap:30px;font-size:14.5px;font-weight:600;color:var(--ink-2)}
+.nav a{transition:color .2s}
+.nav a:hover{color:#000}
+.header-cta{display:none}
+@media(min-width:900px){
+  .nav{display:flex}
+  .header-cta{display:inline-flex}
+}
+
+/* ============ HERO ============ */
+.hero{
+  position:relative;overflow:hidden;
+  background:#080808;color:#fff;
+  padding:52px 0 60px;
+}
+.hero::before{
+  content:'';position:absolute;top:-240px;right:-180px;
+  width:560px;height:560px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,204,0,.26),transparent 66%);
+  pointer-events:none;
+}
+.hero::after{
+  content:'';position:absolute;bottom:-260px;left:-200px;
+  width:520px;height:520px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,204,0,.10),transparent 68%);
+  pointer-events:none;
+}
+.hero-grid{position:relative;z-index:2}
+.pill{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,204,0,.12);border:1px solid rgba(255,204,0,.32);
+  color:var(--yellow);font-size:12.5px;font-weight:700;
+  padding:7px 15px;border-radius:999px;letter-spacing:.02em;
+}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--yellow);animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.8)}}
+.hero h1{
+  margin-top:20px;
+  font-size:clamp(2rem,8vw,3.9rem);
+  line-height:1.05;letter-spacing:-.035em;font-weight:900;
+}
+.hl{color:var(--yellow)}
+.lede{
+  margin-top:18px;max-width:560px;
+  color:rgba(255,255,255,.72);
+  font-size:clamp(1rem,2.4vw,1.13rem);line-height:1.6;
+}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.hero-trust{
+  display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:30px;
+  list-style:none;font-size:13.5px;color:rgba(255,255,255,.62);font-weight:500;
+}
+.hero-trust li{display:flex;align-items:center;gap:7px}
+.hero-trust svg{flex-shrink:0;color:var(--yellow)}
+
+/* hero device mock */
+.hero-visual{display:none}
+.hero-device{
+  width:238px;height:474px;border-radius:36px;background:#151515;
+  border:1px solid rgba(255,255,255,.13);
+  padding:11px;margin:0 auto;position:relative;
+  box-shadow:0 40px 80px rgba(0,0,0,.6),0 0 0 1px rgba(255,204,0,.12) inset;
+}
+.hero-device::after{
+  content:'';position:absolute;top:22px;left:50%;transform:translateX(-50%);
+  width:62px;height:6px;border-radius:99px;background:rgba(255,255,255,.22);
+}
+.hero-device-screen{
+  width:100%;height:100%;border-radius:27px;
+  background:linear-gradient(160deg,#FFCC00 0%,#FFB300 48%,#f2a900 100%);
+  color:#000;padding:34px 22px 24px;display:flex;flex-direction:column;
+}
+.hd-top{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;opacity:.72}
+.hd-amount{font-size:46px;font-weight:900;letter-spacing:-.045em;margin-top:auto;line-height:1}
+.hd-amount span{font-size:16px;font-weight:700;letter-spacing:-.01em;opacity:.7}
+.hd-bar{height:9px;border-radius:99px;background:rgba(0,0,0,.16);margin-top:16px;overflow:hidden}
+.hd-bar i{display:block;height:100%;width:42%;border-radius:99px;background:#000}
+.hd-label{font-size:12.5px;font-weight:700;margin-top:9px;opacity:.72}
+.hd-chip{
+  margin-top:auto;background:#000;color:#fff;border-radius:14px;
+  padding:12px 14px;font-size:12px;font-weight:700;display:flex;
+  align-items:center;justify-content:space-between;gap:10px;
+}
+.hd-chip b{color:var(--yellow)}
+
+@media(min-width:900px){
+  .hero{padding:76px 0 86px}
+  .hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:40px;align-items:center}
+  .hero-visual{display:block}
+}
+
+/* ============ STATS STRIP ============ */
+.stats{background:var(--yellow);color:#000}
+.stats-inner{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:8px;padding:20px 20px;text-align:center;
+}
+.stats-inner div{display:flex;flex-direction:column;gap:1px}
+.stats-inner strong{font-size:clamp(1.25rem,4.4vw,1.75rem);font-weight:900;letter-spacing:-.03em;line-height:1.1}
+.stats-inner span{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;opacity:.68}
+@media(min-width:700px){
+  .stats-inner{padding:26px 20px;gap:20px}
+  .stats-inner span{font-size:12px}
+}
+
+/* ============ SECTIONS ============ */
+.section{padding:62px 0}
+.section.soft{background:var(--soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.eyebrow{
+  display:inline-block;background:var(--yellow);color:#000;
+  font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  padding:6px 13px;border-radius:999px;margin-bottom:15px;
+}
+h2{font-size:clamp(1.6rem,5vw,2.5rem);line-height:1.14;letter-spacing:-.028em;font-weight:900}
+.section-head{max-width:620px;margin-bottom:38px}
+.section-head p{margin-top:14px;color:var(--ink-2);font-size:clamp(.95rem,2.2vw,1.05rem);line-height:1.65}
+
+/* ============ STEPS ============ */
+.steps{display:grid;gap:16px}
+.step{
+  background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  padding:26px 22px;position:relative;transition:transform .25s,box-shadow .25s,border-color .25s;
+}
+.step:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:rgba(255,204,0,.6)}
+.step-icon{
+  width:46px;height:46px;border-radius:14px;background:var(--yellow);
+  display:grid;place-items:center;color:#000;margin-bottom:16px;
+}
+.step h3{font-size:1.05rem;font-weight:800;letter-spacing:-.015em;margin-bottom:7px}
+.step p{font-size:14.5px;color:var(--ink-2);line-height:1.62}
+.step-num{
+  position:absolute;top:26px;right:24px;font-size:12px;font-weight:900;
+  color:#c9c9c9;letter-spacing:.06em;
+}
+@media(min-width:640px){.steps{grid-template-columns:1fr 1fr}}
+@media(min-width:1000px){.steps{grid-template-columns:repeat(4,1fr);gap:18px}}
+
+/* ============ BROWSE CTA CARD ============ */
+.browse-card{
+  position:relative;overflow:hidden;border-radius:26px;
+  background:#080808;color:#fff;text-align:center;
+  padding:52px 24px;
+  box-shadow:0 30px 70px rgba(0,0,0,.16);
+}
+.browse-card::before{
+  content:'';position:absolute;top:-220px;left:50%;transform:translateX(-50%);
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,204,0,.22),transparent 65%);
+  pointer-events:none;
+}
+.browse-inner{position:relative;z-index:2;max-width:640px;margin:0 auto}
+.browse-card h2{color:#fff}
+.browse-card p{
+  margin-top:14px;color:rgba(255,255,255,.7);
+  font-size:clamp(.95rem,2.2vw,1.05rem);line-height:1.65;
+}
+.browse-card .btn{margin-top:28px}
+.browse-meta{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;
+  margin-top:26px;list-style:none;
+  font-size:13px;font-weight:600;color:rgba(255,255,255,.6);
+}
+.browse-meta li{display:flex;align-items:center;gap:7px}
+.browse-meta svg{flex-shrink:0;color:var(--yellow)}
+@media(min-width:700px){.browse-card{padding:64px 48px}}
+
+/* ============ BENEFITS ============ */
+.benefits{display:grid;gap:14px}
+.benefit{
+  display:flex;gap:14px;align-items:flex-start;
+  background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 18px;
+  transition:border-color .25s,transform .25s;
+}
+.benefit:hover{border-color:rgba(255,204,0,.7);transform:translateY(-3px)}
+.benefit-icon{
+  width:38px;height:38px;border-radius:11px;flex-shrink:0;
+  background:rgba(255,204,0,.2);color:#000;display:grid;place-items:center;
+}
+.benefit h3{font-size:.95rem;font-weight:800;letter-spacing:-.01em;margin-bottom:4px}
+.benefit p{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+@media(min-width:640px){.benefits{grid-template-columns:1fr 1fr}}
+@media(min-width:1000px){.benefits{grid-template-columns:repeat(3,1fr);gap:18px}}
+
+/* ============ FAQ ============ */
+.faq-list{display:grid;gap:10px;max-width:760px}
+details{
+  background:#fff;border:1px solid var(--line);border-radius:14px;
+  overflow:hidden;transition:border-color .25s;
+}
+details[open]{border-color:rgba(255,204,0,.8)}
+summary{
+  list-style:none;cursor:pointer;padding:18px 52px 18px 20px;
+  font-weight:700;font-size:15px;position:relative;letter-spacing:-.01em;
+}
+summary::-webkit-details-marker{display:none}
+summary::after{
+  content:'';position:absolute;right:20px;top:50%;
+  width:11px;height:11px;margin-top:-6px;
+  border-right:2.4px solid #000;border-bottom:2.4px solid #000;
+  transform:rotate(45deg);transition:transform .25s;
+}
+details[open] summary::after{transform:rotate(-135deg)}
+details p{padding:0 20px 20px;font-size:14.5px;color:var(--ink-2);line-height:1.68}
+
+/* ============ FINAL CTA ============ */
+.final-cta{
+  background:#080808;color:#fff;text-align:center;
+  padding:70px 0;position:relative;overflow:hidden;
+}
+.final-cta::before{
+  content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);
+  width:620px;height:620px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,204,0,.2),transparent 65%);
+  pointer-events:none;
+}
+.final-cta .wrap{position:relative;z-index:2}
+.final-cta h2{max-width:640px;margin:0 auto}
+.final-cta p{
+  max-width:520px;margin:16px auto 0;
+  color:rgba(255,255,255,.68);font-size:clamp(.95rem,2.3vw,1.05rem);
+}
+.final-cta .btn{margin-top:30px}
+
+/* ============ FOOTER ============ */
+.site-footer{background:#000;color:rgba(255,255,255,.55);padding:44px 0 34px;font-size:13.5px}
+.footer-top{display:flex;flex-direction:column;gap:22px}
+.footer-brand{display:flex;align-items:center;gap:10px}
+.footer-brand .logo-text{color:#fff}
+.footer-links{display:flex;flex-wrap:wrap;gap:14px 24px;font-weight:600}
+.footer-links a:hover{color:var(--yellow)}
+.footer-bottom{
+  margin-top:26px;padding-top:22px;border-top:1px solid rgba(255,255,255,.1);
+  display:flex;flex-direction:column;gap:8px;font-size:12.5px;
+}
+@media(min-width:800px){
+  .footer-top{flex-direction:row;justify-content:space-between;align-items:center}
+  .footer-bottom{flex-direction:row;justify-content:space-between;align-items:center}
+}
+@media(max-width:899px){
+  .site-footer{padding-bottom:110px}
+}
+
+/* ============ STICKY MOBILE CTA ============ */
+.sticky-cta{
+  position:fixed;left:0;right:0;bottom:0;z-index:90;
+  background:rgba(255,255,255,.97);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);
+  padding:11px 16px calc(11px + env(safe-area-inset-bottom));
+  display:flex;align-items:center;gap:14px;
+  transform:translateY(130%);transition:transform .4s cubic-bezier(.22,1,.36,1);
+}
+.sticky-cta.show{transform:translateY(0)}
+.sticky-cta .sc-text{flex:1;min-width:0}
+.sticky-cta .sc-text strong{display:block;font-size:14px;font-weight:800;letter-spacing:-.01em}
+.sticky-cta .sc-text span{font-size:11.5px;color:var(--ink-2);font-weight:600}
+@media(min-width:900px){.sticky-cta{display:none}}
+
+/* ============ REVEAL ============ */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header" id="header">
+  <div class="wrap header-inner">
+    <a href="index.html" class="logo" aria-label="MTN PhoneFlex home">
+      <span class="logo-mark">MTN</span>
+      <span class="logo-text">PhoneFlex</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#how">How it works</a>
+      <a href="phones.html">Phones</a>
+      <a href="#why">Why PhoneFlex</a>
+      <a href="#faq">FAQs</a>
+    </nav>
+    <a href="phones.html" class="btn btn-primary btn-sm header-cta">Get Started</a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="pill"><span class="dot"></span> Now available across Zambia</span>
+      <h1>Get the phone you want.<br><span class="hl">Pay small small, daily.</span></h1>
+      <p class="lede">
+        Pick a phone, pay a small deposit, then clear the balance with easy daily
+        instalments straight from your MTN MoMo wallet. No bank account. No long forms.
+        No stress.
+      </p>
+      <div class="hero-cta">
+        <a href="phones.html" class="btn btn-primary">Browse Phones</a>
+        <a href="#how" class="btn btn-ghost">How it works</a>
+      </div>
+      <ul class="hero-trust">
+        <li>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          No bank account needed
+        </li>
+        <li>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Approval in minutes
+        </li>
+        <li>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          From K5 per day
+        </li>
+      </ul>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-device">
+        <div class="hero-device-screen">
+          <div class="hd-top">My PhoneFlex</div>
+          <div class="hd-amount">K6<span>/day</span></div>
+          <div class="hd-bar"><i></i></div>
+          <div class="hd-label">76 of 180 days paid</div>
+          <div class="hd-chip">
+            <span>Next deduction</span>
+            <b>Tomorrow</b>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATS ============ -->
+<section class="stats">
+  <div class="wrap stats-inner">
+    <div><strong>K5</strong><span>Daily from</span></div>
+    <div><strong>2 min</strong><span>To apply</span></div>
+    <div><strong>100%</strong><span>On MoMo</span></div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">How it works</span>
+      <h2>Four simple steps to your new phone</h2>
+      <p>No queues, no paperwork, no waiting weeks for approval. Everything happens on your phone, in minutes.</p>
+    </div>
+
+    <div class="steps">
+      <article class="step reveal">
+        <span class="step-num">01</span>
+        <div class="step-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
+        </div>
+        <h3>Choose your phone</h3>
+        <p>Browse our range of smartphones and pick the one that fits your life and your budget.</p>
+      </article>
+
+      <article class="step reveal">
+        <span class="step-num">02</span>
+        <div class="step-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="3"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        </div>
+        <h3>Pay a small deposit</h3>
+        <p>Put down as little as 10% using MTN MoMo. That's it — no hidden charges added.</p>
+      </article>
+
+      <article class="step reveal">
+        <span class="step-num">03</span>
+        <div class="step-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6l8-4z"/><polyline points="9 12 11.5 14.5 16 10"/></svg>
+        </div>
+        <h3>Get approved fast</h3>
+        <p>Verify with your NRC and MoMo number. Most customers get a decision within minutes.</p>
+      </article>
+
+      <article class="step reveal">
+        <span class="step-num">04</span>
+        <div class="step-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.5 15a9 9 0 1 1-2.1-9.4L23 10"/></svg>
+        </div>
+        <h3>Pay small daily</h3>
+        <p>Instalments are deducted automatically from your wallet. Pay a little each day, own it fully.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BROWSE CTA ============ -->
+<section class="section soft" id="browse">
+  <div class="wrap">
+    <div class="browse-card reveal">
+      <div class="browse-inner">
+        <h2>Ready to find your next phone?</h2>
+        <p>
+          Browse the full MTN PhoneFlex range — every device, every daily price,
+          every deposit amount, all in one place. Pick yours and apply in minutes.
+        </p>
+        <a href="phones.html" class="btn btn-primary">View Available Phones</a>
+        <ul class="browse-meta">
+          <li>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            12-month plans
+          </li>
+          <li>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            From K5 per day
+          </li>
+          <li>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            12-month warranty
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY ============ -->
+<section class="section" id="why">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Why PhoneFlex</span>
+      <h2>Built for the way Zambia pays</h2>
+      <p>Everything runs on MTN MoMo — the wallet you already use every day.</p>
+    </div>
+
+    <div class="benefits">
+      <div class="benefit reveal">
+        <div class="benefit-icon">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18M3 6h18M3 14h18M3 18h18"/></svg>
+        </div>
+        <div>
+          <h3>No bank account needed</h3>
+          <p>All you need is a registered MTN MoMo wallet and a valid NRC.</p>
+        </div>
+      </div>
+
+      <div class="benefit reveal">
+        <div class="benefit-icon">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>
+        </div>
+        <div>
+          <h3>Approval in minutes</h3>
+          <p>No waiting days for a response. Apply and get a decision almost instantly.</p>
+        </div>
+      </div>
+
+      <div class="benefit reveal">
+        <div class="benefit-icon">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <div>
+          <h3>Daily amounts you can afford</h3>
+          <p>Pay as little as K5 a day. Small, predictable and easy to budget for.</p>
+        </div>
+      </div>
+
+      <div class="benefit reveal">
+        <div class="benefit-icon">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6l8-4z"/></svg>
+        </div>
+        <div>
+          <h3>Brand new, fully warranted</h3>
+          <p>Every phone is sealed and comes with a 12-month manufacturer warranty.</p>
+        </div>
+      </div>
+
+      <div class="benefit reveal">
+        <div class="benefit-icon">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div>
+          <h3>Build your payment profile</h3>
+          <p>Every on-time payment helps you unlock bigger limits in future.</p>
+        </div>
+      </div>
+
+      <div class="benefit reveal">
+        <div class="benefit-icon">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div>
+          <h3>Pay off early, any time</h3>
+          <p>Clear your balance whenever you like — no early settlement penalties.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section soft" id="faq">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Questions</span>
+      <h2>Everything you need to know</h2>
+    </div>
+
+    <div class="faq-list">
+      <details class="reveal">
+        <summary>Who qualifies for PhoneFlex?</summary>
+        <p>Any registered MTN MoMo user aged 18 or older with a valid National Registration Card (NRC). Your MoMo wallet must be active and in good standing.</p>
+      </details>
+
+      <details class="reveal">
+        <summary>How much deposit do I need to pay?</summary>
+        <p>Deposits start from as little as 10% of the phone's cash price. The exact amount is shown on every phone before you apply, so there are no surprises.</p>
+      </details>
+
+      <details class="reveal">
+        <summary>How are the daily instalments collected?</summary>
+        <p>Instalments are automatically deducted from your linked MTN MoMo wallet each day. You'll get an SMS confirmation after every deduction, and you can top up your wallet any time.</p>
+      </details>
+
+      <details class="reveal">
+        <summary>What happens if I miss a payment?</summary>
+        <p>Your wallet is retried automatically. If payments remain outstanding, your account is temporarily locked until the balance is settled. Persistent non-payment may affect your ability to use PhoneFlex again.</p>
+      </details>
+
+      <details class="reveal">
+        <summary>Can I pay off my phone early?</summary>
+        <p>Yes. You can settle your full outstanding balance at any time through the MoMo menu — with no extra charges or penalties.</p>
+      </details>
+
+      <details class="reveal">
+        <summary>Where do I collect my phone?</summary>
+        <p>Once approved, you can collect your device from your nearest participating MTN service centre, or choose to have it delivered to your address.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="final-cta">
+  <div class="wrap">
+    <h2>Your new phone is one tap away</h2>
+    <p>Join thousands of Zambians already paying small small for the phones they love.</p>
+    <a href="phones.html" class="btn btn-primary">Browse Phones Now</a>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="logo-mark">MTN</span>
+        <span class="logo-text">PhoneFlex</span>
+      </div>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="#how">How it works</a>
+        <a href="phones.html">Phones</a>
+        <a href="#faq">FAQs</a>
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 MTN Zambia. All rights reserved.</span>
+      <span>Demo concept — not a live financial service.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ STICKY MOBILE CTA ============ -->
+<div class="sticky-cta" id="stickyCta">
+  <div class="sc-text">
+    <strong>From K5 / day</strong>
+    <span>Deposit from K190</span>
+  </div>
+  <a href="phones.html" class="btn btn-primary btn-sm">Browse Phones</a>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* Header shadow on scroll */
+  var header = document.getElementById('header');
+  var stickyCta = document.getElementById('stickyCta');
+
+  function onScroll() {
+    var y = window.scrollY || window.pageYOffset;
+    header.classList.toggle('scrolled', y > 8);
+    stickyCta.classList.toggle('show', y > 420);
+  }
+
+  var ticking = false;
+  window.addEventListener('scroll', function () {
+    if (!ticking) {
+      window.requestAnimationFrame(function () { onScroll(); ticking = false; });
+      ticking = true;
+    }
+  }, { passive: true });
+  onScroll();
+
+  /* Scroll reveal */
+  var reveals = document.querySelectorAll('.reveal');
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry, i) {
+        if (entry.isIntersecting) {
+          var el = entry.target;
+          setTimeout(function () { el.classList.add('in'); }, Math.min(i * 70, 280));
+          io.unobserve(el);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    reveals.forEach(function (el) { io.observe(el); });
+  } else {
+    reveals.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* Smooth anchor scrolling with header offset (same-page links only) */
+  document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var id = link.getAttribute('href');
+      if (id === '#' || id.length < 2) return;
+      var target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      var top = target.getBoundingClientRect().top + window.pageYOffset - 74;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
