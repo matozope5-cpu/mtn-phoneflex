@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFCC00">
+<title>Top Up Your MoMo Wallet — MTN PhoneFlex</title>
+<meta name="description" content="Your MTN MoMo wallet balance is too low for this phone's deposit. Top up and try again.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============ BASE ============ */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --yellow:#FFCC00;
+  --yellow-dark:#E8B800;
+  --black:#000;
+  --ink:#0d0d0d;
+  --ink-2:#5a5a5a;
+  --ink-3:#8b8b8b;
+  --line:#eaeaea;
+  --soft:#fafafa;
+  --radius:20px;
+  --warning:#b54708;
+  --warning-bg:#fff8e1;
+  --warning-border:#f0d78a;
+  --success:#0f7a45;
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  color:var(--ink);background:#fff;line-height:1.55;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  min-width:0;
+  display:flex;flex-direction:column;min-height:100vh;
+}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit}
+img{max-width:100%;display:block}
+.wrap{width:100%;max-width:760px;margin:0 auto;padding:0 20px}
+
+/* ============ HEADER ============ */
+.site-header{
+  background:#fff;border-bottom:1px solid var(--line);
+  padding:16px 0;
+}
+.header-inner{display:flex;align-items:center;justify-content:center}
+.logo{display:flex;align-items:center;gap:9px}
+.logo-mark{
+  background:var(--yellow);color:#000;font-weight:900;font-style:italic;
+  font-size:14px;letter-spacing:-.4px;padding:6px 12px;border-radius:999px;
+  flex-shrink:0;
+}
+.logo-text{font-weight:800;font-size:16px;letter-spacing:-.02em;white-space:nowrap}
+
+/* ============ HERO ============ */
+.warn-hero{
+  position:relative;overflow:hidden;
+  background:#080808;color:#fff;
+  padding:52px 0 56px;text-align:center;
+}
+.warn-hero::before{
+  content:'';position:absolute;top:-280px;left:50%;transform:translateX(-50%);
+  width:640px;height:640px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,204,0,.18),transparent 64%);
+  pointer-events:none;
+}
+.warn-inner{position:relative;z-index:2;max-width:560px;margin:0 auto}
+
+.warn-icon{
+  width:88px;height:88px;border-radius:50%;
+  background:var(--yellow);color:#000;
+  display:grid;place-items:center;margin:0 auto 24px;
+  box-shadow:0 0 0 10px rgba(255,204,0,.12),0 22px 44px rgba(255,204,0,.22);
+  animation:pop .55s cubic-bezier(.22,1,.36,1) both;
+}
+.warn-icon svg{display:block}
+@keyframes pop{
+  0%{transform:scale(.4);opacity:0}
+  60%{transform:scale(1.08)}
+  100%{transform:scale(1);opacity:1}
+}
+
+.warn-hero h1{
+  font-size:clamp(1.5rem,5.6vw,2.15rem);
+  line-height:1.16;letter-spacing:-.032em;font-weight:900;
+  overflow-wrap:break-word;
+}
+.warn-hero p{
+  margin-top:13px;color:rgba(255,255,255,.72);
+  font-size:clamp(.92rem,2.2vw,1.02rem);line-height:1.62;
+}
+
+/* ============ MAIN ============ */
+.page{flex:1;padding:34px 0 60px}
+
+/* ---------- deposit card ---------- */
+.deposit-card{
+  background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  padding:24px 20px;margin-bottom:20px;
+  box-shadow:0 18px 44px rgba(0,0,0,.06);
+  position:relative;overflow:hidden;
+}
+@media(min-width:640px){.deposit-card{padding:28px 26px}}
+.deposit-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:5px;
+  background:var(--yellow);
+  border-radius:var(--radius) var(--radius) 0 0;
+}
+
+.dc-label{
+  font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);text-align:center;
+  display:block;margin-bottom:8px;
+}
+.dc-amount{
+  font-size:clamp(2.4rem,9vw,3.4rem);
+  font-weight:900;letter-spacing:-.045em;line-height:1;
+  text-align:center;color:#000;
+  margin-bottom:10px;
+}
+.dc-sub{
+  text-align:center;font-size:13.5px;color:var(--ink-2);
+  font-weight:500;line-height:1.55;max-width:400px;margin:0 auto;
+}
+
+.dc-divider{
+  height:1px;background:var(--line);margin:24px 0;
+}
+
+/* phone strip inside deposit card */
+.dc-phone{
+  display:flex;gap:14px;align-items:center;
+}
+.dc-device{
+  position:relative;width:50px;height:98px;flex-shrink:0;
+  border-radius:12px;background:#111;padding:4px;
+  box-shadow:0 10px 22px rgba(0,0,0,.16);
+}
+.dc-device::after{
+  content:'';position:absolute;top:7px;left:50%;transform:translateX(-50%);
+  width:13px;height:3px;border-radius:99px;background:rgba(255,255,255,.35);z-index:2;
+}
+.dc-screen{
+  width:100%;height:100%;border-radius:8px;
+  background:linear-gradient(150deg,#3a3a3a,#080808);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.9);font-size:6.5px;font-weight:800;letter-spacing:.08em;
+}
+.dc-info{min-width:0;flex:1}
+.dc-info h3{
+  font-size:.98rem;font-weight:800;letter-spacing:-.018em;line-height:1.32;
+  overflow-wrap:break-word;
+}
+.dc-meta{
+  font-size:12.5px;color:var(--ink-2);font-weight:500;margin-top:5px;line-height:1.5;
+}
+.dc-colour{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12px;font-weight:700;color:var(--ink-2);margin-top:7px;
+}
+.dc-colour i{
+  width:13px;height:13px;border-radius:50%;
+  border:1.5px solid rgba(0,0,0,.1);display:block;
+}
+
+/* ---------- warning notice ---------- */
+.warn-notice{
+  display:flex;gap:14px;align-items:flex-start;
+  background:var(--warning-bg);border:1px solid var(--warning-border);
+  border-radius:18px;padding:18px;margin-bottom:20px;
+}
+.warn-notice-icon{
+  width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  background:var(--yellow);display:grid;place-items:center;color:#000;
+}
+.warn-notice h3{
+  font-size:.95rem;font-weight:800;letter-spacing:-.015em;margin-bottom:5px;
+  color:#4a3d0d;
+}
+.warn-notice p{
+  font-size:13.5px;line-height:1.62;color:#6b5b1e;font-weight:500;
+}
+.warn-notice p strong{font-weight:800;color:#000}
+
+/* ---------- top-up steps card ---------- */
+.steps-card{
+  background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  padding:24px 20px;margin-bottom:20px;
+}
+@media(min-width:640px){.steps-card{padding:26px 24px}}
+
+.steps-head{
+  display:flex;align-items:center;gap:12px;margin-bottom:20px;
+}
+.steps-head-icon{
+  width:40px;height:40px;border-radius:12px;flex-shrink:0;
+  background:var(--yellow);display:grid;place-items:center;color:#000;
+}
+.steps-head h2{
+  font-size:1.02rem;font-weight:800;letter-spacing:-.018em;line-height:1.3;
+}
+
+.steps-list{display:grid;gap:16px}
+.step{
+  display:flex;gap:14px;align-items:flex-start;
+}
+.step-num{
+  width:28px;height:28px;border-radius:50%;flex-shrink:0;
+  background:#000;color:var(--yellow);
+  display:grid;place-items:center;
+  font-size:12.5px;font-weight:900;
+}
+.step-body h3{
+  font-size:.93rem;font-weight:800;letter-spacing:-.012em;margin-bottom:3px;
+}
+.step-body p{
+  font-size:13.5px;color:var(--ink-2);line-height:1.6;font-weight:500;
+}
+.step-body code{
+  font-family:'SF Mono',Monaco,Consolas,monospace;
+  background:var(--soft);border:1px solid var(--line);
+  padding:2px 7px;border-radius:6px;
+  font-size:12.5px;font-weight:700;color:#000;
+  letter-spacing:.02em;
+}
+
+/* ---------- amount reminder ---------- */
+.amount-reminder{
+  display:flex;gap:14px;align-items:center;justify-content:space-between;
+  background:#080808;color:#fff;border-radius:18px;
+  padding:18px 20px;margin-bottom:20px;
+}
+.ar-text{min-width:0}
+.ar-label{
+  font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.55);display:block;margin-bottom:4px;
+}
+.ar-title{
+  font-size:.95rem;font-weight:800;letter-spacing:-.012em;
+  line-height:1.35;
+}
+.ar-value{
+  font-size:1.6rem;font-weight:900;letter-spacing:-.04em;
+  color:var(--yellow);line-height:1;white-space:nowrap;flex-shrink:0;
+}
+
+/* ---------- buttons ---------- */
+.action-block{display:grid;gap:12px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  font-weight:700;font-size:15px;border-radius:999px;padding:16px 28px;
+  border:2px solid transparent;cursor:pointer;white-space:nowrap;
+  transition:transform .15s ease,box-shadow .25s ease,background .2s ease,color .2s ease;
+  text-align:center;
+}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--yellow);color:#000}
+.btn-primary:hover{background:var(--yellow-dark);box-shadow:0 10px 26px rgba(255,204,0,.45)}
+.btn-outline{background:#fff;color:#000;border-color:var(--line)}
+.btn-outline:hover{border-color:#000}
+.btn-full{width:100%}
+
+/* ---------- closing note ---------- */
+.closing{
+  text-align:center;padding:22px 4px 6px;
+  font-size:13px;color:var(--ink-2);line-height:1.7;font-weight:500;
+}
+.closing strong{color:#000;font-weight:800}
+.closing .small{
+  display:block;margin-top:10px;font-size:12px;color:var(--ink-3);
+}
+
+/* ============ FOOTER ============ */
+.site-footer{
+  background:#000;color:rgba(255,255,255,.55);
+  padding:26px 0;font-size:12.5px;text-align:center;
+}
+.site-footer .footer-brand{
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  margin-bottom:12px;
+}
+.site-footer .logo-text{color:#fff}
+.site-footer p{line-height:1.7}
+
+/* ============ MODAL ============ */
+.modal-overlay{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;
+  opacity:0;visibility:hidden;
+  transition:opacity .3s,visibility .3s;
+}
+.modal-overlay.active{opacity:1;visibility:visible}
+
+.modal-box{
+  background:#fff;
+  width:100%;max-width:420px;
+  border-radius:24px;
+  padding:28px 24px 24px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  transform:translateY(16px) scale(.97);
+  transition:transform .3s cubic-bezier(.22,1,.36,1);
+  box-shadow:0 30px 70px rgba(0,0,0,.3);
+}
+.modal-overlay.active .modal-box{transform:translateY(0) scale(1)}
+.modal-box::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:5px;
+  background:var(--yellow);
+}
+
+.modal-icon{
+  width:64px;height:64px;border-radius:50%;
+  background:rgba(255,204,0,.18);color:#000;
+  display:grid;place-items:center;margin:0 auto 16px;
+}
+.modal-box h3{
+  font-size:1.2rem;font-weight:900;letter-spacing:-.022em;
+  line-height:1.25;margin-bottom:10px;
+  color:#000;
+}
+.modal-box > p{
+  font-size:14px;color:var(--ink-2);line-height:1.6;
+  font-weight:500;margin-bottom:16px;
+}
+.modal-box > p strong{
+  color:#000;font-weight:800;
+}
+
+.modal-note{
+  display:flex;gap:12px;align-items:flex-start;
+  background:var(--warning-bg);border:1px solid var(--warning-border);
+  border-radius:14px;padding:14px 15px;
+  text-align:left;margin-bottom:14px;
+}
+.modal-note-icon{
+  width:30px;height:30px;border-radius:50%;flex-shrink:0;
+  background:var(--yellow);display:grid;place-items:center;color:#000;
+}
+.modal-note p{
+  font-size:12.5px;line-height:1.55;color:#6b5b1e;font-weight:600;
+}
+.modal-note p strong{font-weight:800;color:#000}
+
+.modal-warning{
+  font-size:12.5px;color:#b91c1c;font-weight:700;
+  line-height:1.5;margin-bottom:18px;
+  padding:0 4px;
+}
+
+.modal-actions{display:grid;gap:10px}
+
+.modal-btn{
+  padding:14px 20px;
+  border:none;border-radius:999px;
+  font-family:inherit;font-weight:800;font-size:14.5px;
+  cursor:pointer;
+  transition:transform .15s,background .2s,box-shadow .25s,opacity .2s;
+  text-align:center;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+}
+.modal-btn:active{transform:scale(.97)}
+.modal-btn.primary{
+  background:var(--yellow);color:#000;
+}
+.modal-btn.primary:hover:not(:disabled){
+  background:var(--yellow-dark);
+  box-shadow:0 10px 24px rgba(255,204,0,.4);
+}
+.modal-btn.primary:disabled{
+  opacity:.7;cursor:not-allowed;
+}
+.modal-btn.secondary{
+  background:#f3f4f6;color:#374151;
+}
+.modal-btn.secondary:hover{
+  background:#e5e7eb;
+}
+
+/* ============================================================
+   NARROW-SCREEN OPTIMISATIONS
+   ============================================================ */
+@media (max-width:430px){
+  .wrap{padding:0 16px}
+  .site-header{padding:14px 0}
+  .warn-hero{padding:42px 0 46px}
+  .warn-icon{width:76px;height:76px;margin-bottom:20px}
+  .warn-icon svg{width:34px;height:34px}
+
+  .page{padding:26px 0 52px}
+  .deposit-card{padding:22px 18px;border-radius:18px;margin-bottom:16px}
+  .dc-amount{margin-bottom:8px}
+  .dc-sub{font-size:13px}
+  .dc-divider{margin:20px 0}
+  .dc-device{width:46px;height:90px}
+  .dc-info h3{font-size:.94rem}
+
+  .warn-notice{padding:16px 15px;gap:12px;border-radius:16px;margin-bottom:16px}
+  .warn-notice-icon{width:34px;height:34px}
+  .warn-notice h3{font-size:.9rem}
+  .warn-notice p{font-size:13px}
+
+  .steps-card{padding:20px 16px;border-radius:18px;margin-bottom:16px}
+  .steps-head{gap:10px;margin-bottom:18px}
+  .steps-head-icon{width:36px;height:36px;border-radius:11px}
+  .steps-head h2{font-size:.98rem}
+  .step-num{width:26px;height:26px;font-size:12px}
+  .step-body h3{font-size:.9rem}
+  .step-body p{font-size:13px}
+
+  .amount-reminder{padding:16px 18px;border-radius:16px;margin-bottom:16px;gap:12px}
+  .ar-value{font-size:1.42rem}
+  .ar-title{font-size:.9rem}
+
+  .btn{padding:15px 24px;font-size:14.5px}
+  .closing{font-size:12.5px;padding:18px 2px 4px}
+
+  .modal-box{padding:24px 18px 20px;border-radius:20px}
+  .modal-icon{width:56px;height:56px;margin-bottom:14px}
+  .modal-box h3{font-size:1.1rem}
+  .modal-box > p{font-size:13.5px}
+  .modal-note{padding:12px 13px;gap:10px}
+  .modal-note p{font-size:12px}
+  .modal-note-icon{width:28px;height:28px}
+  .modal-warning{font-size:12px}
+  .modal-btn{padding:13px 18px;font-size:14px}
+}
+
+@media (max-width:360px){
+  .wrap{padding:0 13px}
+  .logo-text{font-size:15px}
+  .logo-mark{font-size:13px;padding:5px 10px}
+  .warn-hero{padding:36px 0 40px}
+  .warn-icon{width:68px;height:68px;margin-bottom:17px}
+  .warn-icon svg{width:30px;height:30px}
+
+  .page{padding:22px 0 46px}
+  .deposit-card{padding:20px 15px;border-radius:16px}
+  .dc-amount{margin-bottom:7px}
+  .dc-sub{font-size:12.5px}
+  .dc-device{width:42px;height:82px}
+  .dc-info h3{font-size:.9rem}
+  .dc-meta{font-size:12px}
+
+  .warn-notice{padding:14px 13px}
+  .warn-notice p{font-size:12.5px}
+
+  .steps-card{padding:18px 14px}
+  .steps-head h2{font-size:.94rem}
+  .step-body h3{font-size:.88rem}
+  .step-body p{font-size:12.5px}
+  .step-body code{font-size:12px;padding:2px 6px}
+
+  .amount-reminder{padding:14px 16px}
+  .ar-value{font-size:1.32rem}
+  .ar-label{font-size:10px}
+  .ar-title{font-size:.86rem}
+
+  .btn{padding:14px 20px;font-size:14px}
+  .closing{font-size:12px}
+
+  .modal-box{padding:20px 15px 18px;border-radius:18px}
+  .modal-icon{width:50px;height:50px;margin-bottom:12px}
+  .modal-box h3{font-size:1.02rem}
+  .modal-box > p{font-size:13px}
+  .modal-note p{font-size:11.5px}
+  .modal-warning{font-size:11.5px}
+  .modal-btn{padding:12px 16px;font-size:13.5px}
+}
+
+@media (max-width:320px){
+  .wrap{padding:0 11px}
+  .deposit-card{padding:18px 13px}
+  .steps-card{padding:16px 12px}
+  .dc-device{width:38px;height:76px}
+  .dc-info h3{font-size:.86rem}
+  .ar-value{font-size:1.22rem}
+  .btn{padding:13px 18px;font-size:13.5px}
+  .logo-text{font-size:14px}
+  .modal-box{padding:18px 13px 16px}
+  .modal-box h3{font-size:.96rem}
+  .modal-box > p{font-size:12.5px}
+  .modal-btn{padding:11px 14px;font-size:13px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .warn-icon{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="wrap header-inner">
+    <div class="logo">
+      <span class="logo-mark">MTN</span>
+      <span class="logo-text">PhoneFlex</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="warn-hero">
+  <div class="wrap warn-inner">
+    <div class="warn-icon">
+      <svg width="38" height="38" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 9v4"/>
+        <path d="M12 17h.01"/>
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+      </svg>
+    </div>
+
+    <h1>Your MoMo balance is too low</h1>
+    <p>
+      To continue with this order, you need to have the full deposit amount in your
+      MTN MoMo wallet. Top up your wallet and try again — everything else is ready.
+    </p>
+  </div>
+</section>
+
+<!-- ============ MAIN ============ -->
+<main class="page">
+  <div class="wrap">
+
+    <!-- DEPOSIT CARD -->
+    <section class="deposit-card">
+      <span class="dc-label">Deposit required in your MoMo wallet</span>
+      <div class="dc-amount" id="depositAmount">K—</div>
+      <p class="dc-sub">
+        Make sure your MTN MoMo wallet shows at least this amount before you
+        try again. The deposit is deducted only after your order is verified.
+      </p>
+
+      <div class="dc-divider"></div>
+
+      <!-- Selected phone -->
+      <div class="dc-phone">
+        <div class="dc-device" aria-hidden="true">
+          <div class="dc-screen" id="phoneBrand">MTN</div>
+        </div>
+        <div class="dc-info">
+          <h3 id="phoneName">Selected phone</h3>
+          <p class="dc-meta" id="phoneSpecs">—</p>
+          <span class="dc-colour" id="phoneColourWrap" hidden>
+            <i id="phoneColourDot"></i>
+            <span id="phoneColourName">—</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- WARNING NOTICE -->
+    <div class="warn-notice">
+      <span class="warn-notice-icon">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/>
+          <line x1="12" y1="8" x2="12" y2="12.5"/>
+          <line x1="12" y1="16" x2="12" y2="16"/>
+        </svg>
+      </span>
+      <div>
+        <h3>Why did this happen?</h3>
+        <p>
+          We checked your MoMo wallet and found that the balance was
+          <strong>not enough to cover the deposit</strong>. Your order has not been
+          placed and no money has been deducted from your wallet.
+        </p>
+      </div>
+    </div>
+
+    <!-- AMOUNT REMINDER -->
+    <div class="amount-reminder">
+      <div class="ar-text">
+        <span class="ar-label">Top up to at least</span>
+        <div class="ar-title">Deposit amount for your selected phone</div>
+      </div>
+      <strong class="ar-value" id="reminderAmount">K—</strong>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="action-block">
+      <button type="button" class="btn btn-primary btn-full" id="tryAgainBtn">
+        Try again
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 4 23 10 17 10"/>
+          <path d="M20.5 15a9 9 0 1 1-2.1-9.4L23 10"/>
+        </svg>
+      </button>
+      
+    </div>
+
+    <!-- CLOSING -->
+    <p class="closing">
+      Thank you for choosing <strong>MTN PhoneFlex</strong>.
+      <span class="small">
+        Your details are safe. Nothing has been charged to your MoMo wallet.
+      </span>
+    </p>
+
+  </div>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-brand">
+      <span class="logo-mark">MTN</span>
+      <span class="logo-text">PhoneFlex</span>
+    </div>
+    <p>
+      © 2025 MTN Zambia. All rights reserved.<br>
+      Demo concept — not a live financial service.
+    </p>
+  </div>
+</footer>
+
+<!-- ============ CONFIRMATION MODAL ============ -->
+<div class="modal-overlay" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+  <div class="modal-box">
+    <div class="modal-icon">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+        <line x1="12" y1="17" x2="12" y2="17"/>
+      </svg>
+    </div>
+
+    <h3 id="modalTitle">Confirm your deposit</h3>
+    <p>
+      Have you topped up your MTN MoMo wallet with at least
+      <strong id="modalAmount">K—</strong> so it covers the deposit for
+      <strong id="modalPhone">your phone</strong>?
+    </p>
+
+    <div class="modal-note">
+      <span class="modal-note-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6l8-4z"/>
+          <polyline points="9 12 11.5 14.5 16 10"/>
+        </svg>
+      </span>
+      <p>
+        <strong>Security check — not a fee.</strong>
+        This deposit confirms your wallet is active and ready. It is only
+        deducted once your order is verified.
+      </p>
+    </div>
+
+    <p class="modal-warning">
+      ⚠️ If you have not topped up yet, your application will be declined again.
+    </p>
+
+    <div class="modal-actions">
+      <button type="button" class="modal-btn primary" id="confirmDepositBtn">
+        Yes, I have topped up
+      </button>
+      <button type="button" class="modal-btn secondary" id="closeModalBtn">
+        No, I'll top up later
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ============================================================
+     FALLBACK (in case the user landed here directly)
+     ============================================================ */
+  var FALLBACK_ORDER = {
+    name: 'Samsung Galaxy A16',
+    brand: 'SAMSUNG',
+    specs: '6.7" · 8GB · 128GB · AMOLED',
+    price: 3389,
+    deposit: 279,
+    daily: 17,
+    colour: '',
+    colourHex: ''
+  };
+
+  /* ---------- Helpers ---------- */
+  function formatK(n) {
+    return 'K' + Number(n).toLocaleString('en-ZM');
+  }
+
+  function read(key, fallback) {
+    try {
+      var raw = localStorage.getItem(key);
+      if (!raw) return fallback;
+      var parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== 'object') return fallback;
+      return parsed;
+    } catch (e) {
+      return fallback;
+    }
+  }
+
+  /* ============================================================
+     LOAD ORDER + DEPOSIT
+     ============================================================ */
+  var order = read('phoneflex_order', FALLBACK_ORDER);
+
+  var depositValue = 0;
+  try {
+    var standalone = Number(localStorage.getItem('phoneflex_deposit'));
+    if (standalone && standalone > 0) depositValue = standalone;
+  } catch (e) { /* ignore */ }
+
+  if (!depositValue) {
+    depositValue = Number(order.deposit) || FALLBACK_ORDER.deposit;
+  }
+
+  /* ============================================================
+     RENDER MAIN PAGE
+     ============================================================ */
+  var depositFormatted = formatK(depositValue);
+
+  document.getElementById('depositAmount').textContent  = depositFormatted;
+  document.getElementById('reminderAmount').textContent = depositFormatted;
+
+  document.getElementById('phoneName').textContent  = order.name  || FALLBACK_ORDER.name;
+  document.getElementById('phoneSpecs').textContent = order.specs || FALLBACK_ORDER.specs;
+  document.getElementById('phoneBrand').textContent = order.brand || 'MTN';
+
+  if (order.colour) {
+    document.getElementById('phoneColourWrap').hidden = false;
+    document.getElementById('phoneColourName').textContent = order.colour;
+    if (order.colourHex) {
+      document.getElementById('phoneColourDot').style.background = order.colourHex;
+    }
+  }
+
+  /* ============================================================
+     MODAL LOGIC
+     ============================================================ */
+  var modal            = document.getElementById('confirmModal');
+  var tryAgainBtn      = document.getElementById('tryAgainBtn');
+  var closeModalBtn    = document.getElementById('closeModalBtn');
+  var confirmDepositBtn = document.getElementById('confirmDepositBtn');
+  var modalAmount      = document.getElementById('modalAmount');
+  var modalPhone       = document.getElementById('modalPhone');
+
+  /* Fill modal values dynamically */
+  modalAmount.textContent = depositFormatted;
+  modalPhone.textContent  = order.name || FALLBACK_ORDER.name;
+
+  function openModal() {
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(function () {
+      modal.classList.add('active');
+    });
+  }
+
+  function closeModal() {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+    setTimeout(function () {
+      modal.hidden = true;
+      /* Reset the confirm button in case it was left disabled */
+      confirmDepositBtn.disabled = false;
+      confirmDepositBtn.textContent = 'Yes, I have topped up';
+    }, 300);
+  }
+
+  /* Open modal when the user taps Try again */
+  tryAgainBtn.addEventListener('click', openModal);
+
+  /* Close modal handlers */
+  closeModalBtn.addEventListener('click', closeModal);
+
+  modal.addEventListener('click', function (e) {
+    if (e.target === modal) closeModal();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+  });
+
+  /* User confirms they've topped up → go back to address page */
+  confirmDepositBtn.addEventListener('click', function () {
+    confirmDepositBtn.disabled = true;
+    confirmDepositBtn.textContent = 'Taking you back…';
+
+    setTimeout(function () {
+      window.location.href = 'address.html';
+    }, 800);
+  });
+
+})();
+</script>
+
+</body>
+</html>

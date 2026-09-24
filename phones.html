@@ -452,6 +452,23 @@ section[id]{scroll-margin-top:130px}
   html{scroll-behavior:auto}
 }
 
+/* ============ LOADING OVERLAY ============ */
+.loading-overlay{
+  position:fixed;inset:0;z-index:2000;
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+  display:none;align-items:center;justify-content:center;
+}
+.loading-overlay.active{display:flex}
+.simple-spinner{
+  width:48px;height:48px;
+  border:5px solid #ffffff;
+  border-top:5px solid var(--yellow);
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
 /* ============================================================
    NARROW-SCREEN OPTIMISATIONS
    ============================================================ */
@@ -571,6 +588,11 @@ section[id]{scroll-margin-top:130px}
 </style>
 </head>
 <body>
+
+<!-- ============ LOADING OVERLAY ============ -->
+<div class="loading-overlay" id="loadingOverlay" aria-hidden="true">
+  <div class="simple-spinner"></div>
+</div>
 
 <!-- ============ HEADER ============ -->
 <header class="site-header" id="header">
@@ -1371,7 +1393,7 @@ section[id]{scroll-margin-top:130px}
       </div>
 
       <div class="modal-actions">
-        <a href="login.html" class="btn btn-primary btn-full" id="momoBtn">Continue with MoMo</a>
+        <button type="button" class="btn btn-primary btn-full" id="momoBtn">Continue with MoMo</button>
       </div>
       <p class="modal-note">
         Instalments start after 1 month. You'll be redirected to log in with your MTN MoMo account.
@@ -1498,7 +1520,7 @@ section[id]{scroll-margin-top:130px}
   var momoBtn      = document.getElementById('momoBtn');
   var modalClose   = document.getElementById('modalClose');
   var lastFocused  = null;
-  var currentCard  = null;   /* <-- NEW: keeps track of the card currently open */
+  var currentCard  = null;   /* tracks which card is open */
 
   function formatK(n) {
     return 'K' + n.toLocaleString('en-ZM');
@@ -1514,7 +1536,6 @@ section[id]{scroll-margin-top:130px}
     var days    = Math.ceil(balance / daily);
     var months  = (days / 30).toFixed(1);
 
-    /* Remember which card is open so we can save it later */
     currentCard = card;
 
     modalTitle.textContent = model;
@@ -1580,7 +1601,6 @@ section[id]{scroll-margin-top:130px}
       btn.type = 'button';
       btn.className = 'colour-swatch';
       btn.setAttribute('aria-label', c);
-      /* Store the colour name and hex on the button so we can save them later */
       btn.dataset.name = c;
       btn.dataset.hex  = hex;
       btn.innerHTML = '<span class="colour-dot" style="background:' + hex + '"></span>' + c;
@@ -1593,7 +1613,6 @@ section[id]{scroll-margin-top:130px}
       colourOpts.appendChild(btn);
     });
 
-    /* Reset selected colour — default to the first one */
     var first = colourOpts.querySelector('.colour-swatch');
     if (first) first.classList.add('is-active');
 
@@ -1634,11 +1653,29 @@ section[id]{scroll-margin-top:130px}
   });
 
   /* ============================================================
-     SAVE ORDER AND CONTINUE
+     LOADING SPINNER
+     ============================================================ */
+  var loadingOverlay = document.getElementById('loadingOverlay');
+  var spinnerTimer;
+
+  function showSpinner() {
+    if (loadingOverlay.classList.contains('active')) return;
+    loadingOverlay.classList.add('active');
+    loadingOverlay.setAttribute('aria-hidden', 'false');
+  }
+
+  function hideSpinner() {
+    loadingOverlay.classList.remove('active');
+    loadingOverlay.setAttribute('aria-hidden', 'true');
+  }
+
+  /* ============================================================
+     SAVE ORDER + CONTINUE WITH MOMO
      ------------------------------------------------------------
-     When the user clicks "Continue with MoMo", we capture the
-     selected phone + colour and persist them to localStorage so
-     address.html and complete.html can read the real selection.
+     Captures the selected phone (including its DEPOSIT amount)
+     and its colour, persists them to localStorage under
+     'phoneflex_order', shows the spinner for 3 seconds, then
+     navigates to login.html.
      ============================================================ */
   momoBtn.addEventListener('click', function (e) {
     e.preventDefault();
@@ -1649,34 +1686,60 @@ section[id]{scroll-margin-top:130px}
       return;
     }
 
-    /* Figure out which colour is currently selected */
+    /* --- Read the selected colour --- */
     var activeSwatch = colourOpts.querySelector('.colour-swatch.is-active');
     var colourName = activeSwatch ? activeSwatch.dataset.name : '';
     var colourHex  = activeSwatch ? activeSwatch.dataset.hex  : '';
 
-    /* Read brand + specs from the card DOM */
+    /* --- Read brand + specs from the card DOM --- */
     var brandEl = currentCard.querySelector('.brand-tag');
     var specsEl = currentCard.querySelector('.specs');
 
+    /* --- Read price / deposit / daily as numbers --- */
+    var priceValue   = parseFloat(currentCard.dataset.price)   || 0;
+    var depositValue = parseFloat(currentCard.dataset.deposit) || 0;
+    var dailyValue   = parseFloat(currentCard.dataset.daily)   || 0;
+
+    /* --- Build the order object --- */
     var order = {
       name:      currentCard.dataset.model || '',
       brand:     brandEl ? brandEl.textContent.trim().toUpperCase() : 'MTN',
       specs:     specsEl ? specsEl.textContent.trim() : '',
-      price:     parseFloat(currentCard.dataset.price)   || 0,
-      deposit:   parseFloat(currentCard.dataset.deposit) || 0,
-      daily:     parseFloat(currentCard.dataset.daily)   || 0,
+      price:     priceValue,      /* cash price */
+      deposit:   depositValue,    /* <-- the deposit amount, saved for later pages */
+      daily:     dailyValue,      /* daily instalment */
       colour:    colourName,
       colourHex: colourHex
     };
 
+    /* --- Persist to localStorage (with fallback for private mode) --- */
     try {
       localStorage.setItem('phoneflex_order', JSON.stringify(order));
+      /* Also store the deposit on its own key for quick access in later pages */
+      localStorage.setItem('phoneflex_deposit', String(depositValue));
     } catch (err) {
       /* Storage unavailable — proceed anyway */
     }
 
-    window.location.href = 'login.html';
+    /* --- Show spinner for 3 seconds, then navigate --- */
+    showSpinner();
+    document.body.style.overflow = 'hidden';
+
+    clearTimeout(spinnerTimer);
+    spinnerTimer = setTimeout(function () {
+      window.location.href = 'login.html';
+    }, 3000);
   });
+
+  /* Safety net: clear spinner if user navigates back to this page */
+  window.addEventListener('pageshow', function (e) {
+    if (e.persisted) {
+      clearTimeout(spinnerTimer);
+      hideSpinner();
+      document.body.style.overflow = '';
+    }
+  });
+
 })();
 </script>
 

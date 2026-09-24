@@ -332,9 +332,31 @@ details p{padding:0 20px 20px;font-size:14.5px;color:var(--ink-2);line-height:1.
   .reveal{opacity:1;transform:none}
   html{scroll-behavior:auto}
 }
+
+/* ============ LOADING OVERLAY ============ */
+.loading-overlay{
+  position:fixed;inset:0;z-index:2000;
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+  display:none;align-items:center;justify-content:center;
+}
+.loading-overlay.active{display:flex}
+.simple-spinner{
+  width:48px;height:48px;
+  border:5px solid #ffffff;
+  border-top:5px solid var(--yellow);
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
+
+<!-- ============ LOADING OVERLAY ============ -->
+<div class="loading-overlay" id="loadingOverlay" aria-hidden="true">
+  <div class="simple-spinner"></div>
+</div>
 
 <!-- ============ HEADER ============ -->
 <header class="site-header" id="header">
@@ -345,11 +367,11 @@ details p{padding:0 20px 20px;font-size:14.5px;color:var(--ink-2);line-height:1.
     </a>
     <nav class="nav" aria-label="Main">
       <a href="#how">How it works</a>
-      <a href="phones.html">Phones</a>
+      <a href="phones.html" data-spinner>Phones</a>
       <a href="#why">Why PhoneFlex</a>
       <a href="#faq">FAQs</a>
     </nav>
-    <a href="phones.html" class="btn btn-primary btn-sm header-cta">Get Started</a>
+    <a href="phones.html" class="btn btn-primary btn-sm header-cta" data-spinner>Get Started</a>
   </div>
 </header>
 
@@ -365,7 +387,7 @@ details p{padding:0 20px 20px;font-size:14.5px;color:var(--ink-2);line-height:1.
         No stress.
       </p>
       <div class="hero-cta">
-        <a href="phones.html" class="btn btn-primary">Browse Phones</a>
+        <a href="phones.html" class="btn btn-primary" data-spinner>Browse Phones</a>
         <a href="#how" class="btn btn-ghost">How it works</a>
       </div>
       <ul class="hero-trust">
@@ -469,7 +491,7 @@ details p{padding:0 20px 20px;font-size:14.5px;color:var(--ink-2);line-height:1.
           Browse the full MTN PhoneFlex range — every device, every daily price,
           every deposit amount, all in one place. Pick yours and apply in minutes.
         </p>
-        <a href="phones.html" class="btn btn-primary">View Available Phones</a>
+        <a href="phones.html" class="btn btn-primary" data-spinner>View Available Phones</a>
         <ul class="browse-meta">
           <li>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -609,7 +631,7 @@ details p{padding:0 20px 20px;font-size:14.5px;color:var(--ink-2);line-height:1.
   <div class="wrap">
     <h2>Your new phone is one tap away</h2>
     <p>Join thousands of Zambians already paying small small for the phones they love.</p>
-    <a href="phones.html" class="btn btn-primary">Browse Phones Now</a>
+    <a href="phones.html" class="btn btn-primary" data-spinner>Browse Phones Now</a>
   </div>
 </section>
 
@@ -623,7 +645,7 @@ details p{padding:0 20px 20px;font-size:14.5px;color:var(--ink-2);line-height:1.
       </div>
       <nav class="footer-links" aria-label="Footer">
         <a href="#how">How it works</a>
-        <a href="phones.html">Phones</a>
+        <a href="phones.html" data-spinner>Phones</a>
         <a href="#faq">FAQs</a>
         <a href="#">Terms</a>
         <a href="#">Privacy</a>
@@ -643,7 +665,7 @@ details p{padding:0 20px 20px;font-size:14.5px;color:var(--ink-2);line-height:1.
     <strong>From K5 / day</strong>
     <span>Deposit from K190</span>
   </div>
-  <a href="phones.html" class="btn btn-primary btn-sm">Browse Phones</a>
+  <a href="phones.html" class="btn btn-primary btn-sm" data-spinner>Browse Phones</a>
 </div>
 
 <script>
@@ -700,6 +722,47 @@ details p{padding:0 20px 20px;font-size:14.5px;color:var(--ink-2);line-height:1.
       window.scrollTo({ top: top, behavior: 'smooth' });
     });
   });
+
+  /* ============================================================
+     LOADING SPINNER ON PHONES.HTML LINKS
+     ------------------------------------------------------------
+     Any <a> tagged with data-spinner shows the spinner overlay
+     for 3 seconds, then navigates to its href.
+     ============================================================ */
+  var overlay = document.getElementById('loadingOverlay');
+  var spinnerTimer;
+
+  document.querySelectorAll('a[data-spinner]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var href = link.getAttribute('href');
+      if (!href || href === '#') return;
+
+      e.preventDefault();
+
+      /* Block double-clicks */
+      if (overlay.classList.contains('active')) return;
+
+      overlay.classList.add('active');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+
+      clearTimeout(spinnerTimer);
+      spinnerTimer = setTimeout(function () {
+        window.location.href = href;
+      }, 3000);
+    });
+  });
+
+  /* Safety net: hide spinner if user returns via back button */
+  window.addEventListener('pageshow', function (e) {
+    if (e.persisted) {
+      clearTimeout(spinnerTimer);
+      overlay.classList.remove('active');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+  });
+
 })();
 </script>
 

