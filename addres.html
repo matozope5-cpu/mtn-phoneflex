@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFCC00">
+<title>Delivery Details — MTN PhoneFlex</title>
+<meta name="description" content="Enter your delivery address and a reachable phone number. An MTN agent will call you to verify your details before we ship your phone.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============ BASE ============ */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --yellow:#FFCC00;
+  --yellow-dark:#E8B800;
+  --black:#000;
+  --ink:#0d0d0d;
+  --ink-2:#5a5a5a;
+  --ink-3:#8b8b8b;
+  --line:#eaeaea;
+  --soft:#fafafa;
+  --radius:20px;
+  --shadow:0 18px 44px rgba(0,0,0,.08);
+  --error:#d92d20;
+  --error-bg:#fef3f2;
+  --success:#0f7a45;
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  color:var(--ink);background:#fff;line-height:1.55;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  min-width:0;
+}
+a{text-decoration:none;color:inherit}
+button,input,select,textarea{font-family:inherit}
+img{max-width:100%;display:block}
+.wrap{width:100%;max-width:1140px;margin:0 auto;padding:0 20px}
+
+/* ============ BUTTONS ============ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-weight:700;font-size:15px;border-radius:999px;padding:14px 26px;
+  border:2px solid transparent;cursor:pointer;white-space:nowrap;
+  transition:transform .15s ease,box-shadow .25s ease,background .2s ease,color .2s ease;
+  text-align:center;
+}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--yellow);color:#000}
+.btn-primary:hover{background:var(--yellow-dark);box-shadow:0 10px 26px rgba(255,204,0,.45)}
+.btn-dark{background:#000;color:#fff}
+.btn-dark:hover{background:#1c1c1c;box-shadow:0 10px 26px rgba(0,0,0,.25)}
+.btn-full{width:100%}
+.btn-lg{padding:17px 30px;font-size:16px}
+
+/* ============ HEADER ============ */
+.site-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid transparent;transition:border-color .3s,box-shadow .3s;
+}
+.site-header.scrolled{border-bottom-color:var(--line);box-shadow:0 4px 22px rgba(0,0,0,.05)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;height:64px;gap:10px}
+.header-left{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.back-btn{
+  display:grid;place-items:center;width:38px;height:38px;flex-shrink:0;
+  border-radius:50%;background:var(--soft);border:1px solid var(--line);
+  color:#000;transition:background .2s,border-color .2s,transform .15s;
+}
+.back-btn:hover{background:#fff;border-color:#000}
+.back-btn:active{transform:scale(.94)}
+.logo{display:flex;align-items:center;gap:9px;flex-shrink:0;min-width:0}
+.logo-mark{
+  background:var(--yellow);color:#000;font-weight:900;font-style:italic;
+  font-size:14px;letter-spacing:-.4px;padding:6px 12px;border-radius:999px;
+  flex-shrink:0;
+}
+.logo-text{font-weight:800;font-size:16px;letter-spacing:-.02em;white-space:nowrap}
+.secure-tag{
+  display:none;align-items:center;gap:7px;
+  font-size:12.5px;font-weight:700;color:var(--ink-2);
+  background:var(--soft);border:1px solid var(--line);
+  padding:7px 14px;border-radius:999px;white-space:nowrap;
+}
+.secure-tag svg{color:var(--success);flex-shrink:0}
+@media(min-width:720px){.secure-tag{display:inline-flex}}
+
+/* ============ PROGRESS ============ */
+.progress{
+  position:sticky;top:64px;z-index:80;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+  padding:14px 0;
+}
+.steps-track{
+  display:flex;align-items:center;gap:0;
+  max-width:620px;margin:0 auto;
+}
+.step-item{
+  display:flex;align-items:center;gap:9px;flex:1;min-width:0;
+}
+.step-item:last-child{flex:0 0 auto}
+.step-circle{
+  width:28px;height:28px;border-radius:50%;flex-shrink:0;
+  display:grid;place-items:center;
+  font-size:12px;font-weight:900;
+  background:#f0f0f0;color:var(--ink-3);
+  border:2px solid #f0f0f0;
+  transition:background .25s,color .25s,border-color .25s;
+}
+.step-item.done .step-circle{background:#000;color:var(--yellow);border-color:#000}
+.step-item.active .step-circle{background:var(--yellow);color:#000;border-color:var(--yellow)}
+.step-name{
+  font-size:12.5px;font-weight:700;color:var(--ink-3);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.step-item.active .step-name{color:#000}
+.step-item.done .step-name{color:var(--ink-2)}
+.step-line{
+  height:2px;flex:1;background:#eee;margin:0 8px;border-radius:99px;min-width:8px;
+}
+.step-item.done + .step-line{background:#000}
+
+/* ============ LAYOUT ============ */
+.page{padding:34px 0 70px}
+.page-grid{display:grid;gap:22px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:980px){
+  .page-grid{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:30px;align-items:start}
+  .summary-col{position:sticky;top:150px}
+}
+
+/* ============ INTRO ============ */
+.intro{margin-bottom:26px}
+.intro .eyebrow{
+  display:inline-block;background:var(--yellow);color:#000;
+  font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  padding:6px 13px;border-radius:999px;margin-bottom:14px;
+}
+.intro h1{
+  font-size:clamp(1.5rem,5.4vw,2.1rem);
+  line-height:1.15;letter-spacing:-.03em;font-weight:900;
+  overflow-wrap:break-word;
+}
+.intro p{
+  margin-top:11px;color:var(--ink-2);
+  font-size:clamp(.92rem,2.2vw,1rem);line-height:1.62;max-width:560px;
+}
+
+/* ============ FORM CARD ============ */
+.form-card{
+  background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  padding:24px 20px;margin-bottom:20px;
+}
+@media(min-width:640px){.form-card{padding:28px 26px}}
+
+.card-head{
+  display:flex;align-items:center;gap:12px;margin-bottom:20px;
+}
+.card-icon{
+  width:40px;height:40px;border-radius:12px;flex-shrink:0;
+  background:var(--yellow);display:grid;place-items:center;color:#000;
+}
+.card-head h2{
+  font-size:1.05rem;font-weight:800;letter-spacing:-.018em;line-height:1.3;
+}
+.card-head p{font-size:12.5px;color:var(--ink-2);font-weight:500;margin-top:2px}
+
+/* ============ FIELDS ============ */
+.field{margin-bottom:18px}
+.field:last-child{margin-bottom:0}
+.field-row{display:grid;gap:18px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:560px){
+  .field-row.two{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+}
+
+label{
+  display:block;font-size:13.5px;font-weight:700;
+  letter-spacing:-.005em;margin-bottom:7px;color:var(--ink);
+}
+label .req{color:var(--error);margin-left:2px}
+label .opt{
+  font-weight:600;color:var(--ink-3);font-size:12px;margin-left:5px;
+}
+
+.input-shell{position:relative;display:flex;align-items:stretch}
+.prefix{
+  display:flex;align-items:center;padding:0 12px;
+  background:var(--soft);border:1.5px solid var(--line);border-right:none;
+  border-radius:13px 0 0 13px;
+  font-size:14.5px;font-weight:800;color:var(--ink-2);
+  letter-spacing:-.01em;flex-shrink:0;
+}
+.input-shell .prefix + input{border-radius:0 13px 13px 0}
+
+input[type="text"],
+input[type="tel"],
+input[type="number"],
+select,
+textarea{
+  width:100%;font-size:15px;font-weight:500;color:var(--ink);
+  background:#fff;border:1.5px solid var(--line);border-radius:13px;
+  padding:13px 15px;outline:none;
+  transition:border-color .2s,box-shadow .2s,background .2s;
+  -webkit-appearance:none;appearance:none;
+  min-width:0;
+}
+input::placeholder,textarea::placeholder{color:#a8a8a8;font-weight:500}
+input:focus,select:focus,textarea:focus{
+  border-color:var(--yellow);background:#fff;
+  box-shadow:0 0 0 3px rgba(255,204,0,.18);
+}
+textarea{resize:vertical;min-height:88px;line-height:1.55}
+
+select{
+  background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%235a5a5a' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 15px center;
+  padding-right:42px;
+  cursor:pointer;
+}
+select:invalid{color:#a8a8a8}
+
+/* error state */
+.field.has-error input,
+.field.has-error select,
+.field.has-error textarea{
+  border-color:var(--error);background:var(--error-bg);
+}
+.field.has-error input:focus,
+.field.has-error select:focus,
+.field.has-error textarea:focus{
+  box-shadow:0 0 0 3px rgba(217,45,32,.14);
+}
+.field.has-error .prefix{border-color:var(--error);background:var(--error-bg)}
+
+.err-msg{
+  display:none;align-items:center;gap:6px;
+  font-size:12.5px;font-weight:600;color:var(--error);
+  margin-top:7px;line-height:1.45;
+}
+.field.has-error .err-msg{display:flex}
+.err-msg svg{flex-shrink:0}
+
+.hint{
+  font-size:12px;color:var(--ink-3);font-weight:500;
+  margin-top:7px;line-height:1.5;
+}
+
+/* ============ VERIFY NOTICE ============ */
+.verify-notice{
+  display:flex;gap:14px;align-items:flex-start;
+  background:#fff8e1;border:1px solid #f0d78a;
+  border-radius:18px;padding:18px 18px;margin-bottom:20px;
+}
+.verify-icon{
+  width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  background:var(--yellow);display:grid;place-items:center;color:#000;
+}
+.verify-notice h3{
+  font-size:.95rem;font-weight:800;letter-spacing:-.015em;margin-bottom:5px;
+  color:#4a3d0d;
+}
+.verify-notice p{
+  font-size:13.5px;line-height:1.62;color:#6b5b1e;font-weight:500;
+}
+.verify-notice p strong{font-weight:800;color:#000}
+
+/* ============ TERMS ============ */
+.terms{
+  display:flex;gap:12px;align-items:flex-start;
+  background:#fff;border:1px solid var(--line);border-radius:18px;
+  padding:18px 18px;margin-bottom:20px;
+  transition:border-color .25s,background .25s;
+}
+.terms.has-error{border-color:var(--error);background:var(--error-bg)}
+.terms input[type="checkbox"]{
+  width:22px;height:22px;flex-shrink:0;margin-top:1px;
+  accent-color:#000;cursor:pointer;
+  -webkit-appearance:auto;appearance:auto;
+}
+.terms label{
+  margin:0;font-size:13.5px;font-weight:600;
+  color:var(--ink-2);line-height:1.6;cursor:pointer;
+}
+.terms label a{color:#000;font-weight:800;text-decoration:underline;text-underline-offset:2px}
+.terms .err-msg{display:none;margin-top:8px}
+.terms.has-error .err-msg{display:flex}
+
+/* ============ SUBMIT ============ */
+.submit-block{margin-top:4px}
+.submit-note{
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  font-size:12.5px;color:var(--ink-3);font-weight:600;
+  margin-top:14px;text-align:center;
+}
+.submit-note svg{flex-shrink:0;color:var(--success)}
+
+/* ============ SUMMARY ============ */
+.summary-card{
+  background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  padding:22px 20px;overflow:hidden;
+}
+@media(min-width:640px){.summary-card{padding:24px}}
+.summary-head{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;margin-bottom:18px;
+}
+.summary-head h2{
+  font-size:1rem;font-weight:800;letter-spacing:-.018em;
+}
+.summary-head a{
+  font-size:12.5px;font-weight:800;color:var(--ink-2);
+  text-decoration:underline;text-underline-offset:2px;
+  transition:color .2s;white-space:nowrap;
+}
+.summary-head a:hover{color:#000}
+
+.sum-phone{
+  display:flex;gap:14px;align-items:center;
+  padding-bottom:18px;border-bottom:1px solid var(--line);
+}
+.sum-device{
+  position:relative;width:50px;height:98px;flex-shrink:0;
+  border-radius:12px;background:#111;padding:4px;
+  box-shadow:0 10px 22px rgba(0,0,0,.16);
+}
+.sum-device::after{
+  content:'';position:absolute;top:7px;left:50%;transform:translateX(-50%);
+  width:13px;height:3px;border-radius:99px;background:rgba(255,255,255,.35);z-index:2;
+}
+.sum-screen{
+  width:100%;height:100%;border-radius:8px;
+  background:linear-gradient(150deg,#3a3a3a,#080808);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.9);font-size:6.5px;font-weight:800;letter-spacing:.08em;
+}
+.sum-info{min-width:0;flex:1}
+.sum-info h3{
+  font-size:.95rem;font-weight:800;letter-spacing:-.018em;line-height:1.32;
+  overflow-wrap:break-word;
+}
+.sum-meta{
+  font-size:12.5px;color:var(--ink-2);font-weight:500;margin-top:5px;
+  line-height:1.5;
+}
+.sum-colour{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12px;font-weight:700;color:var(--ink-2);margin-top:7px;
+}
+.sum-colour i{
+  width:13px;height:13px;border-radius:50%;
+  border:1.5px solid rgba(0,0,0,.1);display:block;
+}
+
+.sum-rows{margin-top:4px}
+.sum-row{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:12px 0;font-size:13.5px;
+}
+.sum-row + .sum-row{border-top:1px solid var(--line)}
+.sum-row .k{color:var(--ink-2);font-weight:600}
+.sum-row .v{font-weight:800;letter-spacing:-.015em;text-align:right;white-space:nowrap}
+.sum-row.total{
+  border-top:2px solid #000;margin-top:4px;padding-top:15px;
+}
+.sum-row.total .k{color:#000;font-weight:800;font-size:14.5px}
+.sum-row.total .v{color:#000;font-size:1.2rem}
+
+.sum-badge{
+  display:flex;align-items:center;gap:9px;
+  background:var(--soft);border:1px solid var(--line);
+  border-radius:13px;padding:12px 14px;margin-top:16px;
+  font-size:12.5px;font-weight:600;color:var(--ink-2);line-height:1.5;
+}
+.sum-badge svg{flex-shrink:0;color:var(--success)}
+
+/* ============ TOAST ============ */
+.toast{
+  position:fixed;left:50%;transform:translateX(-50%) translateY(20px);
+  bottom:24px;z-index:300;
+  background:#000;color:#fff;
+  border-radius:14px;padding:14px 20px;
+  font-size:13.5px;font-weight:700;
+  display:flex;align-items:center;gap:10px;
+  box-shadow:0 18px 40px rgba(0,0,0,.3);
+  opacity:0;visibility:hidden;
+  transition:opacity .3s,transform .3s,visibility .3s;
+  max-width:calc(100vw - 32px);
+}
+.toast.show{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.toast svg{flex-shrink:0;color:var(--yellow)}
+.toast.error svg{color:#ff6b6b}
+
+/* ============ FOOTER ============ */
+.site-footer{background:#000;color:rgba(255,255,255,.55);padding:44px 0 34px;font-size:13.5px}
+.footer-top{display:flex;flex-direction:column;gap:22px}
+.footer-brand{display:flex;align-items:center;gap:10px}
+.footer-brand .logo-text{color:#fff}
+.footer-links{display:flex;flex-wrap:wrap;gap:14px 24px;font-weight:600}
+.footer-links a:hover{color:var(--yellow)}
+.footer-bottom{
+  margin-top:26px;padding-top:22px;border-top:1px solid rgba(255,255,255,.1);
+  display:flex;flex-direction:column;gap:8px;font-size:12.5px;
+}
+@media(min-width:800px){
+  .footer-top{flex-direction:row;justify-content:space-between;align-items:center}
+  .footer-bottom{flex-direction:row;justify-content:space-between;align-items:center}
+}
+
+/* ============================================================
+   NARROW-SCREEN OPTIMISATIONS
+   ============================================================ */
+@media (max-width:430px){
+  .wrap{padding:0 16px}
+  .header-inner{height:60px}
+  .progress{top:60px;padding:12px 0}
+  .step-name{font-size:11.5px}
+  .step-circle{width:25px;height:25px;font-size:11px}
+  .step-line{margin:0 6px}
+
+  .page{padding:26px 0 56px}
+  .form-card{padding:20px 16px;border-radius:18px;margin-bottom:16px}
+  .card-head{gap:10px;margin-bottom:17px}
+  .card-icon{width:36px;height:36px;border-radius:11px}
+  .card-head h2{font-size:1rem}
+  .card-head p{font-size:12px}
+
+  label{font-size:13px;margin-bottom:6px}
+  input[type="text"],input[type="tel"],input[type="number"],select,textarea{
+    font-size:15px;padding:12px 13px;border-radius:12px;
+  }
+  .prefix{padding:0 10px;font-size:14px;border-radius:12px 0 0 12px}
+  .input-shell .prefix + input{border-radius:0 12px 12px 0}
+  .field{margin-bottom:16px}
+  .field-row{gap:16px}
+
+  .verify-notice{padding:16px 15px;gap:12px;border-radius:16px}
+  .verify-icon{width:34px;height:34px}
+  .verify-notice h3{font-size:.9rem}
+  .verify-notice p{font-size:13px}
+
+  .terms{padding:16px 15px;border-radius:16px;gap:11px}
+  .terms label{font-size:13px}
+  .terms input[type="checkbox"]{width:20px;height:20px}
+
+  .btn-lg{padding:15px 24px;font-size:15px}
+
+  .summary-card{padding:20px 16px;border-radius:18px}
+  .sum-device{width:46px;height:90px}
+  .sum-info h3{font-size:.92rem}
+  .sum-row{padding:11px 0;font-size:13px}
+  .sum-row.total .v{font-size:1.12rem}
+}
+
+@media (max-width:360px){
+  .wrap{padding:0 13px}
+  .logo-text{font-size:15px}
+  .logo-mark{font-size:13px;padding:5px 10px}
+  .back-btn{width:36px;height:36px}
+  .progress{padding:10px 0}
+  .step-name{display:none}
+  .step-item{flex:0 0 auto}
+  .step-item:last-child{flex:1}
+  .step-line{margin:0 5px}
+
+  .page{padding:22px 0 48px}
+  .form-card{padding:18px 14px;border-radius:16px}
+  .card-head h2{font-size:.96rem}
+  label{font-size:12.5px}
+  input[type="text"],input[type="tel"],input[type="number"],select,textarea{
+    font-size:14.5px;padding:11px 12px;
+  }
+  .err-msg,.hint{font-size:12px}
+  .verify-notice{padding:14px 13px}
+  .verify-notice p{font-size:12.5px}
+  .terms label{font-size:12.5px}
+  .btn-lg{padding:14px 20px;font-size:14.5px}
+  .summary-card{padding:18px 14px}
+  .sum-device{width:42px;height:82px}
+  .sum-info h3{font-size:.88rem}
+  .sum-meta{font-size:12px}
+  .sum-row{padding:10px 0;font-size:12.5px}
+  .sum-row.total .k{font-size:13.5px}
+  .sum-row.total .v{font-size:1.05rem}
+  .toast{font-size:12.5px;padding:12px 16px}
+}
+
+@media (max-width:320px){
+  .wrap{padding:0 11px}
+  .form-card{padding:16px 12px}
+  .summary-card{padding:16px 12px}
+  .sum-device{width:38px;height:76px}
+  .sum-info h3{font-size:.84rem}
+  .sum-row{font-size:12px}
+  .sum-row.total .v{font-size:1rem}
+  .logo-text{font-size:14px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header" id="header">
+  <div class="wrap header-inner">
+    <div class="header-left">
+      <a href="phones.html" class="back-btn" aria-label="Back to phones">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </a>
+      <a href="index.html" class="logo" aria-label="MTN PhoneFlex home">
+        <span class="logo-mark">MTN</span>
+        <span class="logo-text">PhoneFlex</span>
+      </a>
+    </div>
+    <span class="secure-tag">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Secure checkout
+    </span>
+  </div>
+</header>
+
+<!-- ============ PROGRESS ============ -->
+<div class="progress">
+  <div class="wrap">
+    <div class="steps-track">
+      <div class="step-item done">
+        <span class="step-circle">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </span>
+        <span class="step-name">Phone</span>
+      </div>
+      <span class="step-line"></span>
+      <div class="step-item done">
+        <span class="step-circle">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </span>
+        <span class="step-name">MoMo login</span>
+      </div>
+      <span class="step-line"></span>
+      <div class="step-item active">
+        <span class="step-circle">3</span>
+        <span class="step-name">Delivery</span>
+      </div>
+      <span class="step-line"></span>
+      <div class="step-item">
+        <span class="step-circle">4</span>
+        <span class="step-name">Complete</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PAGE ============ -->
+<main class="page">
+  <div class="wrap">
+
+    <div class="intro">
+      <span class="eyebrow">Step 3 of 4</span>
+      <h1>Where should we deliver your phone?</h1>
+      <p>
+        Fill in your delivery details below. An MTN agent will call you on the
+        number you provide to confirm everything before your phone is shipped.
+      </p>
+    </div>
+
+    <div class="page-grid">
+
+      <!-- ================= FORM COLUMN ================= -->
+      <div class="form-col">
+
+        <form id="addressForm" novalidate>
+
+          <!-- ---------- CONTACT ---------- -->
+          <section class="form-card">
+            <div class="card-head">
+              <span class="card-icon">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </span>
+              <div>
+                <h2>Your contact details</h2>
+                <p>The MTN agent will use these to reach you</p>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="fullName">Full name <span class="req">*</span></label>
+              <input type="text" id="fullName" name="fullName" placeholder="e.g. Chanda Mwansa"
+                     autocomplete="name" autocapitalize="words" spellcheck="false">
+              <span class="err-msg" id="err-fullName">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12.5"/><line x1="12" y1="16" x2="12" y2="16"/></svg>
+                Please enter your full name as it appears on your NRC.
+              </span>
+            </div>
+
+            <div class="field">
+              <label for="phone">Reachable phone number <span class="req">*</span></label>
+              <div class="input-shell">
+                <span class="prefix">+260</span>
+                <input type="tel" id="phone" name="phone" placeholder="97 123 4567"
+                       autocomplete="tel" inputmode="numeric" maxlength="13">
+              </div>
+              <p class="hint">This should be the number you are reachable on — it can be different from your MoMo number. The MTN agent will call this number.</p>
+              <span class="err-msg" id="err-phone">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12.5"/><line x1="12" y1="16" x2="12" y2="16"/></svg>
+                Enter a valid Zambian mobile number, e.g. 97 123 4567.
+              </span>
+            </div>
+
+            <div class="field">
+              <label for="altPhone">Alternative phone number <span class="opt">(optional)</span></label>
+              <div class="input-shell">
+                <span class="prefix">+260</span>
+                <input type="tel" id="altPhone" name="altPhone" placeholder="96 765 4321"
+                       autocomplete="tel" inputmode="numeric" maxlength="13">
+              </div>
+              <p class="hint">Add a backup number in case we cannot reach you on the first one.</p>
+              <span class="err-msg" id="err-altPhone">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12.5"/><line x1="12" y1="16" x2="12" y2="16"/></svg>
+                Enter a valid Zambian mobile number, or leave this blank.
+              </span>
+            </div>
+          </section>
+
+          <!-- ---------- ADDRESS ---------- -->
+          <section class="form-card">
+            <div class="card-head">
+              <span class="card-icon">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </span>
+              <div>
+                <h2>Delivery address</h2>
+                <p>Where your phone will be delivered</p>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="province">Province <span class="req">*</span></label>
+              <select id="province" name="province">
+                <option value="" selected disabled>Select your province</option>
+                <option>Central</option>
+                <option>Copperbelt</option>
+                <option>Eastern</option>
+                <option>Luapula</option>
+                <option>Lusaka</option>
+                <option>Muchinga</option>
+                <option>Northern</option>
+                <option>North-Western</option>
+                <option>Southern</option>
+                <option>Western</option>
+              </select>
+              <span class="err-msg" id="err-province">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12.5"/><line x1="12" y1="16" x2="12" y2="16"/></svg>
+                Please select your province.
+              </span>
+            </div>
+
+            <div class="field-row two">
+              <div class="field">
+                <label for="city">City / Town <span class="req">*</span></label>
+                <input type="text" id="city" name="city" placeholder="e.g. Lusaka"
+                       autocomplete="address-level2" autocapitalize="words">
+                <span class="err-msg" id="err-city">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12.5"/><line x1="12" y1="16" x2="12" y2="16"/></svg>
+                  Please enter your city or town.
+                </span>
+              </div>
+
+              <div class="field">
+                <label for="area">Area / Suburb <span class="req">*</span></label>
+                <input type="text" id="area" name="area" placeholder="e.g. Kabulonga"
+                       autocapitalize="words">
+                <span class="err-msg" id="err-area">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12.5"/><line x1="12" y1="16" x2="12" y2="16"/></svg>
+                  Please enter your area or suburb.
+                </span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="landmark">Nearest landmark <span class="opt">(optional)</span></label>
+              <input type="text" id="landmark" name="landmark"
+                     placeholder="e.g. Near Kabulonga Market"
+                     autocapitalize="sentences">
+              <p class="hint">A well-known place nearby helps our agent find you faster.</p>
+            </div>
+
+            <div class="field">
+              <label for="addressDetails">Street / house details <span class="req">*</span></label>
+              <textarea id="addressDetails" name="addressDetails"
+                        placeholder="e.g. Plot 24, Musonda Road, House 3 — green gate"
+                        autocapitalize="sentences"></textarea>
+              <p class="hint">Include your street name, plot or house number, and any directions that help.</p>
+              <span class="err-msg" id="err-addressDetails">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12.5"/><line x1="12" y1="16" x2="12" y2="16"/></svg>
+                Please enter your street and house details.
+              </span>
+            </div>
+          </section>
+
+          <!-- ---------- VERIFICATION NOTICE ---------- -->
+          <div class="verify-notice">
+            <span class="verify-icon">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </span>
+            <div>
+              <h3>An MTN agent will call you to verify</h3>
+              <p>
+                Before your phone is shipped, an MTN agent will phone you to confirm
+                your name, delivery address and order details. Please make sure the
+                number you give us is <strong>switched on and reachable</strong>.
+                Delivery will only proceed after this call is completed.
+              </p>
+            </div>
+          </div>
+
+          <!-- ---------- TERMS ---------- -->
+          <div class="terms" id="termsWrap">
+            <input type="checkbox" id="agree" name="agree">
+            <div>
+              <label for="agree">
+                I confirm the details above are correct and I agree to the
+                <a href="#">PhoneFlex Terms</a> and <a href="#">Privacy Policy</a>.
+                I understand an MTN agent will contact me to verify my order.
+              </label>
+              <span class="err-msg" id="err-agree">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12.5"/><line x1="12" y1="16" x2="12" y2="16"/></svg>
+                Please tick this box to continue.
+              </span>
+            </div>
+          </div>
+
+          <!-- ---------- SUBMIT ---------- -->
+          <div class="submit-block">
+            <button type="submit" class="btn btn-primary btn-full btn-lg" id="completeBtn">
+              Complete Order
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+            <p class="submit-note">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Your details are encrypted and safe
+            </p>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- ================= SUMMARY COLUMN ================= -->
+      <aside class="summary-col">
+        <div class="summary-card">
+          <div class="summary-head">
+            <h2>Order summary</h2>
+            <a href="phones.html">Change phone</a>
+          </div>
+
+          <div class="sum-phone">
+            <div class="sum-device" aria-hidden="true">
+              <div class="sum-screen" id="sumBrand">MTN</div>
+            </div>
+            <div class="sum-info">
+              <h3 id="sumName">Selected phone</h3>
+              <p class="sum-meta" id="sumSpecs">—</p>
+              <span class="sum-colour" id="sumColourWrap" hidden>
+                <i id="sumColourDot"></i>
+                <span id="sumColourName">—</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="sum-rows">
+            <div class="sum-row">
+              <span class="k">Cash price</span>
+              <span class="v" id="sumPrice">K—</span>
+            </div>
+            <div class="sum-row">
+              <span class="k">Deposit (pay now)</span>
+              <span class="v" id="sumDeposit">K—</span>
+            </div>
+            <div class="sum-row">
+              <span class="k">Daily instalment</span>
+              <span class="v" id="sumDaily">K—</span>
+            </div>
+            <div class="sum-row">
+              <span class="k">Plan duration</span>
+              <span class="v" id="sumDuration">—</span>
+            </div>
+            <div class="sum-row total">
+              <span class="k">Balance to pay</span>
+              <span class="v" id="sumBalance">K—</span>
+            </div>
+          </div>
+
+          <div class="sum-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6l8-4z"/><polyline points="9 12 11.5 14.5 16 10"/></svg>
+            <span>Delivery is free. Instalments start 1 month after your phone is delivered.</span>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="logo-mark">MTN</span>
+        <span class="logo-text">PhoneFlex</span>
+      </div>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="index.html">Home</a>
+        <a href="index.html#how">How it works</a>
+        <a href="index.html#faq">FAQs</a>
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 MTN Zambia. All rights reserved.</span>
+      <span>Demo concept — not a live financial service.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ TOAST ============ -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12.5"/><line x1="12" y1="16" x2="12" y2="16"/></svg>
+  <span id="toastText">Please check the highlighted fields.</span>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- Header shadow ---------- */
+  var header = document.getElementById('header');
+  function onScroll() {
+    header.classList.toggle('scrolled', (window.scrollY || window.pageYOffset) > 8);
+  }
+  var ticking = false;
+  window.addEventListener('scroll', function () {
+    if (!ticking) {
+      window.requestAnimationFrame(function () { onScroll(); ticking = false; });
+      ticking = true;
+    }
+  }, { passive: true });
+  onScroll();
+
+  /* ============================================================
+     LOAD ORDER SUMMARY FROM PREVIOUS STEP
+     ============================================================ */
+  var FALLBACK = {
+    name: 'Samsung Galaxy A16',
+    brand: 'SAMSUNG',
+    specs: '6.7" · 8GB · 128GB · AMOLED',
+    price: 3389,
+    deposit: 279,
+    daily: 17,
+    colour: '',
+    colourHex: ''
+  };
+
+  function formatK(n) {
+    return 'K' + Number(n).toLocaleString('en-ZM');
+  }
+
+  function loadOrder() {
+    var order = FALLBACK;
+    try {
+      var raw = localStorage.getItem('phoneflex_order');
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && parsed.name && parsed.price) order = parsed;
+      }
+    } catch (e) { /* ignore corrupt storage */ }
+
+    document.getElementById('sumName').textContent    = order.name;
+    document.getElementById('sumSpecs').textContent   = order.specs || '—';
+    document.getElementById('sumBrand').textContent   = order.brand || 'MTN';
+    document.getElementById('sumPrice').textContent   = formatK(order.price);
+    document.getElementById('sumDeposit').textContent = formatK(order.deposit);
+    document.getElementById('sumDaily').textContent   = formatK(order.daily) + ' / day';
+
+    var balance = order.price - order.deposit;
+    var days = Math.ceil(balance / order.daily);
+    var months = (days / 30).toFixed(1);
+
+    document.getElementById('sumBalance').textContent  = formatK(balance);
+    document.getElementById('sumDuration').textContent = days + ' days (~' + months + ' months)';
+
+    if (order.colour) {
+      document.getElementById('sumColourWrap').hidden = false;
+      document.getElementById('sumColourName').textContent = order.colour;
+      if (order.colourHex) {
+        document.getElementById('sumColourDot').style.background = order.colourHex;
+      }
+    }
+
+    return order;
+  }
+
+  var currentOrder = loadOrder();
+
+  /* ============================================================
+     TOAST
+     ============================================================ */
+  var toast = document.getElementById('toast');
+  var toastText = document.getElementById('toastText');
+  var toastTimer;
+
+  function showToast(msg, isError) {
+    toastText.textContent = msg;
+    toast.classList.toggle('error', !!isError);
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toast.classList.remove('show');
+    }, 3600);
+  }
+
+  /* ============================================================
+     VALIDATION HELPERS
+     ============================================================ */
+  function setError(id, on) {
+    var input = document.getElementById(id);
+    if (!input) return;
+    var field = input.closest('.field');
+    if (field) field.classList.toggle('has-error', !!on);
+    input.setAttribute('aria-invalid', on ? 'true' : 'false');
+  }
+
+  function clearErrorOnInput(id) {
+    var input = document.getElementById(id);
+    if (!input) return;
+    var evt = (input.tagName === 'SELECT' || input.type === 'checkbox') ? 'change' : 'input';
+    input.addEventListener(evt, function () {
+      var field = input.closest('.field');
+      if (field && field.classList.contains('has-error')) {
+        field.classList.remove('has-error');
+        input.setAttribute('aria-invalid', 'false');
+      }
+    });
+  }
+
+  ['fullName','phone','altPhone','province','city','area','addressDetails'].forEach(clearErrorOnInput);
+
+  /* ---------- Field validators ---------- */
+  function normalisePhone(v) {
+    return (v || '').replace(/[\s\-()]/g, '').replace(/^\+?260/, '').replace(/^0/, '');
+  }
+
+  function isValidZmPhone(v) {
+    var n = normalisePhone(v);
+    return /^[79]\d{8}$/.test(n);
+  }
+
+  function validateName() {
+    var v = document.getElementById('fullName').value.trim();
+    var ok = v.length >= 3 && /^[A-Za-z\u00C0-\u024F' .-]+$/.test(v) && v.indexOf(' ') !== -1;
+    setError('fullName', !ok);
+    return ok;
+  }
+
+  function validatePhone() {
+    var v = document.getElementById('phone').value.trim();
+    var ok = isValidZmPhone(v);
+    setError('phone', !ok);
+    return ok;
+  }
+
+  function validateAltPhone() {
+    var v = document.getElementById('altPhone').value.trim();
+    if (v === '') { setError('altPhone', false); return true; }
+    var ok = isValidZmPhone(v);
+    setError('altPhone', !ok);
+    return ok;
+  }
+
+  function validateProvince() {
+    var v = document.getElementById('province').value;
+    var ok = v !== '' && v !== null;
+    setError('province', !ok);
+    return ok;
+  }
+
+  function validateCity() {
+    var v = document.getElementById('city').value.trim();
+    var ok = v.length >= 2;
+    setError('city', !ok);
+    return ok;
+  }
+
+  function validateArea() {
+    var v = document.getElementById('area').value.trim();
+    var ok = v.length >= 2;
+    setError('area', !ok);
+    return ok;
+  }
+
+  function validateAddressDetails() {
+    var v = document.getElementById('addressDetails').value.trim();
+    var ok = v.length >= 10;
+    setError('addressDetails', !ok);
+    return ok;
+  }
+
+  function validateAgree() {
+    var cb = document.getElementById('agree');
+    var wrap = document.getElementById('termsWrap');
+    var ok = cb.checked;
+    wrap.classList.toggle('has-error', !ok);
+    cb.setAttribute('aria-invalid', ok ? 'false' : 'true');
+    return ok;
+  }
+
+  document.getElementById('agree').addEventListener('change', function () {
+    if (this.checked) {
+      document.getElementById('termsWrap').classList.remove('has-error');
+    }
+  });
+
+  /* ============================================================
+     SUBMIT
+     ============================================================ */
+  var form = document.getElementById('addressForm');
+  var completeBtn = document.getElementById('completeBtn');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    var checks = [
+      { ok: validateName(),           id: 'fullName' },
+      { ok: validatePhone(),          id: 'phone' },
+      { ok: validateAltPhone(),       id: 'altPhone' },
+      { ok: validateProvince(),       id: 'province' },
+      { ok: validateCity(),           id: 'city' },
+      { ok: validateArea(),           id: 'area' },
+      { ok: validateAddressDetails(), id: 'addressDetails' },
+      { ok: validateAgree(),          id: 'agree' }
+    ];
+
+    var firstBad = checks.filter(function (c) { return !c.ok; })[0];
+
+    if (firstBad) {
+      var el = document.getElementById(firstBad.id);
+      if (el) {
+        var top = el.getBoundingClientRect().top + window.pageYOffset - 160;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+        try { el.focus({ preventScroll: true }); } catch (err) { el.focus(); }
+      }
+      showToast('Please fix the highlighted fields before continuing.', true);
+      return;
+    }
+
+    /* ---------- Save address ---------- */
+    var payload = {
+      fullName:       document.getElementById('fullName').value.trim(),
+      phone:          '+260 ' + normalisePhone(document.getElementById('phone').value).replace(/(\d{2})(\d{3})(\d{4})/, '$1 $2 $3'),
+      altPhone:       document.getElementById('altPhone').value.trim()
+                        ? '+260 ' + normalisePhone(document.getElementById('altPhone').value).replace(/(\d{2})(\d{3})(\d{4})/, '$1 $2 $3')
+                        : '',
+      province:       document.getElementById('province').value,
+      city:           document.getElementById('city').value.trim(),
+      area:           document.getElementById('area').value.trim(),
+      landmark:       document.getElementById('landmark').value.trim(),
+      addressDetails: document.getElementById('addressDetails').value.trim()
+    };
+
+    try {
+      localStorage.setItem('phoneflex_address', JSON.stringify(payload));
+      localStorage.setItem('phoneflex_order', JSON.stringify(currentOrder));
+    } catch (err) { /* storage unavailable — continue anyway */ }
+
+    /* ---------- Feedback + redirect ---------- */
+    completeBtn.disabled = true;
+    completeBtn.style.opacity = '.75';
+    completeBtn.innerHTML = 'Saving your details…';
+
+    showToast('Details saved. Taking you to the final step…', false);
+
+    setTimeout(function () {
+      window.location.href = 'complete.html';
+    }, 900);
+  });
+
+  /* ============================================================
+     INPUT POLISH
+     ============================================================ */
+  /* Auto-space phone numbers as the user types */
+  ['phone', 'altPhone'].forEach(function (id) {
+    var input = document.getElementById(id);
+    input.addEventListener('input', function () {
+      var digits = input.value.replace(/\D/g, '').replace(/^260/, '').replace(/^0/, '').slice(0, 9);
+      var out = digits;
+      if (digits.length > 6) {
+        out = digits.slice(0, 2) + ' ' + digits.slice(2, 5) + ' ' + digits.slice(5);
+      } else if (digits.length > 2) {
+        out = digits.slice(0, 2) + ' ' + digits.slice(2);
+      }
+      input.value = out;
+    });
+  });
+
+  /* Block non-numeric keys on phone fields */
+  ['phone', 'altPhone'].forEach(function (id) {
+    document.getElementById(id).addEventListener('keypress', function (e) {
+      if (!/[0-9\s]/.test(e.key)) e.preventDefault();
+    });
+  });
+
+})();
+</script>
+
+</body>
+</html>

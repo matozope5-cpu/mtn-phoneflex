@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFCC00">
+<title>Order Confirmed — MTN PhoneFlex</title>
+<meta name="description" content="Your MTN PhoneFlex order has been placed successfully. An MTN agent will call you to verify your details before delivery.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============ BASE ============ */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --yellow:#FFCC00;
+  --yellow-dark:#E8B800;
+  --black:#000;
+  --ink:#0d0d0d;
+  --ink-2:#5a5a5a;
+  --ink-3:#8b8b8b;
+  --line:#eaeaea;
+  --soft:#fafafa;
+  --radius:20px;
+  --success:#0f7a45;
+  --success-bg:#e8f5ee;
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  color:var(--ink);background:#fff;line-height:1.55;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  min-width:0;
+  display:flex;flex-direction:column;min-height:100vh;
+}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+.wrap{width:100%;max-width:880px;margin:0 auto;padding:0 20px}
+
+/* ============ HEADER ============ */
+.site-header{
+  background:#fff;border-bottom:1px solid var(--line);
+  padding:16px 0;
+}
+.header-inner{display:flex;align-items:center;justify-content:center}
+.logo{display:flex;align-items:center;gap:9px}
+.logo-mark{
+  background:var(--yellow);color:#000;font-weight:900;font-style:italic;
+  font-size:14px;letter-spacing:-.4px;padding:6px 12px;border-radius:999px;
+  flex-shrink:0;
+}
+.logo-text{font-weight:800;font-size:16px;letter-spacing:-.02em;white-space:nowrap}
+
+/* ============ SUCCESS HERO ============ */
+.success-hero{
+  position:relative;overflow:hidden;
+  background:#080808;color:#fff;
+  padding:48px 0 52px;text-align:center;
+}
+.success-hero::before{
+  content:'';position:absolute;top:-280px;left:50%;transform:translateX(-50%);
+  width:640px;height:640px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,204,0,.22),transparent 64%);
+  pointer-events:none;
+}
+.success-inner{position:relative;z-index:2;max-width:560px;margin:0 auto}
+
+.check-ring{
+  width:88px;height:88px;border-radius:50%;
+  background:var(--yellow);color:#000;
+  display:grid;place-items:center;margin:0 auto 24px;
+  box-shadow:0 0 0 10px rgba(255,204,0,.12),0 22px 44px rgba(255,204,0,.25);
+  animation:pop .55s cubic-bezier(.22,1,.36,1) both;
+}
+.check-ring svg{display:block}
+.check-ring svg path{
+  stroke-dasharray:44;stroke-dashoffset:44;
+  animation:draw .5s ease .3s forwards;
+}
+@keyframes pop{
+  0%{transform:scale(.4);opacity:0}
+  60%{transform:scale(1.08)}
+  100%{transform:scale(1);opacity:1}
+}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+.success-hero h1{
+  font-size:clamp(1.5rem,5.6vw,2.2rem);
+  line-height:1.16;letter-spacing:-.032em;font-weight:900;
+  overflow-wrap:break-word;
+}
+.success-hero p{
+  margin-top:13px;color:rgba(255,255,255,.7);
+  font-size:clamp(.92rem,2.2vw,1.02rem);line-height:1.62;
+}
+.ref-chip{
+  display:inline-flex;align-items:center;gap:9px;
+  margin-top:22px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,204,0,.32);
+  padding:9px 17px;border-radius:999px;
+  font-size:13px;font-weight:700;letter-spacing:.01em;
+  color:rgba(255,255,255,.82);
+  max-width:100%;
+}
+.ref-chip span{
+  color:var(--yellow);font-weight:900;letter-spacing:.05em;
+  overflow-wrap:anywhere;
+}
+.ref-chip svg{flex-shrink:0;color:var(--yellow)}
+
+/* ============ MAIN ============ */
+.page{flex:1;padding:34px 0 64px}
+
+/* alert strip */
+.call-strip{
+  display:flex;gap:14px;align-items:flex-start;
+  background:#fff8e1;border:1px solid #f0d78a;
+  border-radius:18px;padding:18px;margin-bottom:22px;
+}
+.call-icon{
+  width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  background:var(--yellow);display:grid;place-items:center;color:#000;
+}
+.call-strip h2{
+  font-size:.95rem;font-weight:800;letter-spacing:-.015em;
+  margin-bottom:5px;color:#4a3d0d;
+}
+.call-strip p{
+  font-size:13.5px;line-height:1.62;color:#6b5b1e;font-weight:500;
+}
+.call-strip p strong{font-weight:800;color:#000}
+
+/* cards */
+.card{
+  background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  padding:22px 20px;margin-bottom:18px;
+}
+@media(min-width:640px){.card{padding:26px 24px}}
+
+.card-head{
+  display:flex;align-items:center;gap:12px;margin-bottom:18px;
+}
+.card-icon{
+  width:38px;height:38px;border-radius:12px;flex-shrink:0;
+  background:var(--yellow);display:grid;place-items:center;color:#000;
+}
+.card-head h2{
+  font-size:1.02rem;font-weight:800;letter-spacing:-.018em;line-height:1.3;
+}
+
+/* ---------- phone block ---------- */
+.phone-block{
+  display:flex;gap:16px;align-items:center;
+  padding-bottom:18px;border-bottom:1px solid var(--line);
+}
+.device{
+  position:relative;width:54px;height:106px;flex-shrink:0;
+  border-radius:13px;background:#111;padding:4px;
+  box-shadow:0 10px 22px rgba(0,0,0,.16);
+}
+.device::after{
+  content:'';position:absolute;top:8px;left:50%;transform:translateX(-50%);
+  width:14px;height:3px;border-radius:99px;background:rgba(255,255,255,.35);z-index:2;
+}
+.device-screen{
+  width:100%;height:100%;border-radius:9px;
+  background:linear-gradient(150deg,#3a3a3a,#080808);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.9);font-size:6.5px;font-weight:800;
+  letter-spacing:.08em;text-align:center;padding:0 3px;overflow:hidden;
+}
+.phone-info{flex:1;min-width:0}
+.phone-info h3{
+  font-size:1.02rem;font-weight:800;letter-spacing:-.02em;line-height:1.3;
+  overflow-wrap:break-word;
+}
+.phone-specs{
+  font-size:12.5px;color:var(--ink-2);font-weight:500;margin-top:5px;line-height:1.5;
+}
+.phone-colour{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:12.5px;font-weight:700;color:var(--ink-2);margin-top:9px;
+}
+.phone-colour i{
+  width:14px;height:14px;border-radius:50%;
+  border:1.5px solid rgba(0,0,0,.1);display:block;flex-shrink:0;
+}
+
+/* ---------- rows ---------- */
+.rows{margin-top:2px}
+.row{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:16px;padding:13px 0;font-size:14px;
+}
+.row + .row{border-top:1px solid var(--line)}
+.row .k{color:var(--ink-2);font-weight:600;flex-shrink:0}
+.row .v{
+  font-weight:800;letter-spacing:-.012em;text-align:right;
+  overflow-wrap:anywhere;min-width:0;
+}
+.row.total{border-top:2px solid #000;margin-top:4px;padding-top:16px}
+.row.total .k{color:#000;font-weight:800;font-size:14.5px}
+.row.total .v{color:#000;font-size:1.22rem}
+
+/* deposit highlight */
+.deposit-box{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  background:var(--yellow);border-radius:15px;
+  padding:16px 18px;margin-top:18px;
+}
+.deposit-box .d-label{
+  font-size:11px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;
+  color:rgba(0,0,0,.55);display:block;margin-bottom:2px;
+}
+.deposit-box .d-note{
+  font-size:12.5px;font-weight:700;color:rgba(0,0,0,.7);
+}
+.deposit-box .d-value{
+  font-size:1.5rem;font-weight:900;letter-spacing:-.038em;line-height:1;
+  white-space:nowrap;
+}
+
+/* ---------- address ---------- */
+.addr-name{
+  font-size:.98rem;font-weight:800;letter-spacing:-.015em;margin-bottom:10px;
+}
+.addr-lines{
+  font-size:14px;color:var(--ink-2);font-weight:500;line-height:1.7;
+}
+.addr-lines span{display:block}
+.addr-contact{
+  display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;
+  padding-top:16px;border-top:1px solid var(--line);
+}
+.contact-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--soft);border:1px solid var(--line);
+  border-radius:999px;padding:9px 15px;
+  font-size:13px;font-weight:700;letter-spacing:-.005em;
+  max-width:100%;
+}
+.contact-pill svg{flex-shrink:0;color:var(--ink-2)}
+.contact-pill span{overflow-wrap:anywhere}
+.contact-pill.primary{
+  background:rgba(255,204,0,.16);border-color:rgba(255,204,0,.5);
+}
+.contact-pill.primary svg{color:#000}
+
+/* ---------- next steps ---------- */
+.steps-list{display:grid;gap:14px}
+.step{
+  display:flex;gap:14px;align-items:flex-start;
+}
+.step-num{
+  width:28px;height:28px;border-radius:50%;flex-shrink:0;
+  background:#000;color:var(--yellow);
+  display:grid;place-items:center;
+  font-size:12.5px;font-weight:900;
+}
+.step-body h3{
+  font-size:.93rem;font-weight:800;letter-spacing:-.012em;margin-bottom:3px;
+}
+.step-body p{
+  font-size:13.5px;color:var(--ink-2);line-height:1.6;font-weight:500;
+}
+
+/* ---------- reassurance ---------- */
+.reassure{
+  display:flex;gap:13px;align-items:flex-start;
+  background:var(--success-bg);border:1px solid #c7e6d5;
+  border-radius:16px;padding:16px 17px;margin-bottom:18px;
+}
+.reassure-icon{
+  width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  background:var(--success);display:grid;place-items:center;color:#fff;
+}
+.reassure p{
+  font-size:13.5px;line-height:1.62;color:#155c39;font-weight:600;
+}
+
+/* ---------- closing note ---------- */
+.closing{
+  text-align:center;padding:26px 4px 6px;
+  font-size:13.5px;color:var(--ink-2);line-height:1.7;font-weight:500;
+}
+.closing strong{color:#000;font-weight:800}
+.closing .small{
+  display:block;margin-top:10px;font-size:12.5px;color:var(--ink-3);
+}
+
+/* ============ FOOTER ============ */
+.site-footer{
+  background:#000;color:rgba(255,255,255,.55);
+  padding:26px 0;font-size:12.5px;text-align:center;
+}
+.site-footer .footer-brand{
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  margin-bottom:12px;
+}
+.site-footer .logo-text{color:#fff}
+.site-footer p{line-height:1.7}
+
+/* ============================================================
+   NARROW-SCREEN OPTIMISATIONS
+   ============================================================ */
+@media (max-width:430px){
+  .wrap{padding:0 16px}
+  .site-header{padding:14px 0}
+  .success-hero{padding:40px 0 44px}
+  .check-ring{width:76px;height:76px;margin-bottom:20px}
+  .check-ring svg{width:34px;height:34px}
+  .ref-chip{font-size:12.5px;padding:8px 15px;gap:8px}
+
+  .page{padding:26px 0 52px}
+  .card{padding:20px 16px;border-radius:18px;margin-bottom:16px}
+  .card-head{gap:10px;margin-bottom:16px}
+  .card-icon{width:34px;height:34px;border-radius:11px}
+  .card-head h2{font-size:.97rem}
+
+  .call-strip{padding:16px 15px;gap:12px;border-radius:16px;margin-bottom:18px}
+  .call-icon{width:34px;height:34px}
+  .call-strip h2{font-size:.9rem}
+  .call-strip p{font-size:13px}
+
+  .phone-block{gap:14px;padding-bottom:16px}
+  .device{width:48px;height:94px;border-radius:12px;padding:3.5px}
+  .device-screen{font-size:6px;border-radius:8px}
+  .phone-info h3{font-size:.96rem}
+  .phone-specs{font-size:12px}
+
+  .row{padding:12px 0;font-size:13.5px;gap:12px}
+  .row.total .k{font-size:14px}
+  .row.total .v{font-size:1.14rem}
+
+  .deposit-box{padding:14px 16px;border-radius:14px;gap:12px}
+  .deposit-box .d-value{font-size:1.36rem}
+  .deposit-box .d-note{font-size:12px}
+
+  .addr-name{font-size:.94rem}
+  .addr-lines{font-size:13.5px}
+  .contact-pill{font-size:12.5px;padding:8px 13px;gap:7px}
+
+  .step-num{width:26px;height:26px;font-size:12px}
+  .step-body h3{font-size:.9rem}
+  .step-body p{font-size:13px}
+
+  .reassure{padding:15px 15px;gap:11px;border-radius:15px}
+  .reassure p{font-size:13px}
+  .closing{font-size:13px;padding:22px 2px 4px}
+}
+
+@media (max-width:360px){
+  .wrap{padding:0 13px}
+  .logo-text{font-size:15px}
+  .logo-mark{font-size:13px;padding:5px 10px}
+  .success-hero{padding:34px 0 38px}
+  .check-ring{width:68px;height:68px;margin-bottom:17px}
+  .check-ring svg{width:30px;height:30px}
+  .ref-chip{font-size:12px;padding:7px 13px;flex-wrap:wrap;justify-content:center}
+
+  .page{padding:22px 0 46px}
+  .card{padding:18px 14px;border-radius:16px}
+  .card-head h2{font-size:.94rem}
+
+  .call-strip{padding:14px 13px}
+  .call-strip p{font-size:12.5px}
+
+  .device{width:44px;height:86px}
+  .phone-info h3{font-size:.92rem}
+  .phone-specs{font-size:11.5px}
+
+  .row{padding:11px 0;font-size:13px}
+  .row .k{font-size:12.5px}
+  .row.total .v{font-size:1.06rem}
+
+  .deposit-box{padding:13px 14px}
+  .deposit-box .d-value{font-size:1.26rem}
+  .deposit-box .d-label{font-size:10px}
+
+  .addr-lines{font-size:13px}
+  .contact-pill{font-size:12px;padding:7px 12px}
+
+  .step-body h3{font-size:.88rem}
+  .step-body p{font-size:12.5px}
+  .reassure p{font-size:12.5px}
+  .closing{font-size:12.5px}
+}
+
+@media (max-width:320px){
+  .wrap{padding:0 11px}
+  .card{padding:16px 12px}
+  .device{width:40px;height:78px}
+  .phone-info h3{font-size:.88rem}
+  .row{font-size:12.5px}
+  .deposit-box .d-value{font-size:1.18rem}
+  .logo-text{font-size:14px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .check-ring{opacity:1;transform:none}
+  .check-ring svg path{stroke-dashoffset:0}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="wrap header-inner">
+    <div class="logo">
+      <span class="logo-mark">MTN</span>
+      <span class="logo-text">PhoneFlex</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ SUCCESS HERO ============ -->
+<section class="success-hero">
+  <div class="wrap success-inner">
+    <div class="check-ring">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4.5 12.5l5 5 10-11"/>
+      </svg>
+    </div>
+
+    <h1>Order placed successfully</h1>
+    <p>
+      Thank you. Your MTN PhoneFlex application has been received and is now
+      awaiting verification by an MTN agent.
+    </p>
+
+    <div class="ref-chip">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 12V8H6a2 2 0 0 1 0-4h12v4"/>
+        <path d="M4 6v12a2 2 0 0 0 2 2h14v-4"/>
+        <path d="M18 12a2 2 0 0 0 0 4h4v-4z"/>
+      </svg>
+      Order reference: <span id="orderRef">PF-000000</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MAIN ============ -->
+<main class="page">
+  <div class="wrap">
+
+    <!-- AGENT CALL STRIP -->
+    <div class="call-strip">
+      <span class="call-icon">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+      </span>
+      <div>
+        <h2>Keep your phone switched on</h2>
+        <p>
+          An MTN agent will call you on <strong id="stripPhone">your number</strong> to
+          verify your details before your phone is shipped. Delivery will only proceed
+          after this call is completed.
+        </p>
+      </div>
+    </div>
+
+    <!-- ORDER SUMMARY -->
+    <section class="card">
+      <div class="card-head">
+        <span class="card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="2" width="14" height="20" rx="3"/>
+            <line x1="12" y1="18" x2="12" y2="18"/>
+          </svg>
+        </span>
+        <h2>Your phone</h2>
+      </div>
+
+      <div class="phone-block">
+        <div class="device" aria-hidden="true">
+          <div class="device-screen" id="sumBrand">MTN</div>
+        </div>
+        <div class="phone-info">
+          <h3 id="sumName">Selected phone</h3>
+          <p class="phone-specs" id="sumSpecs">—</p>
+          <span class="phone-colour" id="sumColourWrap" hidden>
+            <i id="sumColourDot"></i>
+            <span id="sumColourName">—</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="rows">
+        <div class="row">
+          <span class="k">Cash price</span>
+          <span class="v" id="sumPrice">K—</span>
+        </div>
+        <div class="row">
+          <span class="k">Daily instalment</span>
+          <span class="v" id="sumDaily">K—</span>
+        </div>
+        <div class="row">
+          <span class="k">Plan duration</span>
+          <span class="v" id="sumDuration">—</span>
+        </div>
+        <div class="row">
+          <span class="k">Instalments start</span>
+          <span class="v">1 month after delivery</span>
+        </div>
+        <div class="row total">
+          <span class="k">Balance after deposit</span>
+          <span class="v" id="sumBalance">K—</span>
+        </div>
+      </div>
+
+      <div class="deposit-box">
+        <div>
+          <span class="d-label">Deposit</span>
+          <span class="d-note">Deducted from your MoMo wallet</span>
+        </div>
+        <strong class="d-value" id="sumDeposit">K—</strong>
+      </div>
+    </section>
+
+    <!-- DELIVERY DETAILS -->
+    <section class="card">
+      <div class="card-head">
+        <span class="card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+        </span>
+        <h2>Delivery details</h2>
+      </div>
+
+      <p class="addr-name" id="addrName">—</p>
+
+      <div class="addr-lines" id="addrLines">
+        <span>—</span>
+      </div>
+
+      <div class="addr-contact">
+        <span class="contact-pill primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          <span id="addrPhone">—</span>
+        </span>
+
+        <span class="contact-pill" id="addrAltWrap" hidden>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          <span id="addrAltPhone">—</span>
+        </span>
+      </div>
+    </section>
+
+    <!-- WHAT HAPPENS NEXT -->
+    <section class="card">
+      <div class="card-head">
+        <span class="card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/>
+            <polyline points="12 7 12 12 15.5 14"/>
+          </svg>
+        </span>
+        <h2>What happens next</h2>
+      </div>
+
+      <div class="steps-list">
+        <div class="step">
+          <span class="step-num">1</span>
+          <div class="step-body">
+            <h3>Verification call</h3>
+            <p>An MTN agent calls you to confirm your name, delivery address and order details.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="step-num">2</span>
+          <div class="step-body">
+            <h3>Deposit deducted</h3>
+            <p>Once verified, your deposit is taken from your MTN MoMo wallet automatically.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="step-num">3</span>
+          <div class="step-body">
+            <h3>Phone dispatched</h3>
+            <p>Your device is shipped or made ready for collection at your nearest MTN service centre.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="step-num">4</span>
+          <div class="step-body">
+            <h3>Daily instalments begin</h3>
+            <p>Your first instalment is deducted one month after delivery, then every day after that.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REASSURANCE -->
+    <div class="reassure">
+      <span class="reassure-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </span>
+      <p>
+        Your application is saved. You will receive an SMS confirmation on your
+        MTN number shortly, and another message once your order has been verified.
+      </p>
+    </div>
+
+    <!-- CLOSING NOTE -->
+    <p class="closing">
+      Thank you for choosing <strong>MTN PhoneFlex</strong>.
+      <span class="small">Please keep this page or your order reference for your records.</span>
+    </p>
+
+  </div>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-brand">
+      <span class="logo-mark">MTN</span>
+      <span class="logo-text">PhoneFlex</span>
+    </div>
+    <p>
+      © 2025 MTN Zambia. All rights reserved.<br>
+      Demo concept — not a live financial service.
+    </p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ============================================================
+     FALLBACK DATA (used if localStorage is empty)
+     ============================================================ */
+  var FALLBACK_ORDER = {
+    name: 'Samsung Galaxy A16',
+    brand: 'SAMSUNG',
+    specs: '6.7" · 8GB · 128GB · AMOLED',
+    price: 3389,
+    deposit: 279,
+    daily: 17,
+    colour: '',
+    colourHex: ''
+  };
+
+  var FALLBACK_ADDRESS = {
+    fullName: 'Valued Customer',
+    phone: '+260 97 000 0000',
+    altPhone: '',
+    province: 'Lusaka',
+    city: 'Lusaka',
+    area: '—',
+    landmark: '',
+    addressDetails: '—'
+  };
+
+  /* ---------- Helpers ---------- */
+  function formatK(n) {
+    return 'K' + Number(n).toLocaleString('en-ZM');
+  }
+
+  function read(key, fallback) {
+    try {
+      var raw = localStorage.getItem(key);
+      if (!raw) return fallback;
+      var parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== 'object') return fallback;
+      return parsed;
+    } catch (e) {
+      return fallback;
+    }
+  }
+
+  /* ============================================================
+     ORDER REFERENCE — generated once and remembered
+     ============================================================ */
+  function getOrderRef() {
+    var ref = null;
+    try { ref = localStorage.getItem('phoneflex_ref'); } catch (e) {}
+
+    if (!ref || !/^PF-\d{6}$/.test(ref)) {
+      var num = Math.floor(100000 + Math.random() * 900000);
+      ref = 'PF-' + num;
+      try { localStorage.setItem('phoneflex_ref', ref); } catch (e) {}
+    }
+    return ref;
+  }
+
+  document.getElementById('orderRef').textContent = getOrderRef();
+
+  /* ============================================================
+     LOAD ORDER
+     ============================================================ */
+  var order = read('phoneflex_order', FALLBACK_ORDER);
+
+  /* Guard against missing numeric fields */
+  order.price   = Number(order.price)   || FALLBACK_ORDER.price;
+  order.deposit = Number(order.deposit) || FALLBACK_ORDER.deposit;
+  order.daily   = Number(order.daily)   || FALLBACK_ORDER.daily;
+
+  var balance = order.price - order.deposit;
+  var days    = Math.ceil(balance / order.daily);
+  var months  = (days / 30).toFixed(1);
+
+  document.getElementById('sumName').textContent    = order.name    || FALLBACK_ORDER.name;
+  document.getElementById('sumSpecs').textContent   = order.specs   || FALLBACK_ORDER.specs;
+  document.getElementById('sumBrand').textContent   = order.brand   || 'MTN';
+  document.getElementById('sumPrice').textContent   = formatK(order.price);
+  document.getElementById('sumDeposit').textContent = formatK(order.deposit);
+  document.getElementById('sumDaily').textContent   = formatK(order.daily) + ' / day';
+  document.getElementById('sumBalance').textContent = formatK(balance);
+  document.getElementById('sumDuration').textContent =
+    days + ' days (~' + months + ' months)';
+
+  if (order.colour) {
+    document.getElementById('sumColourWrap').hidden = false;
+    document.getElementById('sumColourName').textContent = order.colour;
+    if (order.colourHex) {
+      document.getElementById('sumColourDot').style.background = order.colourHex;
+    }
+  }
+
+  /* ============================================================
+     LOAD ADDRESS
+     ============================================================ */
+  var addr = read('phoneflex_address', FALLBACK_ADDRESS);
+
+  var fullName = addr.fullName || FALLBACK_ADDRESS.fullName;
+  var phone    = addr.phone    || FALLBACK_ADDRESS.phone;
+  var altPhone = addr.altPhone || '';
+
+  document.getElementById('addrName').textContent  = fullName;
+  document.getElementById('addrPhone').textContent = phone;
+  document.getElementById('stripPhone').textContent = phone;
+
+  if (altPhone) {
+    document.getElementById('addrAltWrap').hidden = false;
+    document.getElementById('addrAltPhone').textContent = altPhone;
+  }
+
+  /* Build address lines safely (no innerHTML with user data) */
+  var linesEl = document.getElementById('addrLines');
+  linesEl.textContent = '';
+
+  var lines = [
+    addr.addressDetails,
+    addr.landmark,
+    addr.area,
+    addr.city,
+    addr.province
+  ].filter(function (v) { return v && String(v).trim() !== ''; });
+
+  if (lines.length === 0) lines = ['—'];
+
+  lines.forEach(function (line) {
+    var span = document.createElement('span');
+    span.textContent = line;
+    linesEl.appendChild(span);
+  });
+
+})();
+</script>
+
+</body>
+</html>
