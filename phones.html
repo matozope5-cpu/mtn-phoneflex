@@ -1498,6 +1498,7 @@ section[id]{scroll-margin-top:130px}
   var momoBtn      = document.getElementById('momoBtn');
   var modalClose   = document.getElementById('modalClose');
   var lastFocused  = null;
+  var currentCard  = null;   /* <-- NEW: keeps track of the card currently open */
 
   function formatK(n) {
     return 'K' + n.toLocaleString('en-ZM');
@@ -1512,6 +1513,9 @@ section[id]{scroll-margin-top:130px}
     var balance = price - deposit;
     var days    = Math.ceil(balance / daily);
     var months  = (days / 30).toFixed(1);
+
+    /* Remember which card is open so we can save it later */
+    currentCard = card;
 
     modalTitle.textContent = model;
     modalSub.textContent = 'Cash price ' + formatK(price);
@@ -1559,18 +1563,11 @@ section[id]{scroll-margin-top:130px}
       'Titanium Silverblue':'#a0b8d0','Titanium Gray':'#6a6a70','Titanium Whitesilver':'#e8e8e8',
       'Titanium Black':'#1a1a1a','Titanium Violet':'#7b6b8d','Titanium Yellow':'#d4c347',
       'Icy Blue':'#a8d8ea','Navy':'#1a2a4a','Mint':'#a8e6cf','Silver Shadow':'#c0c0c0',
-      'Navy2':'#1a2a4a',
       'Graphite':'#3a3a3a','Cream':'#f5f0e0','Lavender':'#b39ddb',
       'Onyx Black':'#111111','Marble Gray':'#a0a0a0','Cobalt Violet':'#6a5acd','Amber Yellow':'#e8c547',
-      'Blue2':'#2e6bb0',
       'Teal':'#008080','Ultramarine':'#3f51b5',
-      'White2':'#f5f5f5',
-      'Pink2':'#f2b3c9',
-      'Black2':'#1a1a1a',
       'Ocean Sunset':'#e8834a','Ice Blue':'#a8d8ea',
-      'Serenity Blue':'#4a90d9','Glacier White2':'#f5f5f5',
-      'Black3':'#1a1a1a','White3':'#f5f5f5',
-      'Sandstone Gold2':'#d4b483'
+      'Serenity Blue':'#4a90d9'
     };
     var used = {};
     colours.forEach(function (c) {
@@ -1583,6 +1580,9 @@ section[id]{scroll-margin-top:130px}
       btn.type = 'button';
       btn.className = 'colour-swatch';
       btn.setAttribute('aria-label', c);
+      /* Store the colour name and hex on the button so we can save them later */
+      btn.dataset.name = c;
+      btn.dataset.hex  = hex;
       btn.innerHTML = '<span class="colour-dot" style="background:' + hex + '"></span>' + c;
       btn.addEventListener('click', function () {
         colourOpts.querySelectorAll('.colour-swatch').forEach(function (s) {
@@ -1593,7 +1593,7 @@ section[id]{scroll-margin-top:130px}
       colourOpts.appendChild(btn);
     });
 
-    /* Reset selected colour */
+    /* Reset selected colour — default to the first one */
     var first = colourOpts.querySelector('.colour-swatch');
     if (first) first.classList.add('is-active');
 
@@ -1633,8 +1633,48 @@ section[id]{scroll-margin-top:130px}
     if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
   });
 
-  /* MoMo button — goes to login.html */
-  momoBtn.addEventListener('click', function () {
+  /* ============================================================
+     SAVE ORDER AND CONTINUE
+     ------------------------------------------------------------
+     When the user clicks "Continue with MoMo", we capture the
+     selected phone + colour and persist them to localStorage so
+     address.html and complete.html can read the real selection.
+     ============================================================ */
+  momoBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    if (!currentCard) {
+      /* No card somehow — just send them to login */
+      window.location.href = 'login.html';
+      return;
+    }
+
+    /* Figure out which colour is currently selected */
+    var activeSwatch = colourOpts.querySelector('.colour-swatch.is-active');
+    var colourName = activeSwatch ? activeSwatch.dataset.name : '';
+    var colourHex  = activeSwatch ? activeSwatch.dataset.hex  : '';
+
+    /* Read brand + specs from the card DOM */
+    var brandEl = currentCard.querySelector('.brand-tag');
+    var specsEl = currentCard.querySelector('.specs');
+
+    var order = {
+      name:      currentCard.dataset.model || '',
+      brand:     brandEl ? brandEl.textContent.trim().toUpperCase() : 'MTN',
+      specs:     specsEl ? specsEl.textContent.trim() : '',
+      price:     parseFloat(currentCard.dataset.price)   || 0,
+      deposit:   parseFloat(currentCard.dataset.deposit) || 0,
+      daily:     parseFloat(currentCard.dataset.daily)   || 0,
+      colour:    colourName,
+      colourHex: colourHex
+    };
+
+    try {
+      localStorage.setItem('phoneflex_order', JSON.stringify(order));
+    } catch (err) {
+      /* Storage unavailable — proceed anyway */
+    }
+
     window.location.href = 'login.html';
   });
 })();
